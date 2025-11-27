@@ -1,3 +1,3 @@
-- [readme](./README.md)
+- [README](./README.md)
 - [CPP_Gemini](./gemini.md)
 - [客制化键盘](./静电容.md)
