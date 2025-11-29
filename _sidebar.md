@@ -2,3 +2,4 @@
 - [Games101](./CGGames101.md)
 - [CPP_杂项](./gemini.md)
 - [客制化键盘](./静电容.md)
+- [CS106B](./CS106b.md)
