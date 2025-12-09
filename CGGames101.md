@@ -28,7 +28,7 @@
 - coordinate frame 坐标系
 - matrics 矩阵
 - pervasive 普遍的
-- homegeneous 齐次的
+- homogeneous 齐次的
 - scale 缩放
 - shear 剪切
 - composing transforms 组合变换
