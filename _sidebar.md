@@ -5,3 +5,6 @@
 - [CS106B](./CS106b.md)
 - [CS106L](./CS106L.md)
 - [Lily60](./Lily60.md)
+- [MineCraft](./Craftmine.md)
+- [DabeazPython](./DabeazPython.md)
+- [OpenGL](./OpenGL.md)

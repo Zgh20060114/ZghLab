@@ -1,0 +1,21 @@
+- 缩进表示将语句分成代码块
+- `if-elif-else `
+- `print(f"{name} is {age} years old")`
+- 读取输入 name = input("enter name :")
+- 不像c++,python的空语句会报错,用`pass`
+#### Number
+- `round()` 四舍五入
+- `range()` 生成整数迭代对象
+- python的数字类型: bool, int , double, 复数
+- c++中的`true/false `是bool类型的值,但在python中`True/False`是数字1/0
+- python的整数是动态长度,不会像c++一样有溢出的风险
+- python里的双精度浮点数相当于c++里的double,python没有单精度和长双精度
+- py中默认的`x/y`是返回浮点数,`x//y` 是返回整数(向下取整);c++的`x/y`返回值是整数还是浮点数取决于xy的类型
+- `x**y` 阶乘
+- py和cpp都用`& |`表示按位与/或,py用`and or not` 表示逻辑,c++用`&& ||`
+- py的`abs`和cpp的`std::abs`适用于整数和浮点数,不要用c风格的abs和fabs
+- int(a) 转换
+#### String
+- python的字符串可以用单引号,双引号,三引号;cpp的单引号是char
+- python在索引区间这方面特别喜欢左闭右开
+- str[-2] 倒数第二个, str[-3:] 倒数第三个到最后,str[-3:0]返回空字符串
