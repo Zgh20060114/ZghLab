@@ -28,7 +28,7 @@
 - coordinate frame 坐标系
 - matrics 矩阵
 - pervasive 普遍的
-- homogeneous 齐次的
+- homegeneous 齐次的
 - scale 缩放
 - shear 剪切
 - composing transforms 组合变换
@@ -193,7 +193,7 @@ $$
 <leader>+f+
     - 想打开一个已知名字的文件：用 f 或 F。
     - 想切回刚才看的文件：用 b 或 r。
-    - 想在整个项目里搜索代码内容（而不是文件名）：这通常在另一个快捷键<leader>s 下，比如 <leader>sg (live_grep)。
+    - 想在整个项目里搜索代码内容（而不是文件名）：这通常在另一个快捷键<leader>s 下，比如 <leader>fg (live_grep)。
     - 想换个项目工作：用 p。
     - 想修改配置：用 c。
     - 想快速浏览当前文件夹：用 e 或 E。
