@@ -38,3 +38,9 @@
 - strip 线
 - sizeof 是cpp的内置运算符
 - std::array 的&arr[0]和arr.data()是arr的首元素地址
+- gl_Position是glsl为顶点着色器保留的内置输出变量,所以不需要声明:专门用于顶点着色器输出裁剪空间坐标(齐次坐标)
+- 把fn+caps大写锁定改了,右win
+- win+shift+上下左右 调整大小
+- std::string 加R"()" 分行字符串
+- .c_str() 返回c风格字符串数组指针
+- 现代cpp中,0就是0,空指针是nullptr,NULL是过时的
