@@ -44,3 +44,11 @@
 - std::string 加R"()" 分行字符串
 - .c_str() 返回c风格字符串数组指针
 - 现代cpp中,0就是0,空指针是nullptr,NULL是过时的
+#### git操作
+- git fetch origin main 拉取最新的origin main 但是不合并
+- git reset --hard origin/main 强制用origin/main覆盖当前版本
+
+
+- std::vector不能cout,但是vec.data()可以(数组的首元素的地址)
+- 片段着色器的作用是计算像素的最终颜色输出
+- speficial 指定
