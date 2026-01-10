@@ -14,7 +14,7 @@
   - 颜色缓冲
   - 深度缓冲
   - 模板缓冲 stencil 镂空模板
-- 顶点缓冲对象vbo
+- 顶点缓冲对象vbo: 是储存在gpu显存里的数据
 - 顶点数组对象vao :如何解析vbo里的数据
 - 索引缓冲对象iao
 - 图形渲染管线主要分为两个部分:
@@ -52,3 +52,8 @@
 - std::vector不能cout,但是vec.data()可以(数组的首元素的地址)
 - 片段着色器的作用是计算像素的最终颜色输出
 - speficial 指定
+- GL_FLOAT是枚举类型,GLfloat是变量类型
+- m+xx 标记,可以用'xx,来跳转,用:delmarks xx删除标记,:delmarks!删除全部
+- ibo索引缓冲对象/ebo元素缓冲对象:记录opengl要绘制的顶点索引
+- opengl只支持三角形图元
+- integer 整数
