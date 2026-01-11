@@ -57,3 +57,4 @@
 - ibo索引缓冲对象/ebo元素缓冲对象:记录opengl要绘制的顶点索引
 - opengl只支持三角形图元
 - integer 整数
+- static_cast<int*>(0)可以,但是static_cast<int*>(1)就不可以,因为0可以是空指针nullptr也可以是int,应该用reinterpret_cast<int *>(3),适用于跟内存,指针有关的转换
