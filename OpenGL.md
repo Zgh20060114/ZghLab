@@ -60,3 +60,4 @@
 - static_cast<int*>(0)可以,但是static_cast<int*>(1)就不可以,因为0可以是空指针nullptr也可以是int,应该用reinterpret_cast<int *>(3),适用于跟内存,指针有关的转换
 - 引用不是指针,指针不能赋值给引用, 正常变量才能赋值给引用
 - int &a = b;对a的任何操作本质上都是对b的操作,对a取地址就是对b取地址
+- explicit 只能用于构造函数或转换函数
