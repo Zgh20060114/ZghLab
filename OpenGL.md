@@ -73,3 +73,8 @@
 - 多级渐变纹理mipmap,并过滤
 - mipmap只适用于纹理缩小的情况,纹理放大直接用纹理过滤就行
 - c++本来就是c的超集，完全可以混合编译，cmake甚至优先兼容c
+- std 是standard标准的简称
+- 断言 
+  - static_assert() 编译期断言
+  - assert() 运行时断言
+- std::runtime_error 运行时异常,编译期压根就不会有异常
