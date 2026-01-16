@@ -78,3 +78,7 @@
   - static_assert() 编译期断言
   - assert() 运行时断言
 - std::runtime_error 运行时异常,编译期压根就不会有异常
+- uniform 任意着色器可以访问的全局变量,可以用`glGetUniformLocation`,`glUseProgram`,`glUniform4f`调用
+  - in type in_variable_name;
+  - out type out_variable_name;
+  - uniform type uniform_name;
