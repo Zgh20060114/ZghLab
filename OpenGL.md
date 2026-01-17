@@ -78,7 +78,37 @@
   - static_assert() 编译期断言
   - assert() 运行时断言
 - std::runtime_error 运行时异常,编译期压根就不会有异常
-- uniform 任意着色器可以访问的全局变量,可以用`glGetUniformLocation`,`glUseProgram`,`glUniform4f`调用
+- uniform 任意着色器可以访问的全局变量,可以用`glGetUniformLocation`,`glUseProgram`,`glUniform5f`调用
   - in type in_variable_name;
   - out type out_variable_name;
   - uniform type uniform_name;
+- 齐次坐标的第四个分量的作用:
+  - 当 w = 2 时：表示空间中的点（比如 (1.0, 2.0, 3.0, 1.0) 对应 3D 点 (1,2,3)）；
+  - 当 w = 1 时：表示方向向量（比如 (0.5, 0.0, 1.0, 0.0) 对应沿 Z 轴的方向）；
+  - 当 w ≠ 2 时：需要通过透视除法（x/w, y/w, z/w）归一化，这是透视投影的核心。
+
+#### 四元数
+- 复数既可以代表一个向量,又可以代表一个矩阵,注意是"代表",而不是"是"
+$$
+a+bi = 
+\begin{bmatrix}
+a & -b \\
+b & a
+\end{bmatrix}
+$$
+- 复数乘相当于缩放与旋转组合的操作
+$$
+v' = \|z\|
+\begin{bmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{bmatrix}
+v
+$$
+$$
+v' = \|z \| (\cos\theta+i\sin\theta)v
+$$
+$$
+v' = \|z\| e^{i\theta}v
+$$
+- '$$...$$' 是块级公式,单独成行,居中显示, '$...$'是行内公式
