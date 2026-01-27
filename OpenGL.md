@@ -115,8 +115,23 @@ $$
 - 正交矩阵,又叫实数域中的酉矩阵, $M^T M = M M^T = I$
 - 因为正交矩阵相乘满足交换律,所以$v' = z_2 z_1 v = z_1 z_2 v$, 但是普通旋转矩阵M是不满足交换律的
 - perpendicular 垂直
-- $v$绕单位方向向量$u$旋转角度$\theta$变成$v'$ 的罗德里格斯公式的思路是将$v$转换成$v = v_{parallel}+ v_{perp}$  
+- $v$绕单位方向向量$u$旋转角度$\theta$变成$v'$ 的罗德里格斯公式的思路是将$v$转换成$v = v_{\parallel}+ v_{\perp}$  
 $$
+\boxed{
 v' = \cos(\theta) v + (1-\cos(\theta))(u \cdot v)v + \sin(\theta)(u \times v)
+}
 $$
-- 那四元数和复数有什么关系呢? 四元数有三个虚部 $q = a + b\mathbf{i} + c\mathbf{j} + d\mathbf{k}, i^2 = j^2 = k^2 = ijk = -1$
+- 那四元数和复数有什么关系呢? 四元数有一个实部,三个虚部 $q = a + b\mathbf{i} + c\mathbf{j} + d\mathbf{k}, i^2 = j^2 = k^2 = ijk = -1$
+- 还可以表示为向量形式: $q = \begin{bmatrix} a \\ b \\ c \\ d \end{bmatrix}$ 和 标量向量的的有序对形式$q = \begin{bmatrix} s, \mathbf{v} \end{bmatrix}$
+- 四元数乘法不支持交换律
+- 四元数乘法的格拉斯曼积:
+$$
+\boxed{
+对于任意的四元数q_1 = \begin{bmatrix} s, \mathbf{v} \end{bmatrix}, q_2 = \begin{bmatrix} t, \mathbf{u} \end{bmatrix},
+q_1 q_2 = \begin{bmatrix} st- \mathbf{v}\cdot \mathbf{u}, s \mathbf{u}+ t \mathbf{v} + \mathbf{v} \times \mathbf{u} \end{bmatrix}
+}
+$$
+- 可以将任意的3d向量转化为纯四元数$\begin{bmatrix} 0, \mathbf{v} \end{bmatrix}$
+- 四元数的逆:$qq^{-1} = q^{-1}q = 1$
+- 四元数的共轭:$\bar{q} = \begin{bmatrix} s, \mathbf{-v} \end{bmatrix}$ , $q\bar{q} = \bar{q}q = \begin{bmatrix} s^2 + \mathbf{v} \cdot \mathbf{v}, 0 \end{bmatrix}$
+- $q^{-1} = \frac{\bar{q}}{\|q\|^2}$, 和复数一样
