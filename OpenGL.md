@@ -83,9 +83,9 @@
   - out type out_variable_name;
   - uniform type uniform_name;
 - 齐次坐标的第四个分量的作用:
-  - 当 w = 2 时：表示空间中的点（比如 (1.0, 2.0, 3.0, 1.0) 对应 3D 点 (1,2,3)）；
-  - 当 w = 1 时：表示方向向量（比如 (0.5, 0.0, 1.0, 0.0) 对应沿 Z 轴的方向）；
-  - 当 w ≠ 2 时：需要通过透视除法（x/w, y/w, z/w）归一化，这是透视投影的核心。
+  - 当 w = 1 时：表示空间中的点（比如 (1.0, 2.0, 3.0, 1.0) 对应 3D 点 (1,2,3)）；
+  - 当 w = 0 时：表示方向向量（比如 (0.5, 0.0, 1.0, 0.0) 对应沿 Z 轴的方向）；
+  - 当 w ≠ 0 时：需要通过透视除法（x/w, y/w, z/w）归一化，这是透视投影的核心。
 
 #### 四元数
 - 复数既可以代表一个向量,又可以代表一个矩阵(仅限于2D旋转,复数只是二维的,并且是一个正交矩阵),注意是"代表",而不是"是"
@@ -115,7 +115,7 @@ $$
 - 正交矩阵,又叫实数域中的酉矩阵, $M^T M = M M^T = I$
 - 因为正交矩阵相乘满足交换律,所以$v' = z_2 z_1 v = z_1 z_2 v$, 但是普通旋转矩阵M是不满足交换律的
 - perpendicular 垂直
-- $v$绕单位方向向量$u$旋转角度$\theta$变成$v'$ 的罗德里格斯公式的思路是将$v$转换成$v = v_{\parallel}+ v_{\perp}$  
+- $v$绕单位方向向量$u$旋转角度$\theta$变成$v'$ 的$\colorbox{pink}{罗德里格斯公式}$的思路是将$v$转换成$v = v_{\parallel}+ v_{\perp}$  
 $$
 \boxed{
 v' = \cos(\theta) v + (1-\cos(\theta))(u \cdot v)v + \sin(\theta)(u \times v)
@@ -124,7 +124,7 @@ $$
 - 那四元数和复数有什么关系呢? 四元数有一个实部,三个虚部 $q = a + b\mathbf{i} + c\mathbf{j} + d\mathbf{k}, i^2 = j^2 = k^2 = ijk = -1$
 - 还可以表示为向量形式: $q = \begin{bmatrix} a \\ b \\ c \\ d \end{bmatrix}$ 和 标量向量的的有序对形式$q = \begin{bmatrix} s, \mathbf{v} \end{bmatrix}$
 - 四元数乘法不支持交换律
-- 四元数乘法的格拉斯曼积:
+- 四元数乘法的$\colorbox{pink}{格拉斯曼积}$:
 $$
 \boxed{
 对于任意的四元数q_1 = \begin{bmatrix} s, \mathbf{v} \end{bmatrix}, q_2 = \begin{bmatrix} t, \mathbf{u} \end{bmatrix},
@@ -135,3 +135,55 @@ $$
 - 四元数的逆:$qq^{-1} = q^{-1}q = 1$
 - 四元数的共轭:$\bar{q} = \begin{bmatrix} s, \mathbf{-v} \end{bmatrix}$ , $q\bar{q} = \bar{q}q = \begin{bmatrix} s^2 + \mathbf{v} \cdot \mathbf{v}, 0 \end{bmatrix}$
 - $q^{-1} = \frac{\bar{q}}{\|q\|^2}$, 和复数一样
+- 四元数的3D旋转公式(正交情况): 
+$$
+\boxed{
+\begin{gathered}
+一个向量\mathbf{v_{\perp}}绕正交于的旋转轴\mathbf{u}旋转\theta角度,\\那么旋转后的\mathbf{v_{\perp}'}可以用四元数乘法获取: \\
+构造四元数v_{\perp}=\begin{bmatrix} 0, \mathbf{v_{\perp}} \end{bmatrix}, q = \begin{bmatrix}\cos\theta, \sin\theta\mathbf{u}\end{bmatrix}, \\
+v_{\perp}'=qv_{\perp} \\
+(q是个单位四元数,代表纯旋转没缩放)
+\end{gathered}
+}
+$$
+- 四元数的3D旋转公式(平行情况):
+$$
+\boxed{
+v_{\parallel}'=v_{\parallel}
+}
+$$
+
+- 四元数的3D旋转公式(一般情况):
+$$
+\boxed{
+\begin{gathered}
+一个向量\mathbf{v}绕任意单位方向旋转轴\mathbf{u}旋转\theta角度,\\那么旋转后的\mathbf{v'}可以用四元数乘法获取: \\
+构造四元数v=\begin{bmatrix} 0, \mathbf{v} \end{bmatrix}, q = \begin{bmatrix}\cos\frac{\theta}{2}, \sin\frac{\theta}{2}\mathbf{u}\end{bmatrix}, \\
+v'=qv\bar{q} = qvq^{-1} \\
+(q是个单位四元数,代表纯旋转没缩放)
+\end{gathered}
+}
+$$
+- 这个公式等价于罗德里格斯公式: 
+$$
+qvq^{-1}=\cos(\theta)\mathbf{v} + (1-\cos(\theta))(\mathbf{u}\cdot \mathbf{v})\mathbf{v} + \sin(\theta)(\mathbf{u} \times \mathbf{v})
+$$
+- 四元数乘法对应的乘法分左乘右乘
+- 左乘四元数q：
+$$\mathbf{q} \otimes \mathbf{p} = \mathbf{L(q)} \cdot \mathbf{p}$$
+$$\mathbf{L(q)} = \begin{bmatrix}
+w & -x & -y & -z \\
+x & w & -z & y \\
+y & z & w & -x \\
+z & -y & x & w
+\end{bmatrix}$$
+- 右乘四元数q:
+$$\mathbf{p} \otimes \mathbf{q} = \mathbf{R(q)} \cdot \mathbf{p}$$
+$$\mathbf{R(q)} = \begin{bmatrix}
+w & -x & -y & -z \\
+x & w & z & -y \\
+y & -z & w & x \\
+z & y & -x & w
+\end{bmatrix}$$
+
+- $v'=qv\bar{q} = qvq^{-1} =$ ![四元数旋转公式](assets_OpenGL/四元数旋转公式.png)
