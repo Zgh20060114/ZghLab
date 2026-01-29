@@ -16,6 +16,8 @@
 - py的`abs`和cpp的`std::abs`适用于整数和浮点数,不要用c风格的abs和fabs
 - int(a) 转换
 #### String
-- python的字符串可以用单引号,双引号,三引号;cpp的单引号是char
+- python的字符串可以用单引号,双引号,三引号(单引号和双引号作用一样于不跨行的字符串,三引号可多行);
+- cpp的单引号是char,双引号才是string
+###### string idndex
 - python在索引区间这方面特别喜欢左闭右开
 - str[-2] 倒数第二个, str[-3:] 倒数第三个到最后,str[-3:0]返回空字符串
