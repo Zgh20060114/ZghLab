@@ -187,3 +187,6 @@ z & y & -x & w
 \end{bmatrix}$$
 
 - $v'=qv\bar{q} = qvq^{-1} =$ ![四元数旋转公式](assets_OpenGL/四元数旋转公式.png)
+
+- ctrl+a 增大数字
+- ctrl+x 减小数字

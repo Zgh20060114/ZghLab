@@ -3,6 +3,7 @@
 - `print(f"{name} is {age} years old")`
 - 读取输入 name = input("enter name :")
 - 不像c++,python的空语句会报错,用`pass`
+- python 无显式声明变量直接使用
 #### Number
 - `round()` 四舍五入
 - `range()` 生成整数迭代对象
@@ -21,3 +22,29 @@
 ###### string idndex
 - python在索引区间这方面特别喜欢左闭右开
 - str[-2] 倒数第二个, str[-3:] 倒数第三个到最后,str[-3:0]返回空字符串
+###### string operator
+- 字符窜的连接: "hello"+s
+- 字符串的长度: len(s)
+- 字符串成员测试: `test = 'e' in s`, `test = "he" not in s`
+- 字符串复制: `replication = s * 5`
+###### string method
+- 删除字符串前/后空格:`s.strip()` (只能)
+- 大小写转换:`s.upper()`, `s.lower() ` (全部)
+- 替换字符串内容: `s = "hello world" s.replace("hello","hallo") `
+- s.endswith(suffix)     # 检查字符串是否以suffix结尾
+- s.find(t)              # t在s中首次出现的位置（索引）
+- s.index(t)             # t在s中首次出现的位置（索引）
+- s.isalpha()            # 检查字符是否都是字母
+- s.isdigit()            # 检查字符是否都是数字
+- s.islower()            # 检查字符是否都是小写
+- s.isupper()            # 检查字符是否都是大写
+- s.join(slist)          # 使用s作为分隔符连接字符串列表slist
+- s.rfind(t)             # 从字符串末尾开始搜索t的位置
+- s.rindex(t)            # 从字符串末尾开始搜索t的位置
+- s.split([delim])       # 使用分隔符delim将字符串拆分为子字符串列表
+- s.startswith(prefix)   # 检查字符串是否以prefix开头
+- 字符串一旦创建后是无法修改的,修改字符串都是新建的,`s[1]='o'` 是错的
+- 将任何值转化成字符串:`str(3)`
+- py查看变量类型:`print(type(s).__name__)`,`print(type(s))`,``
+- 字节串,引号前+b:`data = b"Hello World\r\n" `
+- 原始字符串,引号前+r:`data = r"hello\nworld"`,作用是让反斜杠\仅作为普通字符生效,反斜杠\不再触发转译字符功能
