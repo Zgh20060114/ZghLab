@@ -1,9 +1,11 @@
 - 缩进表示将语句分成代码块
 - `if-elif-else `
 - `print(f"{name} is {age} years old")`
+- `print("asdf",end=xxx)`,
 - 读取输入 name = input("enter name :")
-- 不像c++,python的空语句会报错,用`pass`
+- 不像c++,python的空语句会报错,用`pass`; 占位时`pass`和`...`功能相同,`...`除了占位的功能外还有空值语义
 - python 无显式声明变量直接使用
+- 三元运算: 结果1 if 条件 else 结果2
 #### Number
 - `round()` 四舍五入
 - `range()` 生成整数迭代对象
@@ -15,7 +17,7 @@
 - `x**y` 阶乘
 - py和cpp都用`& |`表示按位与/或,py用`and or not` 表示逻辑,c++用`&& ||`
 - py的`abs`和cpp的`std::abs`适用于整数和浮点数,不要用c风格的abs和fabs
-- int(a) 转换
+- int(a) 转换,失败会报错ValueError; c++的转换:抛弃c风格,用 static_cast<int>(a); const_cast<int>(a)仅适合去除指针/引用变量的const属性;dynamic_cast向下转换,继承转换
 #### String
 - python的字符串可以用单引号,双引号,三引号(单引号和双引号作用一样于不跨行的字符串,三引号可多行);
 - cpp的单引号是char,双引号才是string
@@ -49,5 +51,41 @@
 - 字节串,引号前+b:`data = b"Hello World\r\n" `
 - 原始字符串,引号前+r:`data = r"hello\nworld"`,作用是让反斜杠\仅作为普通字符生效,反斜杠\不再触发转译字符功能
 - 格式化字符窜f-string: f'{变量:格式说明符}'
-#### 列表List
+#### List
 - `name = ["sd","fg","kl"]`
+- 注明类型: `name: list[Any]`
+###### list operator
+- append
+- insert
+- + 连接两个list
+- len(name)
+- in /not in 
+- 复制 name*4
+- list 就不是为数学计算设计的,是为了通用数据储存和操作的
+- `for na in name:`
+- 返回第一个出现的索引:`name.index("sd") `
+- remove/del, 删除元素
+- reverse 反转
+###### list sort 
+- 就地排序
+  - name.sort()
+  - name.sort(reverse=True)
+- na = sorted(name)
+#### File manager
+- `with open('input.txt', 'rt') as f_read, open('output.txt', 'wt') as f_write:`
+- t文本模式,b二进制模式,r只读模式,r只写模式
+- with是python中专门为资源管理设计的,自动可靠的释放资源,不用手动的`file.close()`
+- `read/write`
+- 按行迭代:`for line in file:`
+- `with open('outfile', 'wt') as out:
+    print('Hello World', file=out)`, 使用print输出到文件中相较于`file.write("hello world\n") `的好处就是自动添加换行符\n
+- `next(file)` 调用一次迭代一次
+#### Function
+- 捕获并处理异常
+```python
+try:
+  xxx
+except xxx:
+  xxx
+```
+- 
