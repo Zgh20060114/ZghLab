@@ -1,5 +1,6 @@
 s = "hello python".replace("hello", "hi")
 a = s.find("o")
+print(dir(s))
 st = str(42)
 print(type(s).__name__)
 print(isinstance(st, str))

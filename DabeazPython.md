@@ -48,3 +48,6 @@
 - py查看变量类型:`print(type(s).__name__)`,`print(type(s))`,``
 - 字节串,引号前+b:`data = b"Hello World\r\n" `
 - 原始字符串,引号前+r:`data = r"hello\nworld"`,作用是让反斜杠\仅作为普通字符生效,反斜杠\不再触发转译字符功能
+- 格式化字符窜f-string: f'{变量:格式说明符}'
+#### 列表List
+- `name = ["sd","fg","kl"]`
