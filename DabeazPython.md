@@ -7,6 +7,7 @@
 - 不像c++,python的空语句会报错,用`pass`; 占位时`pass`和`...`功能相同,`...`除了占位的功能外还有空值语义
 - python 无显式声明变量直接使用
 - 三元运算: 结果1 if 条件 else 结果2
+- del 删除变量/元素
 #### Number
 - `round()` 四舍五入
 - `range()` 生成整数迭代对象
@@ -96,7 +97,41 @@ except xxx:
 ## working with data && data struct
 - 空值类型 :`name = None`, 为一个后续会赋值的变量提前占位
 #### tuple
-- tup = ("sd",1,1.1,1) ,元组,列表都是有序可重复的数据结构;但是list是可变数据结构,而tuple不可变
+- `tup = ("sd",1,1.1,1)` ,元组,列表都是有序可重复的数据结构;但是list是可变数据结构,而tuple则是只读的不可修改,但是可以根据当前元组元素构造新的元组
+- 既然都有了list,那tuple设计出来的目的是什么呢: 核心目的是"不可变的",不可变就防止数据篡改,可做字典键/集合元素(只有不可变元素才能被hash)
 - 也可省略()
-- tup = ("sd",)
-- 
+- `tup = ("sd",) `
+- `t1,t2,t3,t4 = tup`,除了用索引外
+- tuple是不可变的,所以就没有append
+#### dictionary
+- `dic = {"as": 1, "qw": "11", "qw": "12"} `
+- 底层hash,与cpp的std::unordered_map实现一致,无序,可修改,重复的会覆盖
+- list(dic),字典转化成列表,获得所有的键
+- `for di in dic:` 迭代获取键di
+- `dic.keys() `,获得实时自动跟随变化的键
+- 获得键值对:`for k,v in dic.items(): `
+- item 项,物品,元素
+- `dic.get("ass", None): `, 找不到有默认值
+- 不可变的类型可做dictionary's key,如元组
+- 无append,直接写键幅值即可
+#### set
+- 无序,不可重复(会自动去重)
+- add
+## format 格式化
+- `f"{数据:[对齐符][占宽数字][整数格式编码]}" `
+  - 占宽数字：指定数据在n个字符的固定区域内展示（不足补空格，超出则按实际长度显示）；
+  - 对齐符：>（右对齐）、<（左对齐）、^（居中对齐），未指定时默认右对齐（数字）/左对齐（字符串）。
+  - ![格式编码](assets_DabeazPython/2026-02-03-22-37-17.png)
+- `'{name:>10s} {shares:10d} {price:10.2f}'.format(name='IBM', shares=100, price=91.1)`
+- ` s = {
+      'name': 'IBM',
+      'shares': 100,
+      'price': 91.1
+  }
+  '{name:>10s} {shares:10d} {price:10.2f}'.format_map(s)`, 相当于是format的字典(映射)特供版
+## sequence datatype 序列式数据类型
+- string
+- list
+- tuple
+- `a = [0,1,2,3,4,5,6,7,8]  a[2:4] = [10,11,12]  # [0,1,10,11,12,4,5,6,7,8]` ,重新分配的切片不必与原来长度相同
+
