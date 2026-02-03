@@ -1,3 +1,4 @@
+## python fundamental
 - 缩进表示将语句分成代码块
 - `if-elif-else `
 - `print(f"{name} is {age} years old")`
@@ -81,6 +82,9 @@
     print('Hello World', file=out)`, 使用print输出到文件中相较于`file.write("hello world\n") `的好处就是自动添加换行符\n
 - `next(file)` 调用一次迭代一次
 #### Function
+- `def fuc(n): `
+- 可校验参数类型: `def fuc(n:int|double):`
+- 文档字符串必须放在函数/类/模块的第一行
 - 捕获并处理异常
 ```python
 try:
@@ -88,4 +92,11 @@ try:
 except xxx:
   xxx
 ```
+- raise:抛出异常
+## working with data && data struct
+- 空值类型 :`name = None`, 为一个后续会赋值的变量提前占位
+#### tuple
+- tup = ("sd",1,1.1,1) ,元组,列表都是有序可重复的数据结构;但是list是可变数据结构,而tuple不可变
+- 也可省略()
+- tup = ("sd",)
 - 
