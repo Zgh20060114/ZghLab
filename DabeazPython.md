@@ -134,4 +134,5 @@ except xxx:
 - list
 - tuple
 - `a = [0,1,2,3,4,5,6,7,8]  a[2:4] = [10,11,12]  # [0,1,10,11,12,4,5,6,7,8]` ,重新分配的切片不必与原来长度相同
-
+- `range(start,stop,step)` 只能生成整数序列
+- `for n,s in enumerate(se): ` 生成

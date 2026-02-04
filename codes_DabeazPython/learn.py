@@ -55,7 +55,7 @@ print(holidays[(1, 1)])
 se = {1, 1, 3}
 print(len(se))
 se.add(2)
-print(len(se))
+print(se)
 
-for n in range(-2, 3.5, 0.5):
-    print(n)
+for n, s in enumerate(se, 1):
+    print(f"{n} = {s}")
