@@ -8,6 +8,7 @@
 - python 无显式声明变量直接使用
 - 三元运算: 结果1 if 条件 else 结果2
 - del 删除变量/元素
+- int 和 str 没法比较
 #### Number
 - `round()` 四舍五入
 - `range()` 生成整数迭代对象
@@ -70,8 +71,8 @@
 - reverse 反转
 ###### list sort 
 - 就地排序
-  - name.sort()
-  - name.sort(reverse=True)
+  - `name.sort() ` 原地修改, 仅list可用
+  - `name.sort(reverse=True) ` 生成新的的, 可迭代对象均可使用
 - na = sorted(name)
 #### File manager
 - `with open('input.txt', 'rt') as f_read, open('output.txt', 'wt') as f_write:`
@@ -107,7 +108,7 @@ except xxx:
 - `dic = {"as": 1, "qw": "11", "qw": "12"} `
 - 底层hash,与cpp的std::unordered_map实现一致,无序,可修改,重复的会覆盖
 - list(dic),字典转化成列表,获得所有的键
-- `for di in dic:` 迭代获取键di
+- `for di in dic:` 迭代获取的是键,不能使用`for k,v in dic`
 - `dic.keys() `,获得实时自动跟随变化的键
 - 获得键值对:`for k,v in dic.items(): `
 - item 项,物品,元素
@@ -134,5 +135,6 @@ except xxx:
 - list
 - tuple
 - `a = [0,1,2,3,4,5,6,7,8]  a[2:4] = [10,11,12]  # [0,1,10,11,12,4,5,6,7,8]` ,重新分配的切片不必与原来长度相同
-- `range(start,stop,step)` 只能生成整数序列
-- `for n,s in enumerate(se): ` 生成
+- `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列
+- `for n,s in enumerate(se,start): ` 生成counter and iteration 
+- `ts = zip(tup, se) ` 接收可迭代对象(如:list,string,tuple...)返回的是zip迭代器类型,只能迭代一次;如需多次使用,使用`list(ts),tuple(ts) `等
