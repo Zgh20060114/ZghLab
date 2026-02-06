@@ -7,6 +7,8 @@
 
 
 from typing import Any
+from collections import Counter
+from collections import deque
 
 
 name = ["sd", 1]
@@ -74,3 +76,29 @@ for t, s in ts:
 
 for n, x in enumerate(se):
     print(n, x, sep="*")
+
+
+portfolio = [
+    ("IBM", 50, 120),
+    ("AAPL", 100, 150),
+    ("IBM", 100, 125),  # 同一股票，持股数累加
+    ("GOOG", 80, 200),
+]
+total_shares = Counter()
+for name, shares, price in portfolio:
+    # if name not in total_shares:  # 必须手动判断，否则报错
+    #     total_shares[name] = 0
+    # 不用Counter需手动给刚开始是空的字典的值初始化为零,否则+=会报错,因为会先取值,取到了不存在的值
+    total_shares[name] += shares
+print(total_shares)
+
+print(Counter(tup))
+
+# de = deque(maxlen=10)
+
+a = ["sd", 2, 3]
+b = [2 * x for x in a if type(x) is int]
+print(b)
+
+b = a
+print(hex(id(b)))

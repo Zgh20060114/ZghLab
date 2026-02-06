@@ -109,6 +109,7 @@ except xxx:
 - 底层hash,与cpp的std::unordered_map实现一致,无序,可修改,重复的会覆盖
 - list(dic),字典转化成列表,获得所有的键
 - `for di in dic:` 迭代获取的是键,不能使用`for k,v in dic`
+- dict的in/not in 都是对于键
 - `dic.keys() `,获得实时自动跟随变化的键
 - 获得键值对:`for k,v in dic.items(): `
 - item 项,物品,元素
@@ -138,3 +139,16 @@ except xxx:
 - `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列
 - `for n,s in enumerate(se,start): ` 生成counter and iteration 
 - `ts = zip(tup, se) ` 接收可迭代对象(如:list,string,tuple...)返回的是zip迭代器类型,只能迭代一次;如需多次使用,使用`list(ts),tuple(ts) `等
+## collection module
+- `Counter `是dict字典类的一个子类,访问到开始不存在的键的时候会赋值为零,从而不会报错
+- 一个字典的键对应多个值:`from collections import defaultdict`
+- `deque`:固定长度限制,频繁头部操作的双向队列
+## list comprehension 列表推导式
+- `a = ["sd", 2, 3]
+b = [2 * x for x in a]`.
+- 过滤: `b = [2 * x for x in a if type(x) is int]`, [ <expression> for <variable_name> in <sequence> if <condition>]
+## object
+### object model; memory management; copy; type checking 
+- 代码里的数字、列表、字典、函数等都是「对象」(object); 而「对象模型」(object model)是管理这些对象的 “底层规则手册”
+- 赋值变量是地址拷贝`b=a`,赋值数值是值拷贝`b=10`
+- `is ` 比较是不是同一地址; `==` 比较的只是数值是否相等
