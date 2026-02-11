@@ -10,4 +10,4 @@
 - [OpenGL](./OpenGL.md)
 - [Subject3](./Subject3.md)
 - [三角洲胜者为王笔记](./三角洲胜者为王笔记.md)
-- [单例+setter&getter](./现代 C++：用单例状态类替代 extern 全局变量.md)
+- [单例+setter&getter](./现代C++单例getter&setter.md)
