@@ -93,6 +93,7 @@
   - 可以使用位置参数调用函数：`prices = read_prices('prices.csv', True) `
   - 或者可以使用关键字参数调用该函数：`prices = read_prices(filename='prices.csv', debug=True) `
   - 默认参数(必须末尾):`def read_prices(filename, debug=False):`
+- `return q, r     # Return a tuple `  多个会组成一个元组
 - 捕获并处理异常
 ```python
 try:
