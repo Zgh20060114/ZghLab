@@ -51,6 +51,7 @@
 - 字符串一旦创建后是无法修改的,修改字符串都是新建的,`s[1]='o'` 是错的
 - 将任何值转化成字符串:`str(3)`
 - py查看变量类型:`print(type(s).__name__)`,`print(type(s))`,``
+- `isinstance(a,(list,tuple)) `
 - 字节串,引号前+b:`data = b"Hello World\r\n" `
 - 原始字符串,引号前+r:`data = r"hello\nworld"`,作用是让反斜杠\仅作为普通字符生效,反斜杠\不再触发转译字符功能
 - 格式化字符窜f-string: f'{变量:格式说明符}'
@@ -87,6 +88,11 @@
 - `def fuc(n): `
 - 可校验参数类型: `def fuc(n:int|double):`
 - 文档字符串必须放在函数/类/模块的第一行
+- 参数:
+  - `def read_prices(filename: str) -> dict:` 加上参数类型和返回值类型
+  - 可以使用位置参数调用函数：`prices = read_prices('prices.csv', True) `
+  - 或者可以使用关键字参数调用该函数：`prices = read_prices(filename='prices.csv', debug=True) `
+  - 默认参数(必须末尾):`def read_prices(filename, debug=False):`
 - 捕获并处理异常
 ```python
 try:
@@ -94,6 +100,7 @@ try:
 except xxx:
   xxx
 ```
+- `except ` 除了,表示排除
 - raise:抛出异常
 ## working with data && data struct
 - 空值类型 :`name = None`, 为一个后续会赋值的变量提前占位
@@ -119,6 +126,32 @@ except xxx:
 #### set
 - 无序,不可重复(会自动去重)
 - add
+#### summary
+1. list 有序可变可重复
+  - append(x)
+  - extend(iter) #批量增加
+  - insert(idx, x)
+  - pop(idx)
+  - del lst\[idx\]
+  - remove(x)
+  - clear()
+2. tuple 有序可变可重复
+  - 新建智能
+3. dict 有序可变不可重复
+  - d\[key\] = value
+  - update({'a':1,'b'=2}) ; update(b=2)
+  - dic.setdefault(11, 12) 如果存在11,那就返回11对应的value,dic不会改变;如果不存在11,那就返回12,改变dic
+  - pop(key,default)
+  - popitem(删除最后插入的键值对,返回键值对元组)
+  - del dic\[key\]
+  - clear()
+4. set 无序可变不可重复
+  - add(x)
+  - update([1,2,3])
+  - remove(x) 元素不存在则报错
+  - discard(x) 元素不存在则无操作
+  - pop() 随机删除一个元素,并返回
+  - clear()
 ## format 格式化
 - `f"{数据:[对齐符][占宽数字][整数格式编码]}" `
   - 占宽数字：指定数据在n个字符的固定区域内展示（不足补空格，超出则按实际长度显示）；
@@ -141,7 +174,7 @@ except xxx:
 - `ts = zip(tup, se) ` 接收可迭代对象(如:list,string,tuple...)返回的是zip迭代器类型,只能迭代一次;如需多次使用,使用`list(ts),tuple(ts) `等
 ## collection module
 - `Counter `是dict字典类的一个子类,访问到开始不存在的键的时候会赋值为零,从而不会报错
-- 一个字典的键对应多个值:`from collections import defaultdict`
+- `difaultdict`:一个字典的键对应多个值:`from collections import defaultdict`
 - `deque`:固定长度限制,频繁头部操作的双向队列
 ## list comprehension 列表推导式
 - `a = ["sd", 2, 3]
@@ -150,5 +183,21 @@ b = [2 * x for x in a]`.
 ## object
 ### object model; memory management; copy; type checking 
 - 代码里的数字、列表、字典、函数等都是「对象」(object); 而「对象模型」(object model)是管理这些对象的 “底层规则手册”
-- 赋值变量是地址拷贝`b=a`,赋值数值是值拷贝`b=10`
+- 赋值变量是地址拷贝`b=a`(修改一个值,所有的引用都会改变,但如果直接重新赋值数值,就变成了一个新的变量,和之前的引用就无关了),赋值数值是值拷贝`b=10`
 - `is ` 比较是不是同一地址; `==` 比较的只是数值是否相等
+- 和cpp不同,python的变量从不储存数据本身,而是储存数据的地址(引用)
+- 赋值有三种: (和cpp的深浅拷贝不同)
+![赋值方式](assets_DabeazPython/赋值方式.png)
+- 深拷贝: `import copy`
+![层级元素是什么](assets_DabeazPython/2026-02-11-13-37-06.png)
+#### everything is an object 一切皆对象
+- python中的数字,字符,函数,异常,类,实例...都是对象,都能像数据一样被传递,放入容器,不存在特殊类型,这就是是所谓的"一等对象(first class)"
+```
+items = [abs, math, ValueError ]
+items[0](-45)       # abs
+items[1].sqrt(2)    # math
+except items[2]:    # ValueError
+```
+```
+
+

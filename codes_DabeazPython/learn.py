@@ -12,7 +12,8 @@ from collections import deque
 
 
 name = ["sd", 1]
-print(name)
+na = list(name)
+print(na)
 # name.append(1)
 # name.insert(2, 1.1)
 # if True:
@@ -36,6 +37,7 @@ print(tup)
 #         print(line)
 
 dic: dict[Any, Any] = {"qw": 1, "as": "11", "qw": "12"}
+di = dict(dic)
 if dic.get("ass", None):
     kv = dic.items()
     for k, v in kv:
@@ -49,6 +51,8 @@ for k in dic:
 print(f"dic :{sorted(dic)}")
 
 dic[11] = 11
+dic.update({1: 1})
+print(dic.setdefault(11, 12))
 print(dic)
 
 
@@ -96,9 +100,15 @@ print(Counter(tup))
 
 # de = deque(maxlen=10)
 
-a = ["sd", 2, 3]
-b = [2 * x for x in a if type(x) is int]
-print(b)
+# a = ["sd", 2, 3]
+# b = [2 * x for x in a if type(x) is int]
+# print(b)
 
+# b = a
+# print(hex(id(b)))
+
+a = [1, 2, 3]
 b = a
-print(hex(id(b)))
+a.append(4)
+print(a)
+print(b)
