@@ -193,12 +193,12 @@ b = [2 * x for x in a]`.
 ![层级元素是什么](assets_DabeazPython/2026-02-11-13-37-06.png)
 #### everything is an object 一切皆对象
 - python中的数字,字符,函数,异常,类,实例...都是对象,都能像数据一样被传递,放入容器,不存在特殊类型,这就是是所谓的"一等对象(first class)"
-```
+
+~~~python
 items = [abs, math, ValueError ]
 items[0](-45)       # abs
 items[1].sqrt(2)    # math
 except items[2]:    # ValueError
-```
-```
+~~~
 
-
+- python中绝大多数原地修改的方法都会返回`None`

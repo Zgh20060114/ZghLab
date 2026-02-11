@@ -112,3 +112,12 @@ b = a
 a.append(4)
 print(a)
 print(b)
+
+
+def getA():
+    global a
+    a = [2, 2]
+
+
+getA()
+print(a)
