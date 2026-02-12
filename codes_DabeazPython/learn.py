@@ -11,6 +11,7 @@ from collections import Counter
 from collections import deque
 import mod
 from math import cos, pi
+import sys
 
 
 name = ["sd", 1]
@@ -57,6 +58,7 @@ dic.update({1: 1})
 print(dic.setdefault(11, 12))
 print(dic)
 
+print(dic.values())
 
 holidays = {
     (1, 1): "New Years",
@@ -130,3 +132,14 @@ print("ijij", c)
 print(__name__)
 
 print(cos(0))
+
+
+def main() -> None:
+    print(sys.modules.keys())
+    print(sys.path)
+    print(type(__name__))
+    print("一执行")
+
+
+if __name__ == "__main__":
+    main()

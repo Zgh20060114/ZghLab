@@ -114,6 +114,7 @@
 - `for di in dic:` 迭代获取的是键,不能使用`for k,v in dic`
 - dict的in/not in 都是对于键
 - `dic.keys() `,获得实时自动跟随变化的键
+- `dic.values()`,获得实时自动跟随的值
 - 获得键值对:`for k,v in dic.items(): `
 - item 项,物品,元素
 - `dic.get("ass", None): `, 找不到有默认值
@@ -248,3 +249,15 @@ except xxx:
 - 模块是隔离的:`foo.x`和`foc.x`不同
 - `import math as m` as关键字
 - `from math import sin `, 降低臃肿,不用前缀
+- `sys.modules`
+- `sys.path` 导入模块的搜索路径
+#### main module
+- 最先运行的文件就是主模块__main__
+- `if __name__ == "__main__":` 后面写仅需仅想直接运行时执行的代码,不需要被import后执行的代码
+- python不强制是main函数,只是为了对齐其他语言习惯罢了
+  ~~~ python
+  def main():
+    ...
+  if __name__ == '__main__':
+    main()
+  ~~~
