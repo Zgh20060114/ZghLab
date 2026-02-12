@@ -79,6 +79,7 @@
 - `with open('input.txt', 'rt') as f_read, open('output.txt', 'wt') as f_write:`
 - t文本模式,b二进制模式,r只读模式,r只写模式
 - with是python中专门为资源管理设计的,自动可靠的释放资源,不用手动的`file.close()`
+- with是python中的上下文管理器,自动管理资源,确保打开和关闭成对执行
 - `read/write`
 - 按行迭代:`for line in file:`
 - `with open('outfile', 'wt') as out:
@@ -94,15 +95,9 @@
   - 或者可以使用关键字参数调用该函数：`prices = read_prices(filename='prices.csv', debug=True) `
   - 默认参数(必须末尾):`def read_prices(filename, debug=False):`
 - `return q, r     # Return a tuple `  多个会组成一个元组
-- 捕获并处理异常
-```python
-try:
-  xxx
-except xxx:
-  xxx
-```
-- `except ` 除了,表示排除
-- raise:抛出异常
+- 在函数内修改全局变量需要在修改前使用`global xxx`
+- python的函数传参都是传递引用
+
 ## working with data && data struct
 - 空值类型 :`name = None`, 为一个后续会赋值的变量提前占位
 #### tuple
@@ -202,3 +197,54 @@ except items[2]:    # ValueError
 ~~~
 
 - python中绝大多数原地修改的方法都会返回`None`
+
+#### error checking 错误检查
+- propagate 传递
+~~~
+BaseException
+├─ KeyboardInterrupt（用户中断）
+└─ Exception（程序逻辑错误，也是你大部分需要处理的异常）
+   ├─ ArithmeticError（算术错误）
+   │  ├─ ZeroDivisionError（除零）
+   │  └─ OverflowError（数值溢出）
+   ├─ AssertionError（断言失败）
+   ├─ EOFError（文件/输入提前结束）
+   ├─ ImportError（导入失败）
+   ├─ IndexError（索引越界）
+   ├─ KeyError（字典键不存在）
+   ├─ MemoryError（内存不足）
+   ├─ NameError（变量未定义）
+   ├─ ReferenceError（弱引用失效）
+   ├─ RuntimeError（运行时通用错误）
+   ├─ SyntaxError（语法错误）
+   ├─ SystemError（解释器系统错误）
+   ├─ TypeError（类型不匹配）
+   └─ ValueError（值无效）
+~~~
+
+- 捕获并处理异常
+```python
+try:
+  xxx
+except xxx:
+  xxx
+```
+- `except ` 除了,表示排除
+- exception 异常情况,异常
+- `except RuntimeError as e:` e是该异常的一个实例
+- raise:抛出异常 `raise RuntimeError("关联值信息")`
+- 异常可关联一个关联值,包含异常更详细的信息,这个关联值是异常的一部分
+- `except Exception:` 捕获所有异常
+- `except LookupError as e:
+    ...
+  except RuntimeError as e:` 捕获多个异常;或者`except (LookupError,RuntimeError) as e:`
+- 重新抛出异常:`raise`
+- 处理不了的异常就不要用try-except捕获
+- `try-except-finally `,finally是一定会被执行的,可以用`try-with-except `的with语法糖代替
+
+#### module
+- `print(__name__)` 运行当前文件时,会输出`__main__`,不是文件名; 当被其他文件导入时则输出文件名, 用以区分此文件"当作模块导入"和"模块直接运行"
+- 模块名不能以数字,'-'开头
+- 模块是隔离的:`foo.x`和`foc.x`不同
+- `import math as m` as关键字
+- `from math import sin `, 降低臃肿,不用前缀

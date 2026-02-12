@@ -9,6 +9,8 @@
 from typing import Any
 from collections import Counter
 from collections import deque
+import mod
+from math import cos, pi
 
 
 name = ["sd", 1]
@@ -115,9 +117,16 @@ print(b)
 
 
 def getA():
-    global a
-    a = [2, 2]
+    global c
+    c = [2, 2]
 
+
+c = [44]
 
 getA()
-print(a)
+print(c)
+
+print("ijij", c)
+print(__name__)
+
+print(cos(0))
