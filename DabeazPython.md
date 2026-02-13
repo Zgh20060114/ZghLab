@@ -4,7 +4,7 @@
 - `print(f"{name} is {age} years old")`
 - `print("asdf",end=xxx)`,
 - 读取输入 name = input("enter name :")
-- 不像c++,python的空语句会报错,用`pass`; 占位时`pass`和`...`功能相同,`...`除了占位的功能外还有空值语义
+- 不像c++,python的空语句会报错,用`pass`; 占位时`pass`和`...`功能相同,`...`除了占位的功能外还有空值语义/任意值/任意维度
 - python 无显式声明变量直接使用
 - 三元运算: 结果1 if 条件 else 结果2
 - del 删除变量/元素
@@ -261,3 +261,31 @@ except xxx:
   if __name__ == '__main__':
     main()
   ~~~
+  
+- basilk
+###### 命令行参数
+- 命令行参数列表: `sys.argv `
+###### 标准输入输出
+- 文件描述符,系统级的特殊文件,能像文件一样读写的特殊对象:
+  - `sys.stdout`
+  - `sys.stdin`
+  - `sys.stderr`, 专门的错误输出通道,即使stdout被重定向了,error信息依旧会显示到终端上
+- `print`就是在往`sys.stdout`写内容,是简化的`sys.stdout.write("hello world\n")`
+- `input`就是简化的`sys.stdin.readline().strip()`
+- 代码重定向:` sys.stdout = f   sys.stdout = sys.__stdout__`
+- shell重定向符号`>`
+- shell管道符号`|`, 将上一个命令的sys.stdout作为下一个命令的sys.stdin
+###### 环境变量
+- 设置不同的环境变量切换运行环境/传递信息/控制代码行为...
+- zsh/bash 设置环境变量:`export learn="ing"`;查询:`    print(os.environ["learn"])`
+###### 终止程序
+- 任意位置直接整个程序.提供错误码,错误信息,`raise SystemExit`
+- raise SystemExit          # 退出程序，默认退出码 0
+- raise SystemExit(exitcode)# 带退出码退出（非0表示错误）
+- raise SystemExit('提示信息') # 带提示信息退出
+- 等同于:`sys.exit(exitcode)`,他的底层就是`raise SystemExit(exitcode)`
+- `sys.exit(0)` 正常退出,非零异常
+###### #! line
+- 如何不用`python3 xx.py`,直接用文件名`xx.py`运行呢?:使用`#!/usr/bin/env python3`,自动查找python3解释器的路径
+## class and object 类和对象
+

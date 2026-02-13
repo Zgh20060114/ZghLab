@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # s = "hello python".replace("hello", "hi")
 # a = s.find("o")
 # print(dir(s))
@@ -12,6 +13,7 @@ from collections import deque
 import mod
 from math import cos, pi
 import sys
+import os
 
 
 name = ["sd", 1]
@@ -141,5 +143,14 @@ def main() -> None:
     print("一执行")
 
 
+class Play:
+    pass
+
+Play player
+print(player)
+
 if __name__ == "__main__":
     main()
+    print(len(sys.argv))
+    sys.exit(0)
+    print(os.environ["learn"])
