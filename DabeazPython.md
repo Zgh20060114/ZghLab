@@ -299,3 +299,20 @@ except xxx:
 - `object`是最父的父类,class都继承自它
 - 可多重继承:`class Child(Mother,Father):`
 - python里没有private,protected,public这一套,只能约定俗成._xx是protected, __xx是private
+#### 特殊方法(类似于运算符重载)
+- 直接写函数实现功能当然没问题,但是使用类中的特殊方法会更简便:
+~~~python
+    # 实现 __add__：让 + 运算符生效
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y) 
+    # 实现 __str__：让 print() 输出友好
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+    # 实现 __repr__：让交互式解释器输出详细信息
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+    # 实现 __len__：让 len() 能获取“长度”（这里约定为整数长度）
+    def __len__(self):
+        return int((self.x**2 + self.y**2)**0.5)
+~~~
+- [特殊方法详细汇总](./Python特殊方法_简化自定义类使用.md)
