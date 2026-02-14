@@ -140,7 +140,11 @@ def main() -> None:
     print(sys.modules.keys())
     print(sys.path)
     print(type(__name__))
-    print("一执行")
+    print("main已执行")
+
+
+def addOne(num):
+    return num + 1
 
 
 class Play:
@@ -157,7 +161,10 @@ print(isinstance(player, Play))
 print(isinstance(player, Game))
 
 if __name__ == "__main__":
-    main()
+    print("测试main和main()")
+    main
+    addOne
+    print("测试结束")
     print(len(sys.argv))
     sys.exit(0)
     print(os.environ["learn"])

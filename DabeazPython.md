@@ -288,7 +288,7 @@ except xxx:
 ###### #! line
 - 如何不用`python3 xx.py`,直接用文件名`xx.py`运行呢?:使用`#!/usr/bin/env python3`,自动查找python3解释器的路径
 ## class and object 类和对象
-- `__init__`相当于cpp的构造函数
+- `__init__`相当于cpp的构造函数,成员函数是写到`__init__`函数里的
 - `self`就是调用这个方法的实例本身,不写这个参数的话,会找不到是哪个实例的成员/方法,所以在类中调用成员/方法时,都需要`self.x `,`self.do()`
 - 在类的方法里调用同类的其他方法时，就不需要手动传 self 参数（Python 会自动帮你传）
 #### inheritance 继承
@@ -298,7 +298,7 @@ except xxx:
 - 如果子类有新的成员需要初始化,需要重写__init__函数,用父类的init函数`super().__init__(xxxx)`
 - `object`是最父的父类,class都继承自它
 - 可多重继承:`class Child(Mother,Father):`
-- python里没有private,protected,public这一套,只能约定俗成._xx是protected, __xx是private
+- python里没有private,protected,public这一套访问控制,只能约定俗成._xx是protected, __xx是private
 #### 特殊方法(类似于运算符重载)
 - 直接写函数实现功能当然没问题,但是使用类中的特殊方法会更简便:
 ~~~python
@@ -316,3 +316,28 @@ except xxx:
         return int((self.x**2 + self.y**2)**0.5)
 ~~~
 - [特殊方法详细汇总](./Python特殊方法_简化自定义类使用.md)
+###### method invocation 方法调用
+- `dog.do`不加括号只能返回方法对象;`dog.do()`加上括号才会执行方法
+- c++这样来说也不报错`do;`,获取函数指针但不使用,不报错但没意义
+###### attribute access 属性获取
+- 可判断,可动态的,静态时等同于`.`的属性获取方法`getattr,setattr,hasattr,delattr`:
+~~~python
+getattr(obj, 'name')          # 等价于 obj.name
+setattr(obj, 'name', value)   # 等价于 obj.name = value
+delattr(obj, 'name')          # 等价于 del obj.name
+hasattr(obj, 'name')          # 检查属性是否存在
+~~~
+
+#### 自定义异常
+- 自定义异常通过类来实现,必须继承自Exception,类通常是空的,因为也用不到成员和方法:
+~~~python
+class NetworkError(Exception):
+    pass
+~~~
+
+## python对象的内部工作原理
+- 本节会讲解 Python 对象的一些底层实现逻辑。从其他编程语言转过来的开发者，常常觉得 Python 的类设计 “缺少某些特性”—— 比如：
+  没有「访问控制」的概念（例如 private、protected 关键字）；
+  self 参数的存在总让人觉得怪异；
+  操作对象时有时感觉像 “无拘无束、毫无规则”。
+  这些感受确实没错，让我们搞清楚这一切的运作原理，以及一些常用的编程范式 —— 这些范式能更好地封装对象的内部逻辑。
