@@ -146,8 +146,15 @@ def main() -> None:
 class Play:
     pass
 
-Play player
+
+class Game(Play):
+    pass
+
+
+player = Game()
 print(player)
+print(isinstance(player, Play))
+print(isinstance(player, Game))
 
 if __name__ == "__main__":
     main()

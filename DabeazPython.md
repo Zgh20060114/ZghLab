@@ -288,4 +288,14 @@ except xxx:
 ###### #! line
 - 如何不用`python3 xx.py`,直接用文件名`xx.py`运行呢?:使用`#!/usr/bin/env python3`,自动查找python3解释器的路径
 ## class and object 类和对象
-
+- `__init__`相当于cpp的构造函数
+- `self`就是调用这个方法的实例本身,不写这个参数的话,会找不到是哪个实例的成员/方法,所以在类中调用成员/方法时,都需要`self.x `,`self.do()`
+- 在类的方法里调用同类的其他方法时，就不需要手动传 self 参数（Python 会自动帮你传）
+#### inheritance 继承
+- `class Animals:  class Dog(Animals):` 
+- `super()`是父类的一个代理对象,不是普通的父类实例,只能调用父类的方法,无法调用父类的成员
+- 在子类中调用父类的方法:`super().do()`
+- 如果子类有新的成员需要初始化,需要重写__init__函数,用父类的init函数`super().__init__(xxxx)`
+- `object`是最父的父类,class都继承自它
+- 可多重继承:`class Child(Mother,Father):`
+- python里没有private,protected,public这一套,只能约定俗成._xx是protected, __xx是private
