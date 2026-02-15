@@ -5,6 +5,7 @@
 - `print("asdf",end=xxx)`,
 - 读取输入 name = input("enter name :")
 - 不像c++,python的空语句会报错,用`pass`; 占位时`pass`和`...`功能相同,`...`除了占位的功能外还有空值语义/任意值/任意维度
+- `...`是Ellipsis类的唯一实例,大多数是当临时占位用的
 - python 无显式声明变量直接使用
 - 三元运算: 结果1 if 条件 else 结果2
 - del 删除变量/元素
@@ -132,8 +133,8 @@
   - del lst\[idx\]
   - remove(x)
   - clear()
-2. tuple 有序可变可重复
-  - 新建智能
+2. tuple 有序不可变可重复
+  - 新建只能
 3. dict 有序可变不可重复
   - d\[key\] = value
   - update({'a':1,'b'=2}) ; update(b=2)
@@ -298,7 +299,7 @@ except xxx:
 - 如果子类有新的成员需要初始化,需要重写__init__函数,用父类的init函数`super().__init__(xxxx)`
 - `object`是最父的父类,class都继承自它
 - 可多重继承:`class Child(Mother,Father):`
-- python里没有private,protected,public这一套访问控制,只能约定俗成._xx是protected, __xx是private
+- python的 __访问控制约定__ :python里没有private,protected,public这一套访问控制,只能约定俗成._xx是protected, __xx是private
 #### 特殊方法(类似于运算符重载)
 - 直接写函数实现功能当然没问题,但是使用类中的特殊方法会更简便:
 ~~~python
@@ -341,3 +342,40 @@ class NetworkError(Exception):
   self 参数的存在总让人觉得怪异；
   操作对象时有时感觉像 “无拘无束、毫无规则”。
   这些感受确实没错，让我们搞清楚这一切的运作原理，以及一些常用的编程范式 —— 这些范式能更好地封装对象的内部逻辑。
+- 字典存放着module里的所有全局变量,函数,类 `xxx.__dict__`,`globals()`
+- 自定义的对象（object）会把「实例数据」和「类本身」都存储在字典中。事实上Python整个对象系统本质上就是构建在字典之上的一层封装。当在`__init__`中给self.xxx赋值时，其实就是在填充这个 __dict__字典
+- 每个类的实例的私有字典__dict__都是独立的,类实例的__dict__储存着成员变量,类的__dict__储存着成员函数,并且子类不会储存父类的成员函数
+~~~python
+    print(type(player))
+    print(player.__class__) # 是一样的
+~~~
+- 查找类的父类:`xx.__base__`
+- 成员函数的查找沿着子类->父类的顺序向上查找(方法解析顺序method resolution order(mro))
+#### 属性装饰器 property
+- `@property`,`@xx.setter` 使调用者可以像调用成员变量一样调用成员函数(不加括号):
+~~~python
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected int')
+        self._shares = value
+~~~
+但我感觉不好,在调用时应该进行区分,像cpp一样写get/set函数
+- `class Stock:
+    __slots__ = ('name','_shares','price')  # 只允许这3个属性` , 用__slots__元组来代替占内存的__dict__字典,限制类的成员变量只是附带功能,主要用途是提高性能
+
+## generators 生成器
+- 迭代协议iteration protocol: `for x in obj:`的底层迭代协议为迭代器__iter__和with循环:
+  ~~~python
+  _iter = obj.__iter__()        # Get iterator object
+  while True:
+      try:
+          x = _iter.__next__()  # Get next item
+          # statements ...
+      except StopIteration:     # No more items
+          break
+  ~~~

@@ -148,14 +148,19 @@ def addOne(num):
 
 
 class Play:
-    pass
+    def __init__(self, name) -> None:
+        self.name = name
+
+    def over(self):
+        print("play over")
 
 
 class Game(Play):
-    pass
+    def gameOver(self):
+        print("game over")
 
 
-player = Game()
+player = Game("suce")
 print(player)
 print(isinstance(player, Play))
 print(isinstance(player, Game))
@@ -166,5 +171,11 @@ if __name__ == "__main__":
     addOne
     print("测试结束")
     print(len(sys.argv))
+    # print(sys.modules[__name__].__dict__)
+    # print(globals())
+    print(Play.__base__)
+    print(Game.__mro__)
+    print(type(player))
+    print(player.__class__)
     sys.exit(0)
     print(os.environ["learn"])
