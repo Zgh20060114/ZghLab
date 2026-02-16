@@ -36,6 +36,7 @@ print(na)
 
 tup = ("sd", "ss", "df")
 print(tup)
+print(next(tup.__iter__()))
 # with open("./CS106b.md", "rt") as file:
 #     # data = file.read(40)
 #     for line in file:
