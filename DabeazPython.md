@@ -380,3 +380,4 @@ class NetworkError(Exception):
           break
   ~~~
 - `__iter__`是可迭代对象必须实现的方法, 所以自定义可迭代类要自己实现`def __iter__(self):`
+- `next(xx)` 参数是迭代器,不是可迭代对象

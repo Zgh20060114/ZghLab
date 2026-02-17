@@ -1,0 +1,3 @@
+- 更新了manjaro后,hyprland(wayland窗口系统)与和qt界面相关的程序兼容性特别差,比如vlc,strawberry等等,运行无界面,解决思路是不用wayland显示窗口了,用xcb(x11的进阶):
+  - `QT_QPA_PLATFORM=xcb vlc/strawberry `
+- `pkill vlc`是温和杀死,杀不掉;`pkill -9 vlc`强制杀死;`kill`只能用pid杀,`pkill`可以用名称杀

@@ -11,3 +11,4 @@
 - [Subject3](./Subject3.md)
 - [三角洲胜者为王笔记](./三角洲胜者为王笔记.md)
 - [单例+setter&getter](./现代C++单例getter&setter.md)
+- [hyprland-qt-wayland不兼容问题](./hyprland-qt-wayland问题解决办法.md)
