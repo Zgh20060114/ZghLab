@@ -10,6 +10,10 @@
 - 三元运算: 结果1 if 条件 else 结果2
 - del 删除变量/元素
 - int 和 str 没法比较
+- `_` 是一个约定俗成的变量名，表示"我不关心这个变量的值"。 `for _ in range(5):`
+- python中的函数参数有两种类型:
+  - 位置参数: `calc(1, 2, '+')`
+  - 关键字参数: `calc(a=1, b=2, op='+')`;cpp里没有这个关键字参数
 #### Number
 - `round()` 四舍五入
 - `range()` 生成整数迭代对象
@@ -75,7 +79,7 @@
 - 就地排序
   - `name.sort() ` 原地修改, 仅list可用
   - `name.sort(reverse=True) ` 生成新的的, 可迭代对象均可使用
-- na = sorted(name)
+- `na = sorted(name); sorted(iterable, key=func) ` func(元素)得到排序键值,按照这个排序键值对原元素排序
 #### File manager
 - `with open('input.txt', 'rt') as f_read, open('output.txt', 'wt') as f_write:`
 - t文本模式,b二进制模式,r只读模式,r只写模式
@@ -116,7 +120,7 @@
 - dict的in/not in 都是对于键
 - `dic.keys() `,获得实时自动跟随变化的键
 - `dic.values()`,获得实时自动跟随的值
-- 获得键值对:`for k,v in dic.items(): `
+- 获得键值对:`for k,v in dic.items(): `; 字典确实是个可迭代对象,但它迭代是是键
 - item 项,物品,元素
 - `dic.get("ass", None): `, 找不到有默认值
 - 不可变的类型可做dictionary's key,如元组
@@ -401,3 +405,9 @@ class NetworkError(Exception):
 - 有列表推导式,字典推导式,集合推导式,没有元组表达式,因为括号被生成器表达式占用了
 - 用的时候才会迭代生成元素,不会把所有元素都加载到内存中,仅保存生成规则,所以占用内存极低
 - 列表表达式可以反复使用,生成器表达式只能使用一次
+- `(<expression> for i in s if <conditional>)`
+
+## 高级主题
+#### 可变参数
+- 可变位置参数: `def func(xx, *args)`
+- 可变关键字参数: `def func(xx=xx, )`

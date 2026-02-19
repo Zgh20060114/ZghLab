@@ -65,6 +65,9 @@ print(dic)
 
 print(dic.values())
 
+for key, value in dic:
+    print(key, "=", value)
+
 holidays = {
     (1, 1): "New Years",
     (3, 14): "Pi day",
@@ -117,6 +120,8 @@ print(Counter(tup))
 # print(hex(id(b)))
 
 a = [1, 2, 3]
+c = sorted(a, key=lambda x: x % 2)
+print("c = ", c)
 b = a
 a.append(4)
 print(a)
