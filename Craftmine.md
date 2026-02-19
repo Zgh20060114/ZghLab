@@ -1,11 +1,13 @@
 - `std::string_view `是`std::string` 的指针+长度，不是真正的字符串对象，是字符串对象的只读视图
 - size_max在<cstdint>头文件里
 - space+ca fix_available
+~~~cmake
 file(
   GLOB SRC
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
-- 写上GLOB才能使用通配符匹。更推荐inline配
+~~~
+- 写上GLOB才能使用通配符匹。
 - inline允许多个定义但是必须是同一实体(内联由编译器自行决定，我不关心)；static每个调用的文件都有一个副本。更推荐inline
 - constexpr 编译期常量，必须在编译期确定并且全局唯一
 - modify 修饰,装饰

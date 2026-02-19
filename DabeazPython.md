@@ -167,7 +167,7 @@
 - list
 - tuple
 - `a = [0,1,2,3,4,5,6,7,8]  a[2:4] = [10,11,12]  # [0,1,10,11,12,4,5,6,7,8]` ,重新分配的切片不必与原来长度相同
-- `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列
+- `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列, `range(2)`生成0-2,单一参数时是stop,并且range(xx)是惰性对象,一般迭代访问/索引访问,想要得到实际数字,用list(xx)转化
 - `for n,s in enumerate(se,start): ` 生成counter and iteration 
 - `ts = zip(tup, se) ` 接收可迭代对象(如:list,string,tuple...)返回的是zip迭代器类型,只能迭代一次;如需多次使用,使用`list(ts),tuple(ts) `等
 ## collection module
@@ -316,7 +316,7 @@ except xxx:
     def __len__(self):
         return int((self.x**2 + self.y**2)**0.5)
 ~~~
-- [特殊方法详细汇总](./Python特殊方法_简化自定义类使用.md)
+- [__特殊方法详细汇总__](./Python特殊方法_简化自定义类使用.md)
 ###### method invocation 方法调用
 - `dog.do`不加括号只能返回方法对象;`dog.do()`加上括号才会执行方法
 - c++这样来说也不报错`do;`,获取函数指针但不使用,不报错但没意义
@@ -352,14 +352,14 @@ class NetworkError(Exception):
 - 查找类的父类:`xx.__base__`
 - 成员函数的查找沿着子类->父类的顺序向上查找(方法解析顺序method resolution order(mro))
 #### 属性装饰器 property
-- `@property`,`@xx.setter` 使调用者可以像调用成员变量一样调用成员函数(不加括号):
+- `@property`,`@xx.setter` 使调用者可以像调用成员变量一样调用成员函数(不加括号),(相当于成员函数变成成员变量了):
 ~~~python
     @property
     def shares(self):
         return self._shares
 
     @shares.setter
-    def shares(self, value):
+    def shares(self, value):   # setter的装饰名必须和@property的函数名保持一致
         if not isinstance(value, int):
             raise TypeError('Expected int')
         self._shares = value
@@ -371,7 +371,7 @@ class NetworkError(Exception):
 ## generators 生成器
 - 迭代协议iteration protocol: `for x in obj:`的底层迭代协议为迭代器__iter__和with循环:
   ~~~python
-  _iter = obj.__iter__()        # Get iterator object
+  _iter = obj.__iter__()        # Get iterator object,获得迭代器
   while True:
       try:
           x = _iter.__next__()  # Get next item
@@ -379,5 +379,25 @@ class NetworkError(Exception):
       except StopIteration:     # No more items
           break
   ~~~
-- `__iter__`是可迭代对象必须实现的方法, 所以自定义可迭代类要自己实现`def __iter__(self):`
+#### 自定义迭代类
+- `__iter__`是可迭代对象必须实现的方法, 所以自定义可迭代类要自己实现`def __iter__(self):`, 如果想要自定义可迭代器类实例本身还可以是迭代器,那么就需要实现`def __iter__(self):`,`def __next__(self):`
 - `next(xx)` 参数是迭代器,不是可迭代对象
+- 迭代器是一个可迭代对象,但是可迭代对象不一定是一个迭代器
+- `_iter.__next__()`和`next(_iter)`是一样的
+#### 自定义迭代器(代替__iter__()和__next__()的语法糖)
+- 关键字yield:让普通的while循环函数变成生成器函数,没有return但是会返回一个生成器对象,在调用__next__()后会暂停while,只输出一个;
+- 语法: `yield [表达式] `, `变量 = yield [表达式]`,可以用[生成器].send(xx)给变量传值
+  ~~~python
+  def generator(n: int):
+      while n >= 0:
+          yield n - 1
+          n -= 1
+  x = generator(10)
+  for i in x:
+      print(i)
+  ~~~
+#### 利用yield生成器generator的一次一个特性,管道(pipeline)模式--生产者,处理者,消费者
+#### 生成器表达式(generator expression)
+- 有列表推导式,字典推导式,集合推导式,没有元组表达式,因为括号被生成器表达式占用了
+- 用的时候才会迭代生成元素,不会把所有元素都加载到内存中,仅保存生成规则,所以占用内存极低
+- 列表表达式可以反复使用,生成器表达式只能使用一次

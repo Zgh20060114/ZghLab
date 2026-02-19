@@ -151,11 +151,27 @@ def addOne(num):
 
 
 class Play:
-    def __init__(self, name) -> None:
+    def __init__(self, name, share: int, lt: list) -> None:
         self.name = name
+        self._shares = share
+        self.lt = lt
 
     def over(self):
         print("play over")
+
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):  # setter的装饰名必须和@property的函数名保持一致
+        if not isinstance(value, int):
+            raise TypeError("Expected int")
+        self._shares = value
+        print("setshares函数被调用")
+
+    def __iter__(self):
+        return self.lt.__iter__()
 
 
 class Game(Play):
@@ -163,10 +179,30 @@ class Game(Play):
         print("game over")
 
 
-player = Game("suce")
-print(player)
+player = Game("suce", 10, [1, 2, 3, 4, 5])
+print("修改前:", player.shares)
+player.shares = 11
+print("修改后:", player.shares)
+for i in player:
+    print(i, end=" ")
+print()
 print(isinstance(player, Play))
 print(isinstance(player, Game))
+
+
+def generator(n: int):
+    while n >= 0:
+        yield n - 1
+        n -= 1
+
+
+x = generator(10)
+for i in x:
+    print(i)
+
+ra = range(4)
+print(type(ra))
+print(ra)
 
 if __name__ == "__main__":
     print("测试main和main()")
