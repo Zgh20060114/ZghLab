@@ -65,8 +65,6 @@ print(dic)
 
 print(dic.values())
 
-for key, value in dic:
-    print(key, "=", value)
 
 holidays = {
     (1, 1): "New Years",
@@ -158,7 +156,7 @@ def addOne(num):
 class Play:
     def __init__(self, name, share: int, lt: list) -> None:
         self.name = name
-        self._shares = share
+        self.shares = share
         self.lt = lt
 
     def over(self):

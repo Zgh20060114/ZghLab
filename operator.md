@@ -4,3 +4,6 @@
 - ^头,$尾
 - 文件树.聚焦当前所在子目录,backspace返回
 - sudo pacman -S archlinux-keyring 更新系统gpg签名问题
+- ctrl+a 增大数字
+- ctrl+x 减小数字
+

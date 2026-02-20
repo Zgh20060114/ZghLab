@@ -77,7 +77,7 @@
 - reverse 反转
 ###### list sort 
 - 就地排序
-  - `name.sort() ` 原地修改, 仅list可用
+  - `name.sort() ` 原地修改, 仅list可用,  `name.sort(key=func)`
   - `name.sort(reverse=True) ` 生成新的的, 可迭代对象均可使用
 - `na = sorted(name); sorted(iterable, key=func) ` func(元素)得到排序键值,按照这个排序键值对原元素排序
 #### File manager
@@ -409,5 +409,43 @@ class NetworkError(Exception):
 
 ## 高级主题
 #### 可变参数
-- 可变位置参数: `def func(xx, *args)`
-- 可变关键字参数: `def func(xx=xx, )`
+- 可变位置参数: `def func(xx, *args):`, 额外的参数形成一个元组
+- 可变关键字参数: `def func(xx=xx, **kwargs):`, 额外的参数形成一个字典
+- `*`和`**`是打包/解包的关键字,在函数定义时打包参数,在函数调用时解包可迭代对象(这样的话可以把可迭代对象当作参数传递)
+#### lambda匿名函数
+- `lambda 参数: 表达式`, 没有return,表达式的结果就是返回值
+#### 返回函数(函数里面嵌套函数并且返回值是函数)
+- 内层函数能记住(留住)传入外层函数的参数,形成一个闭包
+- 闭包:当内层函数引用了外层函数的变量,且内层函数被返回,外层函数被调用赋值时,python会创建一个闭包closure--把内层函数和外层函数变量绑定在一起
+- 这种延迟执行的特性导致很适合做回调函数
+- 应用:
+  - 回调函数
+  - 延迟执行
+  - 装饰器函数
+#### 装饰器函数与装饰器
+~~~python
+# 这是一个装饰器定义函数
+def log_decorator(func):
+    def wrapper():
+        print("函数开始执行")
+        func()
+        print("函数执行结束")
+    return wrapper
+# 使用装饰器
+@log_decorator
+def hello():
+    print("Hello")
+# 相当于：
+# hello = log_decorator(hello)
+~~~
+- 工厂模式:把 “对象创建逻辑” 从构造函数中抽离出来,用专门的方法代替负责创建，让代码更清晰灵活。
+- 预定义的装饰器:
+  - `@staticmethod `: 相当于cpp的类静态成员函数static
+  - `@classmethod`: 第一个参数是`cls `
+    - `cls.count += 1  # 直接操作类属性，子类继承后自动适配`
+    - 工厂模式,构建实例
+
+## test and debug
+testing rocks, debugging sucks 测试超重要,调试太糟心
+- `assert isinstance(10, int), 'Expected int'` ,用于函数内进行内部自检
+- 契约式编程: 使用assert在函数的所有输入参数,返回值...上加上断言
