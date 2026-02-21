@@ -99,7 +99,7 @@
   - 可以使用位置参数调用函数：`prices = read_prices('prices.csv', True) `
   - 或者可以使用关键字参数调用该函数：`prices = read_prices(filename='prices.csv', debug=True) `
   - 默认参数(必须末尾):`def read_prices(filename, debug=False):`
-- `return q, r     # Return a tuple `  多个会组成一个元组
+- `return q, r     # Return a tuple `  多的会组成一个元组
 - 在函数内修改全局变量需要在修改前使用`global xxx`
 - python的函数传参都是传递引用
 
@@ -449,3 +449,28 @@ def hello():
 testing rocks, debugging sucks 测试超重要,调试太糟心
 - `assert isinstance(10, int), 'Expected int'` ,用于函数内进行内部自检
 - 契约式编程: 使用assert在函数的所有输入参数,返回值...上加上断言
+#### unittest模块
+- 必须要把要测试的内容写到类中,类函数中,这个类要继承`unittest.TestCase`,测试函数名以`test_`开头,运行时用`unittest.main()`, 需要用预定义的assert版本
+~~~python
+# Assert that expr is True
+self.assertTrue(expr)
+# Assert that x == y
+self.assertEqual(x,y)
+# Assert that x != y
+self.assertNotEqual(x,y)
+# Assert that x is near y, 比较到浮点数小数点后places位
+self.assertAlmostEqual(x,y,places)
+# Assert that callable(arg1,arg2,...) raises exc ,callable是否抛出异常
+self.assertRaises(exc, callable, arg1, arg2, ...)
+~~~
+#### pytest(更简洁好用)
+- 无需类,只需`test_`开头的函数即可,普通的assert即可,pytest会自动美化报错,执行测试用:`python -m pytest (xx.py)`或者`pytest xx.py`
+#### 日志模块
+- 用print输出错误信息的话,无法控制什么情况下显示,什么时候不显示,无法写入文件,所以需要用到日志模块:logging
+- `log = logging.getLogger(__name__)`
+- `log.warning("Couldn't parse : %s", line)`
+- `log.debug("Reason : %s", e)`
+## 包 
+- 用 . 代表「当前包」，无需写死包名，直接导入同包内的模块,`from . import 同包内的模块`
+- `from .. import 上级包内的模块`
+- 直接运行包内的子模块里的脚本: `python3 -m 包名.子模块脚本`
