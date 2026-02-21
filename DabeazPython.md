@@ -474,3 +474,4 @@ self.assertRaises(exc, callable, arg1, arg2, ...)
 - 用 . 代表「当前包」，无需写死包名，直接导入同包内的模块,`from . import 同包内的模块`
 - `from .. import 上级包内的模块`
 - 直接运行包内的子模块里的脚本: `python3 -m 包名.子模块脚本`
+- uv: 代替pip+venv
