@@ -24,3 +24,12 @@
     - 主成分分析
     - 因果关系和概率图模型
     - 生成对抗性网络
+
+- cuda:并行计算平台和编程规范,`sudo pacman -S cuda`,安装实现了cuda规范的系统库
+- cuda toolkit: 提供开发,编译cuda程序的工具库,其中提供的nvcc用于编译cuda程序
+- cuDNN: cuda toolkit的一个扩展库,专门为深度神经网络
+- pytorch安装的时候已经把这些依赖库附加了,会优先使用自己带的,所以只用安装pytorch就够了
+- pip3 指定python3
+- PyTorch 无法构建不规则多维数组
+- `x = torch.tensor(标量/元组/列表等类型数组) `
+- `x.dtype`:内部储存元素的数据类型
