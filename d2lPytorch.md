@@ -58,3 +58,7 @@
   - .grad: 梯度信息（如果开启）
 - [tensor操作](./torch_tensor.md)
 - `x.squeeze()` 把1x的维度去掉,简化shape
+- 高维tensor的shape只有后两位是行列数,前面的都是分组数
+- `z = torch.Size([2,3])` 一个tensor形状对象,不是tensor
+- `x.numel()` 元素个数
+- `x.reshape(-1,4)`,通过-1来调用此自动计算出维度的功能
