@@ -56,3 +56,5 @@
   - .layout: 内存布局 (strided/sparse)
   - .data: 实际存储的数据缓冲区
   - .grad: 梯度信息（如果开启）
+- [tensor操作](./torch_tensor.md)
+- `x.squeeze()` 把1x的维度去掉,简化shape
