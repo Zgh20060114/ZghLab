@@ -33,3 +33,26 @@
 - PyTorch 无法构建不规则多维数组
 - `x = torch.tensor(标量/元组/列表等类型数组) `
 - `x.dtype`:内部储存元素的数据类型
+- 方差: $\sigma^2 = \frac{1}{N} \sum_{i=1}^N(x_i-\mu)^2$ 
+- 标准差: $\sigma = \sqrt{\sigma^2}$
+- tensor创建方法:
+
+| 方法                | 描述                | 示例                  |
+|---------------------|---------------------|-----------------------|
+| `torch.tensor()`    | 从数据创建张量      | `torch.tensor([[1,2],[3,4]])` |
+| `torch.zeros()`     | 全零张量            | `torch.zeros(3,3)`    |
+| `torch.ones()`      | 全一张量            | `torch.ones(2,2)`     |
+| `torch.eye()`       | 单位矩阵            | `torch.eye(3)`        |
+| `torch.rand()`      | 均匀分布 [0,1)      | `torch.rand(3,3)`     |
+| `torch.randn()`     | 标准正态分布        | `torch.randn(3,3)`    |
+| `torch.arange()`    | 等差数列            | `torch.arange(0,10,2)`|
+| `torch.linspace()`  | 线性间隔            | `torch.linspace(0,1,5)`|
+| `torch.full()`      | 填充指定值          | `torch.full((3,3), 7)`|
+| `torch.empty()`     | 未初始化空张量      | `torch.empty(3,3)`   |
+- torch.Tensor 对象
+  - .dtype: 元素数据类型 (float32, int64, etc.)
+  - .shape: 张量形状 (torch.Size)
+  - .device: 存储设备 (CPU/GPU)
+  - .layout: 内存布局 (strided/sparse)
+  - .data: 实际存储的数据缓冲区
+  - .grad: 梯度信息（如果开启）
