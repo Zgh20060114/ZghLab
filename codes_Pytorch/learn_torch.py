@@ -22,3 +22,8 @@ c = y.numpy()
 print(torch.tensor(c))
 f = x.clone()
 print(x * f)
+
+g = torch.ones([6]) / 6
+print(g)
+h = torch.distributions.multinomial.Multinomial(8, g).sample([2])
+print(h)

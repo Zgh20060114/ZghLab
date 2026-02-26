@@ -125,9 +125,24 @@
 - dl中计算梯度的 是损失函数 $L$ 对权重 $w$ 的梯度，即 $\frac{\partial L}{\partial w}$。
 - 求导链式法则用于损失函数求梯度
 - pytorch会自动微分,构建一个模型的计算图,便于反向传播梯度
-- 在反向传播时才会自动微分,正向计算时会保留每个节点的输出值存入缓存(gpu显存),便于反向传播自动微分的时候求微分用
+- 在反向传播时才会自动微分,正向计算时会保留每个节点的输出值存入缓存(gpu显存),便于反向传播自动微分的时候求微分用, 因此在`y.backward()`前,`x.grad`的值是None
 - `x.requires_grad_(True) # 等价于x=torch.arange(4.0,requires_grad=True)`, 为变量分配内存储存梯度
-- 默认情况下,torch会积累梯度(用于每个batch会累计batch_size次数的梯度(和正向计算中间值)),所以制约batch_size大小的是gpu显存大小
+- 默认情况下,torch会积累梯度(用于每个batch会累计batch_size次数的梯度(和正向计算中间值)),所以制约batch_size大小的是gpu显存大小, 所以每次更新参数后需要手动清零梯度:
+  - `optimizer.zero_grad()`等价于`optimizer.zero_grad()`
+  - `x.grad.zero_()`, 清除指定张量的梯度
 - 为什么要积累batch_size次数(batch_size个数据)的梯度,再进行一次参数更新呢?: 数据是有噪声的,把噪声平均掉得到较真实的梯度
 - 一个epoch(周期,时代): 训练完所有数据为一次epoch
 - batch_size过小则震荡,过大则爆显存,学习到固定思维,泛化能力差
+- 对于非标量输出y(向量),y的梯度是所有分量的梯度之和(`y.sum().backward()`,等价于`y.backward(torch.ones(len(x)))`), 要不然向量对向量的梯度(微分)的结果是一个雅可比矩阵:
+$$
+\frac{\partial y}{\partial x} = 
+\begin{bmatrix}
+\frac{\partial y_1}{\partial x_1} & \frac{\partial y_1}{\partial x_2} & \cdots & \frac{\partial y_1}{\partial x_n} \\
+\frac{\partial y_2}{\partial x_1} & \frac{\partial y_2}{\partial x_2} & \cdots & \frac{\partial y_2}{\partial x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial y_m}{\partial x_1} & \frac{\partial y_m}{\partial x_2} & \cdots & \frac{\partial y_m}{\partial x_n}
+\end{bmatrix}
+$$
+- 分离计算`u = y.detach()`:截断梯度的反向传播
+- multinomial 多项式
+- `h = torch.distributions.multinomial.Multinomial(8, g).sample([2])`
