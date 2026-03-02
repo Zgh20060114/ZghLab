@@ -144,5 +144,16 @@ $$
 \end{bmatrix}
 $$
 - 分离计算`u = y.detach()`:截断梯度的反向传播
-- multinomial 多项式
+- multinomial 多项式,多项分布
 - `h = torch.distributions.multinomial.Multinomial(8, g).sample([2])`
+- 条件概率: `P(A|B)=P(AB)/P(B)`
+- 边际概率: P(A)就等于所有A发生的条件概率相加
+- accumulate 累积
+- distribution 分布
+- torch.distributions 是 PyTorch 中用于实现概率分布和随机采样的工具包
+## 线性神经网络
+- 预测:
+  - 回归	预测连续值	一个具体的数值	房价多少？温度多少？ (为什么预测连续值叫做回归?历史上的孩子遗传身高回归到平均水平)
+  - 分类	预测离散类别	一个类别标签	是猫还是狗？垃圾邮件吗？
+
+- OpenMP,tbb
