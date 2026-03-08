@@ -6,4 +6,5 @@
 - sudo pacman -S archlinux-keyring 更新系统gpg签名问题
 - ctrl+a 增大数字
 - ctrl+x 减小数字
-
+- ctrl+x+t todo
+- TODO:/FIXME:/BUG: 大写加冒号

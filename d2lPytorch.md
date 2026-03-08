@@ -177,3 +177,10 @@ $$
 - 极大似然估计MLE: 的核心思想是 —— 既然我们已经观测到了这组数据，那么能让这组数据出现概率最大的参数，就是最真实的参数.
 - normal: 正态,正常,标准
 - 一维张量不是行/列向量,他们属于二维张量,需要reshape或者隐式转换
+- scatter 散点图
+- 读取数据:
+  - `data_set = data.TensorDateset(*数据)`, 把特征和标签对齐配对,包装成一个可以索引的数据集
+  - `data_iter = data.DataLoader(data_set, batch_size, shuffle = is_train)`, 把数据集包装成一个可迭代的数据加载器, 迭代一次取出batch_size个sample, 训练打乱,测试不需要
+- sequence, 序列,次序,有关联的一串
+- `nn.Sequentia` # TODO:
+- `net = nn.Linear(2,1)` 输入特征形状(特征的个数),输出特征形状

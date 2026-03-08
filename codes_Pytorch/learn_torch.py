@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import torch
+from torch.utils import data
+from torch import nn
 
 x = torch.tensor([1, 1.3], requires_grad=True)
 print(x)
@@ -29,4 +31,20 @@ print(g)
 h = torch.distributions.multinomial.Multinomial(8, g).sample([2])
 print(h)
 
-print(torch.tensor([[1, 2], [3, 4]]))
+# print(torch.tensor([[1, 2], [3, 4]]))
+# for i in range(4):
+#     print(i)
+
+
+# def generator(n: int):
+#     while n >= 0:
+#         yield n - 1
+#         n -= 1
+#
+#
+# x = generator(10)
+# for i in x:
+#     print(i)
+
+data.TensorDataset()
+net = nn.Linear(2, 1)

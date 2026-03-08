@@ -85,6 +85,7 @@
 - t文本模式,b二进制模式,r只读模式,r只写模式
 - with是python中专门为资源管理设计的,自动可靠的释放资源,不用手动的`file.close()`
 - with是python中的上下文管理器,自动管理资源,确保打开和关闭成对执行
+- with的核心:进入 with 块时自动调用 __enter__，退出时自动调用 __exit__（无论是否发生异常）; 所以任何需要这种“进入-退出”配对操作的场景，都可以用 with，不限于传统意义上的资源管理。
 - `read/write`
 - 按行迭代:`for line in file:`
 - `with open('outfile', 'wt') as out:
@@ -171,7 +172,7 @@
 - list
 - tuple
 - `a = [0,1,2,3,4,5,6,7,8]  a[2:4] = [10,11,12]  # [0,1,10,11,12,4,5,6,7,8]` ,重新分配的切片不必与原来长度相同
-- `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列, `range(2)`生成0-2,单一参数时是stop,并且range(xx)是惰性对象,一般迭代访问/索引访问,想要得到实际数字,用list(xx)转化
+- `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列, `range(2)`生成0-1,单一参数时是stop,并且range(xx)是惰性对象,一般迭代访问/索引访问,想要得到实际数字,用list(xx)转化
 - `for n,s in enumerate(se,start): ` 生成counter and iteration 
 - `ts = zip(tup, se) ` 接收可迭代对象(如:list,string,tuple...)返回的是zip迭代器类型,只能迭代一次;如需多次使用,使用`list(ts),tuple(ts) `等
 ## collection module
@@ -202,6 +203,7 @@ items[1].sqrt(2)    # math
 except items[2]:    # ValueError
 ~~~
 
+- 函数名也是对象:`def aa() bb = aa bb()`
 - python中绝大多数原地修改的方法都会返回`None`
 
 #### error checking 错误检查
@@ -411,7 +413,7 @@ class NetworkError(Exception):
 #### 可变参数
 - 可变位置参数: `def func(xx, *args):`, 额外的参数形成一个元组
 - 可变关键字参数: `def func(xx=xx, **kwargs):`, 额外的参数形成一个字典
-- `*`和`**`是打包/解包的关键字,在函数定义时打包参数,在函数调用时解包可迭代对象(这样的话可以把可迭代对象当作参数传递)
+- `*`和`**`是打包/解包的关键字,在函数定义时打包参数,在函数调用时解包可迭代对象(这样的话可以把可迭代对象当作参数传递), 这两个符号,在函数定义中都是打包,在函数调用时都是解包
 #### lambda匿名函数
 - `lambda 参数: 表达式`, 没有return,表达式的结果就是返回值
 #### 返回函数(函数里面嵌套函数并且返回值是函数)
