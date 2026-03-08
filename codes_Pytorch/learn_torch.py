@@ -3,6 +3,7 @@
 import torch
 
 x = torch.tensor([1, 1.3], requires_grad=True)
+print(x)
 print(x.shape)
 y = torch.empty(3, 2).fill_(1)
 print(y.squeeze().shape)
@@ -27,3 +28,5 @@ g = torch.ones([6]) / 6
 print(g)
 h = torch.distributions.multinomial.Multinomial(8, g).sample([2])
 print(h)
+
+print(torch.tensor([[1, 2], [3, 4]]))
