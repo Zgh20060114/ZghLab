@@ -46,5 +46,14 @@ print(h)
 # for i in x:
 #     print(i)
 
-data.TensorDataset()
-net = nn.Linear(2, 1)
+# data.TensorDataset()
+net = nn.Sequential(nn.Linear(2, 1))
+net[0].weight.data.normal_(0, 0.01)
+net[0].bias.data.fill_(0)
+print(net[0])
+loss = nn.MSELoss()
+optim = torch.optim.SGD(net.parameters(True), lr=0.1)
+
+# net.apply()
+# torch.nn.functional.nll_loss()
+nn.CrossEntropyLoss(reduce= ,reduction=)

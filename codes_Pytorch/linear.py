@@ -19,6 +19,7 @@ true_b = 4.2
 features, labels = synthetic_data(true_w, true_b, 1000)
 
 print(len(features))
+# TODO:
 
 plt.rcParams["font.sans-serif"] = ["FZHei-B01"]  # 中文显示
 plt.rcParams["axes.unicode_minus"] = False  # 负号显示

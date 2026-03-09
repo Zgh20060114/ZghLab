@@ -477,3 +477,4 @@ self.assertRaises(exc, callable, arg1, arg2, ...)
 - `from .. import 上级包内的模块`
 - 直接运行包内的子模块里的脚本: `python3 -m 包名.子模块脚本`
 - uv: 代替pip+venv
+- 当类实现了`__call__` 方法, 类的实例就可以当函数一样用`obj(xx)`
