@@ -47,13 +47,18 @@ print(h)
 #     print(i)
 
 # data.TensorDataset()
-net = nn.Sequential(nn.Linear(2, 1))
-net[0].weight.data.normal_(0, 0.01)
-net[0].bias.data.fill_(0)
-print(net[0])
-loss = nn.MSELoss()
-optim = torch.optim.SGD(net.parameters(True), lr=0.1)
-
+# net = nn.Sequential(nn.Linear(2, 1))
+# net[0].weight.data.normal_(0, 0.01)
+# net[0].bias.data.fill_(0)
+# print(net[0])
+# loss = nn.MSELoss()
+# optim = torch.optim.SGD(net.parameters(True), lr=0.1)
+#
 # net.apply()
 # torch.nn.functional.nll_loss()
-nn.CrossEntropyLoss(reduce= ,reduction=)
+# nn.CrossEntropyLoss(reduction="none")
+
+# x[1] = 2
+# print(x)
+
+# x.backward()
