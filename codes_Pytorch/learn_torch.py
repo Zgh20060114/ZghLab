@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from numpy import std
 import torch
 from torch.utils import data
 from torch import nn
@@ -61,4 +62,13 @@ print(h)
 # x[1] = 2
 # print(x)
 
+
 # x.backward()
+def init_weight(m):
+    nn.init.normal(m.weight, mean=0.0, std=0.1)
+    nn.init.normal(m.bias, std=0.1)
+    nn.init.constant(m.bias, 0.0)
+    nn.init.dirac
+
+
+nn.MSELoss(reduction="mean")

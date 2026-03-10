@@ -8,3 +8,12 @@
 - ctrl+x 减小数字
 - ctrl+x+t todo
 - TODO:/FIXME:/BUG: 大写加冒号
+- leader+f+c: 直接就能改nvim-config了 
+- leader+. :打开一个草稿本
+- leader+, :当前打开的buffer
+- leader+/ :全局文本搜索, 和leader+sg作用一样
+- leader - :在当前window下方分裂一个
+- leader | :在当前window右方分裂一个
+- 在窗口之间跳转: ctrl + h/j/k/l
+- shift + h/l : 切换buffer
+
