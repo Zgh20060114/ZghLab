@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from numpy import std
+from numpy import printoptions, std
 import torch
 from torch.utils import data
 from torch import nn
@@ -72,5 +72,18 @@ def init_weight(m):
 
 
 nn.MSELoss(reduction="mean")
-nn.functional.relu()
-nn.ReLU
+net = nn.Sequential(nn.Linear(2, 2), nn.ReLU(), nn.Linear(2, 1))
+# net[0].bias.data.fill_(0)
+# print(net[0].bias)
+print(*[(name, param.data) for name, param in net.named_parameters()])
+print(net[0].state_dict())
+
+print(torch.any(x))
+
+# print(torch.zero_(torch.tensor([1, 1])))
+
+print(
+    torch.randn(
+        2,
+    )
+)

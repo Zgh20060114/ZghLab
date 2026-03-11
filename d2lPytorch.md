@@ -64,6 +64,7 @@
 - `z = torch.Size([2,3])` 一个tensor形状对象,不是tensor
 - `x.numel()` 元素个数
 - `x.reshape(-1,4)`,通过-1来调用此自动计算出维度的功能
+- `torch.zero_(torch.tensor([1, 1]))` 原地元素清零
 
 - 形状不同的tensor依靠广播机制(不足的进行复制行/列)进行按元素操作, torch的广播机制就是为了对齐按元素操作的工具
 - `索引是x[1,3],切片是x[1:3] `
@@ -264,3 +265,19 @@ $$
   - `nn.Sequential` 维护了一个保存各个模块的OrderedDict有序列表`_modules`
   - 层的参数访问: `net[2].state_dict()`
   - 每个参数都是`nn.parameter.Parameter`的一个实例
+  - `net = nn.Sequential(nn.Linear(2, 1))` 不指定时参数会默认He均匀初始化
+  - `print([(name, param.data) for name, param in net[0].named_parameters()])` ,一次性访问一层/一个net的参数, 基本等于`net[0].state_dict()`
+  - `net[0].weight.data`, 访问指定参数
+  - `net[0][1][0].bias.data` 索引
+  - `net.add_module()`
+  - `nn.init.` 提供多种初始化方式
+  - 参数共享的目的是: 让模型在不同层级学习「一致且通用的特征变换规则」, 例如`net = nn.Sequential(nn.Linear(4, 8), nn.ReLU(),shared, nn.ReLU(),shared, nn.ReLU(),nn.Linear(8, 1))`,利用"python变量是对象的引用(内存地址)"实现
+  - `out32 = model(x32)` net类没有实现__call__函数,为什么能类实例函数用呢,因为`nn.Module`这个父类已经实现了__call__,调用forward(),参数传入forward并执行
+  - 延后初始化, 直到数据第一次通过模型传递时，框架才会动态地推断出每个层的大小,参数的形状
+  - `nn.Parameter()` 是 PyTorch 中用于定义可学习模型参数的类，它本质是 torch.Tensor 的子类，但让张量能被 PyTorch 的 nn.Module 框架识别并自动管理（求导、更新、保存等）。
+    - 标记为「可学习参数」，被 nn.Module 自动追踪
+    - 默认开启自动求导（requires_grad=True）
+    - 当你调用 model.to(device)（比如移到 GPU）时，nn.Parameter 包装的张量会自动同步到目标设备；普通 Tensor 则需要手动移设备。
+  - `nn.parameter.Parameter()` 和`nn.Parameter()` 一样的
+  - `torch.any(x)` 返回bool, 是否至少存在一个非零元素
+  - python 的语法特性，允许在函数调用时在最后一个参数后面加逗号，完全不改变参数的含义。

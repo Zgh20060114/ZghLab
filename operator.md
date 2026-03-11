@@ -16,4 +16,4 @@
 - leader | :在当前window右方分裂一个
 - 在窗口之间跳转: ctrl + h/j/k/l
 - shift + h/l : 切换buffer
-
+- 终端退回normal模式,双击esc
