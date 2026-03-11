@@ -115,7 +115,7 @@
 - tuple是不可变的,所以就没有append
 #### dictionary
 - `dic = {"as": 1, "qw": "11", "qw": "12"} `
-- 底层hash,与cpp的std::unordered_map实现一致,无序,可修改,重复的会覆盖
+- 底层hash,与cpp的std::unordered_map实现一致,~~无序~~,现在是有序的了,可修改,重复的会覆盖
 - list(dic),字典转化成列表,获得所有的键
 - `for di in dic:` 迭代获取的是键,不能使用`for k,v in dic`
 - dict的in/not in 都是对于键
@@ -124,7 +124,7 @@
 - 获得键值对:`for k,v in dic.items(): `; 字典确实是个可迭代对象,但它迭代是是键
 - item 项,物品,元素
 - `dic.get("ass", None): `, 找不到有默认值
-- 不可变的类型可做dictionary's key,如元组
+- __不可变的类型__ 可做dictionary's key,如元组
 - 无append,直接写键幅值即可
 #### set
 - 无序,不可重复(会自动去重)
@@ -174,6 +174,7 @@
 - `a = [0,1,2,3,4,5,6,7,8]  a[2:4] = [10,11,12]  # [0,1,10,11,12,4,5,6,7,8]` ,重新分配的切片不必与原来长度相同
 - `range(start,stop,step)`, `range(10,0,-1) ` 只能生成整数序列, `range(2)`生成0-1,单一参数时是stop,并且range(xx)是惰性对象,一般迭代访问/索引访问,想要得到实际数字,用list(xx)转化
 - `for n,s in enumerate(se,start): ` 生成counter and iteration 
+- `enumerate(iterable, start=0)` , start指定起始索引值  
 - `ts = zip(tup, se) ` 接收可迭代对象(如:list,string,tuple...)返回的是zip迭代器类型,只能迭代一次;如需多次使用,使用`list(ts),tuple(ts) `等
 ## collection module
 - `Counter `是dict字典类的一个子类,访问到开始不存在的键的时候会赋值为零,从而不会报错

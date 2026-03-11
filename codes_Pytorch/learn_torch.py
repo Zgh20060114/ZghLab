@@ -72,3 +72,5 @@ def init_weight(m):
 
 
 nn.MSELoss(reduction="mean")
+nn.functional.relu()
+nn.ReLU

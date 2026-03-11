@@ -114,7 +114,7 @@
   - L∞范数（无穷范数）：各分量绝对值的最大值。
     - 公式：$\|\vec{v}\|_\infty = \max(|v_1|， |v_2|， |v_3|)$
     - 几何意义：在一个无限大的棋盘上，国王从一点走到另一点所需的最少步数（切比雪夫距离）。
-- 矩阵范数
+- 矩阵范数(Frobenius范数)
   - ![矩阵范数F-norm](assets_d2lPytorch/2026-02-25-11-43-56.png)
   - `torch.norm(A)`
 #### 导数 
@@ -183,12 +183,14 @@ $$
   - `data_set = data.TensorDateset(*数据)`, 把特征和标签对齐配对,包装成一个可以索引的数据集
   - `data_iter = data.DataLoader(data_set, batch_size, shuffle = is_train)`, 把数据集包装成一个可迭代的数据加载器, 迭代一次取出batch_size个sample, 训练打乱,测试不需要
 - sequence, 序列,次序,有关联的一串
-- `nn.Sequentia` # TODO:
+- `nn.Sequential` # TODO:
 - `net = nn.Linear(2,1)` 输入特征形状(特征的个数),输出特征形状
 - internal 内部的
 - 损失函数计算的值(标量)的梯度是反向传播的起点
 - `net(X)` 实例调用,`__call__`里面调用了forward函数
+- __call__ 魔法方法让类的实例可以像函数一样被调用, 但是我感觉这样封装的太厉害了,不看源码看不出来调用的类的哪个方法
 - `optimer.step()` 更新参数: ![随机梯度下降参数更新公式](assets_d2lPytorch/2026-03-09-21-15-44.png)
+- K折交叉验证: 把数据分成K份,其中一份当验证集,训练,重复K次,K个训练结果求均值作为模型真正的性能
 #### softmax回归(O = X @ W.T + b Y=softmax(O))
 - 逻辑回归(二分类)的泛化版本(多分类)
 - 层数 = 参数层 = 隐藏层(没参数的激活层除外) + 输出层
@@ -218,6 +220,7 @@ $$
 - 交叉熵损失函数适合分类,mse适合数值回归
 ## 多层感知机(MLP)
 - MLP = 全连接层 + 非线性激活函数(要不然添加隐藏层没有任何好处)
+- 单层感知机就是一个全连接层(线性层)+一个激活层
 - relu激活函数:` max(x,0)`
 - 参数化relu激活函数: ` max(x,0) + a*min(0,x) `
 - sigmoid激活函数: $sigmoid(x) = \frac{1}{1+e^{-x}}$
@@ -241,6 +244,23 @@ $$
   - sum: 不求平均
   - mean: 求和,求平均
 - `trainer = torch.optim.SGD([{"params":net[0].weight,'weight_decay': wd},{"params":net[0].bias}], lr=lr)` 字典指定参数配置
-- 暂退法(dropout): 在计算每一内部层的时候,注入噪声(二进制掩码噪声0/xx),之所以叫dropout法,是因为从表面上看训练的时候丢弃(dropout)了一些神经元
+- 注入噪声,让模型变得更平滑(更平滑更简单),减轻过拟合
+- __暂退法(dropout)__: 在计算每一内部层的时候,注入噪声(二进制掩码噪声0/xx),之所以叫dropout法,是因为从表面上看训练的时候丢弃(dropout)了一些神经元
 - ![暂退法正则化公式](assets_d2lPytorch/2026-03-10-20-19-24.png)
 - 高斯噪声: 服从正态分布的随机数据
+- 暂退层一般添加到激活层的后面,` nn.Relu() nn.Dropout(mmm) `
+- prod累乗
+- `l.backward(torch.ones_like(x))` 中传入的参数是梯度的 “初始值”（也叫梯度种子), 指定非标量张量l的初始梯度(向量求不出来梯度)
+- 当sigmoid函数的输入很小或者很大时,它的梯度会消失
+- 暂退法还正则化能打破隐藏层参数的对称性
+- 高斯(分布)的==正态(正态)的
+- 梯度的方差不能过大,否则会训练不稳定
+- “零均值 + 方差 != 正态分布” , 只要二阶矩$E[X^2]$存在的分布都有方差,都可以实现这样0均值,$\sigma$的方差的分布,但不是正态分布
+- xvaier初始化:  ![xvaier初始化](assets_d2lPytorch/2026-03-11-13-41-12.png)
+## 深度学习计算
+  - 块block:可以由很多block/layer组成
+  - 支持原地操作,能不改变形状的逐元素处理的函数/类实例化,都可以指定`inplace=True`
+  - `nn.Sequential`类是严格顺序块类
+  - `nn.Sequential` 维护了一个保存各个模块的OrderedDict有序列表`_modules`
+  - 层的参数访问: `net[2].state_dict()`
+  - 每个参数都是`nn.parameter.Parameter`的一个实例
