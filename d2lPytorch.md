@@ -274,10 +274,14 @@ $$
   - 参数共享的目的是: 让模型在不同层级学习「一致且通用的特征变换规则」, 例如`net = nn.Sequential(nn.Linear(4, 8), nn.ReLU(),shared, nn.ReLU(),shared, nn.ReLU(),nn.Linear(8, 1))`,利用"python变量是对象的引用(内存地址)"实现
   - `out32 = model(x32)` net类没有实现__call__函数,为什么能类实例函数用呢,因为`nn.Module`这个父类已经实现了__call__,调用forward(),参数传入forward并执行
   - 延后初始化, 直到数据第一次通过模型传递时，框架才会动态地推断出每个层的大小,参数的形状
-  - `nn.Parameter()` 是 PyTorch 中用于定义可学习模型参数的类，它本质是 torch.Tensor 的子类，但让张量能被 PyTorch 的 nn.Module 框架识别并自动管理（求导、更新、保存等）。
+  - `nn.Parameter` 是 PyTorch 中用于定义可学习模型参数的类，它本质是 torch.Tensor 的子类，但让张量能被 PyTorch 的 nn.Module 框架识别并自动管理（求导、更新、保存等）。
     - 标记为「可学习参数」，被 nn.Module 自动追踪
     - 默认开启自动求导（requires_grad=True）
     - 当你调用 model.to(device)（比如移到 GPU）时，nn.Parameter 包装的张量会自动同步到目标设备；普通 Tensor 则需要手动移设备。
-  - `nn.parameter.Parameter()` 和`nn.Parameter()` 一样的
+  - `nn.parameter.Parameter类` 和`nn.Parameter类` 一样的
   - `torch.any(x)` 返回bool, 是否至少存在一个非零元素
   - python 的语法特性，允许在函数调用时在最后一个参数后面加逗号，完全不改变参数的含义。
+  - `torch.save()` 保存参数
+  - `torch.load()` 加载参数
+  - `torch.save(net.state_dict(),"MLP.params")` 保存整个模型参数
+  - `net.load_state_dict(torch.load("MLP.params"))`

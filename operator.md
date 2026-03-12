@@ -17,3 +17,8 @@
 - 在窗口之间跳转: ctrl + h/j/k/l
 - shift + h/l : 切换buffer
 - 终端退回normal模式,双击esc
+- f{搜索char} :跳转到搜索字符 ;下一个,上一个
+- t{搜索char} :跳转到搜索字符前一个
+- s{搜索string/char}
+- f/t/s可以和v一起不规则选择,也可以单独使用
+- ctrl+d/u 向上/下翻半页
