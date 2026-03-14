@@ -119,3 +119,8 @@ print(tensor_cpu.device)
 tensor_cuda1 = tensor_cpu.cuda(0)
 print(tensor_cuda1.cuda(0) is tensor_cuda1)
 # linear.to("cuda")
+
+print(in_unit.max())
+nn.MaxPool2d(3)
+linear.train()
+nn.Conv3d()
