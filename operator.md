@@ -22,3 +22,4 @@
 - s{搜索string/char}
 - f/t/s可以和v一起不规则选择,也可以单独使用
 - ctrl+d/u 向上/下翻半页
+- [vim_c_operate](./vim_c_operate.md)
