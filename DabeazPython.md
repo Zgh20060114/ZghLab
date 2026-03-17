@@ -307,7 +307,7 @@ except xxx:
 - `object`是最父的父类,class都继承自它
 - 可多重继承:`class Child(Mother,Father):`
 - python的 __访问控制约定__ :python里没有private,protected,public这一套访问控制,只能约定俗成._xx是protected, __xx是private
-#### 特殊方法(类似于运算符重载)
+#### 特殊方法/魔法方法(类似于运算符重载)
 - 直接写函数实现功能当然没问题,但是使用类中的特殊方法会更简便:
 ~~~python
     # 实现 __add__：让 + 运算符生效

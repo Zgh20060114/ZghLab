@@ -328,7 +328,7 @@ $$
 - LeNet、AlexNet和VGG都有一个共同的设计模式：通过一系列的卷积层与池化层来提取空间结构特征；然后展开通过全连接层与激活层对特征的表征进行处理
 - VGG块 : 一系列(卷积层+Relu激活层)+一个最大池化层, vgg模型在多个vgg块后+全连接层x4
 - NiN块: (卷积层+relu)+(1x1卷积层+relu)x2, nin模型: (nin块+最大池化层)x多个+一个(nin块+全局平均池化层)+一个展开层
-- googlenet的Inception块
+- googlenet的Inception块:  ![inception块架构](assets_d2lPytorch/2026-03-16-09-51-35.png), 不同尺寸的滤波器的组合
 - 普通conv2d层+relu层: 增强空间结构上的非线性能力
 - 1x1卷积层+relu层: 增强通道结构上非线性能力
 - `nn.AdaptiveAvgPool2d(2)` 自适应平均池化层, `nn.AdaptiveMaxPool2d((2, 3))` 自适应最大池化层. 只需指定输出尺寸,它会自动调整窗口大小和stride
@@ -336,8 +336,10 @@ $$
 - 从数据输入到模型,到从模型输出, 第零个维度batch_size一直不变,就像车厢里的乘客在变,但是车厢不变一样 
 - `nn.Dropout(num)` 一般用在fc+relu层之后,防止fc过拟合
 - PyTorch 的动态图机制会自动调度模型结构组成,并行计算
-- __批量规范化__: 将层的输出,下一层的输入,规范到$(\gamma, \beta)$分布中,$\gamma, \beta$是模型要学习的参数. 让中间输出值更加稳定
+- __批量规范化(BatchNorm)__: 将层的输出,下一层的输入,规范到$(\gamma, \beta)$分布中,$\gamma, \beta$是模型要学习的参数. 让中间输出值更加稳定
 - 批量规范化公式: $BN(\mathbf{x}) = \lambda \frac{\mathbf{x}-\mu}{\sigma}+ \beta$, 当前batch内所有特征的均值和标准差,不是所有数据,因为不同的特征有不同的分布
+- 为什么要把BN层放到激活层之前呢: 1.relu输出是非负的. 2.规范化的输入对激活层更友好
+- `nn.BatchNorm2d(num_features)` 输出的特征数量(linear)/特征通道channel数量(conv2d)
 - `nn.train() ` 和 `nn.eval()`行为区别:
 
   | 层类型 | 训练模式 | 评估模式 |
@@ -349,7 +351,16 @@ $$
 - 有些参数不随训练进行梯度变化,所以用`.data`, 只用数值,不要梯度
 - `nn.BatchNorm2d(num_features)` 中的 num_features 必须等于：Conv2d 层：输出通道数（out_channels）;Linear 层：输出特征数（out_features）
 - 普通结构：让网络直接学从 x 到最终输出 f (x) 的完整变换→ 变化大、难学、梯度容易消失。
-- 残差结构：
+- __残差结构__ ：
   1. 让网络学 f(x) − x（输出与输入的差）再把 x 加回去。
   2. 因为模型训练中 f (x) 大多接近 x(数据x并没有变的面目全非的f(x))，所以 f (x)−x 是小幅修正，神经网络天生就擅长学小幅修正。
   3. 同时梯度永远带 +1，再深也能训练,防止梯度反向传播到浅层的时候,梯度几乎消失了
+- 1x1卷积层作用在x这一路上
+- residual 剩余,残余
+- `super(当前类名, self).__init__()`, 老式写法,和`super().__init__()`一样
+- __稠密网络(DenseNet)__ : 残差网络是把卷积层结果和输入加在一起, 稠密网络是把卷积结果和输入在channel维度上拼接在一起
+- DenseNet由稠密层和过渡层组成,稠密层维度拼接导致通道增加复杂度,过渡层通过1x1卷积层减小通道数量
+- transition 过渡,转变
+- immerse 沉浸
+- precise 精确的
+- utility 实用的
