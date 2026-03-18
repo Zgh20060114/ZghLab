@@ -14,3 +14,4 @@
 - [hyprland-qt-wayland不兼容问题](./hyprland-qt-wayland问题解决办法.md)
 - [d2lPytorch](./d2lPytorch.md)
 - [科目三科目四](./科目三&四.md)
+- [凯文.墨菲RL](./Kevin_Murphy_RL.md)
