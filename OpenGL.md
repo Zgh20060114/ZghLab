@@ -188,3 +188,5 @@ z & y & -x & w
 
 - $v'=qv\bar{q} = qvq^{-1} =$ ![四元数旋转公式](assets_OpenGL/四元数旋转公式.png)
 
+- profile 配置文件
+- caption 标题,字幕

@@ -23,3 +23,6 @@
 - f/t/s可以和v一起不规则选择,也可以单独使用
 - ctrl+d/u 向上/下翻半页
 - [vim_c_operate](./vim_c_operate.md)
+- v+f+字符+;/,选择, 然后y
+- y/c/v ,配合s, / ,f, t 等搜索跳转有起效
+- `:LspRestart` , 重启lsp语言服务器
