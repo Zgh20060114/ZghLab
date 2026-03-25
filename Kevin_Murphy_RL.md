@@ -1,4 +1,4 @@
-# introduction
+# Chapter 1: introduction
 - Reinforcement learning 或 RL 是一类用于解决各种顺序决策任务的方法.
 
 | x | 顺序决策 | 非顺序决策 |
@@ -69,7 +69,7 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 #### value-based rl 基于价值的强化学习,也称ADP(approximate dynamic programming 近似动态规划)
 - 最优策略的价值函数满足以下递归条件, 这个递归条件被称为贝尔曼最优方程: $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$, 
 在当前状态 s 选择动作 a获得的即时奖励 R(s,a)+折现后的未来价值期望的和的最大值。
-- 对于固定策略$\pi$,$贝尔曼方程 V^(s) = R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]$,但是不知道p{s'|s,a}, 也不能枚举出全部的s',所以可以用蒙特卡洛思想(用单个样本采样代替均值, 这里就体现了adp)和梯度下降, 求出该固定策略下的价值:$V_\pi(s) \leftarrow V_\pi(s) + \eta(r+ \gamma V_\pi(s') - V_\pi(s))$, 该求解固定策略的价值函数的方法也被称为$\textcolor{orange}{时序差分学习方法(Temproal Difference)(TD学习)}$
+- 对于固定策略$\pi$,$贝尔曼方程 V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,但是不知道p{s'|s,a}, 也不能枚举出全部的s',所以可以用蒙特卡洛思想(用单个样本采样代替均值, 这里就体现了adp)和梯度下降, 求出该固定策略下的价值:$V_\pi(s) \leftarrow V_\pi(s) + \eta(r+ \gamma V_\pi(s') - V_\pi(s))$, 该求解固定策略的价值函数的方法也被称为$\textcolor{orange}{时序差分学习方法(Temproal Difference)(TD学习)}$
 - 策略: 在每个状态选择最优的动作, 所以能获得(状态,动作)表就是找到了策略, 策略不是一个顺序执行的规则
 - 已知价值函数,如何推导出策略:
   之前是状态价值函数V(s), 现在引入状态动作价值函数Q(s,a), 他们之间的关系是:  $V^∗(s′) = \max_{a′} Q^∗ (s′,a′)$, 
@@ -100,3 +100,54 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 - sparse reward 稀疏奖励问题
 - potential 潜在的
 - s0=s : 初始状态时s
+- residual 剩余
+# Chapter 2: value-based rl
+- 贝尔曼方程(评价给定策略): $V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$
+- 贝尔曼最优方程(寻找最佳策略): $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$
+- 这种找max行为是greed action 
+- bellman error/bellman residual
+- bellman operator
+~~~python
+  # 初始化 V 为全 0 或随机
+  V = [0.0, 0.0, 0.0]  # 对应 s1, s2, s3
+  gamma = 0.9
+
+  for iteration in range(100):  # 迭代直到收敛
+      V_new = []
+      for s in [s1, s2, s3]:
+          best_value = -inf
+          for a in [a1, a2]:
+              # 计算这个动作的期望未来价值
+              expected = 0
+              for s_next in [s1, s2, s3]:
+                  prob = p(s_next | s, a)  # 已知转移概率
+                  expected += prob * V[s_next]  # 用当前 V_k
+              # 动作价值 = 即时奖励 + 折现期望
+              q_value = R(s, a) + gamma * expected
+              # 取最大值
+              if q_value > best_value:
+                  best_value = q_value
+          V_new.append(best_value)
+      V = V_new
+~~~
+- 前一次迭代的价值函数是V_k, 下一次迭代的价值函数是V_k+1, Vk(s)是所有状态的价值函数啊, 最后迭代出的最大的V(s)是每个状态(s0,s1,...sT)的最大价值啊
+~~~python
+  # 前面 V 已经收敛到 V*
+  pi = {}  # 存储策略
+  for s in [s1, s2, s3]:
+      best_action = None
+      best_value = -inf
+      for a in [a1, a2]:
+          # 计算这个动作的期望未来价值（和迭代时一样）
+          expected = 0
+          for s_next in [s1, s2, s3]:
+              prob = p(s_next | s, a)  # 已知转移概率
+              expected += prob * V[s_next]
+          q_value = R(s, a) + gamma * expected
+          if q_value > best_value:
+              best_value = q_value
+              best_action = a
+
+      pi[s] = best_action  # 记录最优动作
+~~~
+

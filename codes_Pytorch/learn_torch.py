@@ -135,3 +135,43 @@ output = input.mean(dim=(0, 2, 3), keepdim=True)
 print(output.shape)
 nn.BatchNorm2d()
 nn.Conv2d()
+
+
+# 初始化 V 为全 0 或随机
+V = [0.0, 0.0, 0.0]  # 对应 s1, s2, s3
+gamma = 0.9
+
+for iteration in range(100):  # 迭代直到收敛
+    V_new = []
+    for s in [s1, s2, s3]:
+        best_value = -inf
+        for a in [a1, a2]:
+            # 计算这个动作的期望未来价值
+            expected = 0
+            for s_next in [s1, s2, s3]:
+                prob = p(s_next | s, a)  # 已知转移概率
+                expected += prob * V[s_next]  # 用当前 V_k
+            # 动作价值 = 即时奖励 + 折现期望
+            q_value = R(s, a) + gamma * expected
+            # 取最大值
+            if q_value > best_value:
+                best_value = q_value
+        V_new.append(best_value)
+
+# 假设 V 已经收敛到 V*
+pi = {}  # 存储策略
+for s in [s1, s2, s3]:
+    best_action = None
+    best_value = -inf
+    for a in [a1, a2]:
+        # 计算这个动作的期望未来价值（和迭代时一样）
+        expected = 0
+        for s_next in [s1, s2, s3]:
+            prob = p(s_next | s, a)  # 已知转移概率
+            expected += prob * V[s_next]
+        q_value = R(s, a) + gamma * expected
+        if q_value > best_value:
+            best_value = q_value
+            best_action = a
+
+    pi[s] = best_action  # 记录最优动作   V = V_new
