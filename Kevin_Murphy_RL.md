@@ -101,13 +101,22 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 - potential 潜在的
 - s0=s : 初始状态时s
 - residual 剩余
-# Chapter 2: value-based rl
-- 贝尔曼方程(评价给定策略): $V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$
-- 贝尔曼最优方程(寻找最佳策略): $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$
+# Chapter 2: value-based rl 基于价值的强化学习
+- 贝尔曼方程(评价给定策略): $V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,  一个在求期望求平均
+- 贝尔曼最优方程(寻找最佳策略): $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,  一个在求最大值
+- 由最佳价值函数推导出最佳策略: 
+$\begin{aligned}
+\pi^*(s) &= \arg\max_a Q^*(s, a)  \\
+&= \arg\max_a \left[ R(s, a) + \gamma \mathbb{E}_{p_S(s'|s,a)} \left[ V^*(s') \right] \right] 
+\end{aligned}$
 - 这种找max行为是greed action 
 - bellman error/bellman residual
 - bellman operator
+### 在已知世界模型中求解最优策略
+#### value iteration
 ~~~python
+- 对于有限状态空间动作空间,可以列举全部的状态,进行值迭代
+- value iteration 代码示例
   # 初始化 V 为全 0 或随机
   V = [0.0, 0.0, 0.0]  # 对应 s1, s2, s3
   gamma = 0.9
@@ -151,3 +160,103 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
       pi[s] = best_action  # 记录最优动作
 ~~~
 
+- 普通值迭代每次迭代计算更新所有状态的价值,实时动态规划(RTDP)是沿着设计好的探索策略的状态进行更新
+~~~python
+# 输入：MDP模型 (S, A, p, R, γ), 起始状态 s0
+# 输出：最优价值函数 V* (在可达状态上), 最优策略 π*
+# 初始化
+      V = [0.0 for _ in range(|S|)]  # 所有状态价值初始为0
+      π = {}  # 策略字典
+# 可选择：初始化策略为贪心（基于当前V）
+      for s in S:
+          best_action = None
+          best_value = -inf
+          for a in A:
+              expected = sum(p(s_next|s,a) * V[s_next] for s_next in S)
+              q_value = R(s, a) + γ * expected
+              if q_value > best_value:
+                  best_value = q_value
+                  best_action = a
+          π[s] = best_action
+# RTDP 主循环（通常运行多个 episode）
+      for episode in range(num_episodes):
+          s = s0  # 重置到起始状态
+          while not is_terminal(s):  # 直到到达终止状态
+              # 1. 对当前状态 s 做贝尔曼备份
+              best_value = -inf
+              best_action = None
+              for a in A:
+                  expected = sum(p(s_next|s,a) * V[s_next] for s_next in S)
+                  q_value = R(s, a) + γ * expected
+                  if q_value > best_value:
+                      best_value = q_value
+                      best_action = a
+              
+              V[s] = best_value          # 更新当前状态的价值
+              π[s] = best_action         # 更新当前状态的策略
+              # 2. 选择动作（可用 ε-greedy 探索）
+              a = π[s]                   # 贪心（或用 ε-greedy）
+              # 3. 执行动作，到达下一个状态
+              s = exploration_strategy(s, a, p)  # 从 p(s'|s,a) 采样
+          # 可选：记录收敛情况，若变化很小可提前终止
+      return V, π
+~~~
+- 确定性策略空间: 每个状态 s 只输出一个固定的动作 a=π(s), 比如π(s1)=a1,π(s2)=a2
+- 随机策略空间: 每个状态s 输出动作的概率分布
+- 一般训练时随机策略, 部署时确定性策略
+#### policy iteration
+- policy iteration 也是最优确定性/随机策略都有,但是pi只能在确定性策略空间中,求得确定性最优策略
+- 迭代贝尔曼最优方程是value iteration; 迭代贝尔曼方程是policy evaluation
+- policy improvement求下一个更好的策略的做法与value iteration用最佳价值函数求最佳策略的做法一致: 都是根据价值函数,使用贪心方法提取确定性特征
+- diagram 图解,图表
+
+- 当状态空间是多个有限集的笛卡尔积时, 列举每个状态是灾难性的(V = [v1, v2, v3, ..., v_100亿]), 因此，通常需要采用近似方法，例如使用价值函数或策略的参数化或非参数化表示，以实现计算上的易处理性,变成Vθ(s)=θTϕ(s)或Vθ(s)=NNθ(s), 比如(ϕ(s)=[x,y,vx,vy,x^2,y^2,1])变成特征, 用特征组合来代替状态的取值组合,迭代求得的θ就是最佳价值函数的参数,Vθ(s)=θTϕ(s)就是所有状态最佳价值函数,然后π(s)=argmax_a Q(s,a)求出最佳策略
+- 关于从最佳价值函数求得最佳策略问题,答案是: 根据π(s)=argmax_a[R(s,a)+γEVθ(s′)]一定可以求得一个最佳确定性策略,但是不代表不存在一个随机策略不是最佳的, 因为存在一个定理: 
+任何MDP环境都至少存在一个确定性最佳策略, 可能存在随机最佳策略
+
+
+- TD学习每一步只做 4 件事：
+    1. 看到状态 s
+    2. 计算当前价值Vθ(s)=θ⊤ϕ(s)
+    3. 计算贝尔曼目标target=r+γVθ(s′) ,(这里的r,s'是当前s单次采样近似选择动作a得到的r和s')
+    4. 更新 θ: θ←θ+α⋅(target−Vθ(s))⋅ϕ(s)
+- 蒙特卡洛估计: (一次/多次)采样平均近似(代替)期望E
+-                    动态规划 (DP)
+                  /           \
+          价值迭代          策略迭代
+             ↓                 ↓
+           ADP          广义策略迭代 (GPI)
+         (近似)          /        \
+            ↓            /          \
+        RTDP等     TD学习     蒙特卡罗方法
+                     ↓            ↓
+                Q-learning    策略梯度
+                     ↓            ↓
+                  DQN           PPO/SAC
+- adp是价值迭代的推广: adp是经过近似 / 采样 / 函数近似 / 异步更新的价值迭代, 典型 ADP 包括：RTDP（实时动态规划）,带函数近似的值迭代等等
+- adp代码示例:
+~~~python
+    # ADP：已知模型，但用函数Vθ(s)=θTϕ(s)近似处理大规模状态空间
+    for iteration in range(max_iter):
+        # 采样一批状态（或所有状态，如果可枚举）
+        for s in sampled_states:
+            # 用当前 θ 计算贝尔曼目标
+            best_value = -inf
+            for a in actions:
+                # 用模型计算期望（仍然需要模型！）
+                expected = sum(p(s'|s,a) * Vθ(s') for s' in all_states)
+                target = R(s,a) + gamma * expected
+                best_value = max(best_value, target)
+            # 用梯度下降更新 θ，使 V_theta(s) 接近 best_value
+            loss = (V_theta(s) - best_value)^2
+            θ = θ - α * ∇_θ loss
+~~~
+- 计算价值函数的两种方法: 
+  - 贝尔曼方程迭代
+  - 蒙特卡洛估计:
+    - 批量更新形式
+    - 增量更新形式
+- 把蒙特卡罗估计和策略迭代结合：
+    策略评估：用蒙特卡罗采样估计当前策略的 Q; 
+    策略改进：πk+1(s)=argmax_aQk(s,a). (策略是greedy)
+    这就是 蒙特卡罗控制. 如果当前策略是确定性的，某些 (s,a) 可能永远不会被采样,解决方案：用 ϵ-greedy 策略（以 ϵ 概率随机探索）来收集数据. 但是这样是次优的(以为这不是当前策略的数据),让让 ϵ→0ϵ→0，最终策略退化为确定性最优策略
