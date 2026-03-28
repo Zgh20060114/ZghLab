@@ -278,4 +278,8 @@ $G_t^\lambda = (1 - \lambda) \sum_{n=1}^{T-t-1} \lambda^{n-1} G_{t:t+n} + \lambd
 - eligibility 责任,资格
 - 但是TD(λ)里面有这么多step, 无法以在线方式更新,所以TD(λ)以资格迹的方式进行TD估计更新:![TD(λ)的资格迹更新计算公式](assets_Kevin_Murphy_RL/2026-03-28-10-36-40.png)
 
-
+- on-policy (同策略): 正在被优化的策略 = 生成采样数据的策略
+- 同策略的算法有 SARRA, ppo等
+- ![sarsa和q-learning的区别,同策略和异策略的区别](assets_Kevin_Murphy_RL/2026-03-28-11-21-21.png)
+- SARSA的算法流程:![sarsa算法流程](assets_Kevin_Murphy_RL/2026-03-28-11-26-51.png):
+  - 其中采样到达s'后,利用现在的策略π选择a', 所以是同策略的;
