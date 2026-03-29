@@ -300,10 +300,21 @@ $G_t^\lambda = (1 - \lambda) \sum_{n=1}^{T-t-1} \lambda^{n-1} G_{t:t+n} + \lambd
   - 函数近似的Q-learning算法伪代码: ![函数近似的Q-learning算法伪代码](assets_Kevin_Murphy_RL/2026-03-28-21-00-57.png)
 - 矩阵A的列空间: Ax=b, 所有b的集合/A的所有列向量线性组合的所有结果组成空间/A的列张成的子空间, 维度就是A的秩
 - 矩阵A的零空间: Ax=0,所有的x组成的空间/经过变换A消失的向量空间, 维度=n-rank(A)
-- DQN的设计
+- DQN(用神经网络做函数近似的Q-learning算法)的设计
   - experience replay : 把采样的数据放到experience replay buffer
     - 优先经验回放prioritized experience replay: 一种反向传播的思想：当某个状态的价值发生变化时，所有能导致这个状态的前驱状态的价值也可能需要更新。
   - Q网络+目标网络
 - the deadly triad(致命三元组): 一般来说，当强化学习算法同时具备以下三个要素时，可能会变得不稳定：函数逼近（例如神经
 网络），自举价值函数估计（即使用类似 TD 的方法而非蒙特卡洛方法），以及异策略学习（其中动作是从与正在优化的策略不同的分布中采样的）
 - 极大化偏差(maximization bias): max_a'Q(s',a') 由于随机奖励(奖励是概率分布的,比如奖励是正态分布),导致采样的max值会大于真正的max值,选择了这个次优的a',解决办法是double Q-learning
+- double DQN(double q-learning与dqn的结合): $target = r + \gamma Q_{\bar{\omega}}(s', \arg\max_{a'} Q_{\omega}(s', a'))$
+- clipped double DQN(两个q-net取最小值): $target = r + \gamma min_{i=1,2}Q_{\bar{\omega_i}}(s', \arg\max_{a'} Q_{\omega_i}(s', a'))$
+- 多步DQN
+- ensemble 集成
+- 随机集成dqn(randomized ensembled dqn) :从 N 个 Q 网络中随机抽取 M 个，取它们估计的最小值作为目标估计值，以降低过估计偏差和方差: 
+$target = r + \gamma max_{a'} min_{i \in M}Q_{\bar{\omega_i}}(s', a')$
+- 凡是带有 argmax_a′ 或 max_a′这些只能枚举的目标值公式，都只能用于离散动作空间（或动作空间极小的特殊情况） 
+- 所以DQN要想解决连续动作空间问题,需要解决argmax的求解问题 TODO:后面会讲
+- q-net学习的是当前状态的所有动作, 以至于要得到需要用的Q(s,a)需要用gather函数到索引需要的动作: `q = self.q_net(s).gather(1, a).squeeze()`, 这样准确估计所有的价值很难,训练效率低,容易受噪声影响,其实大部分时候同一状态的不同动作的q值很接近,可以让q-net分头学习,输出头学习基础状态值, 优势头学习差异值,再相加,这就是 __Dueling DQN算法__:
+![dueling dqn算法公式](assets_Kevin_Murphy_RL/2026-03-29-19-59-58.png)
+- HER 同时用多种目标（包括真实目标和伪目标）训练同一个策略，让智能体学会“如何向任意目标移动”的通用能力，从而最终能够到达真实目标。
