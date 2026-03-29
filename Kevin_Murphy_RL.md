@@ -88,7 +88,7 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 - 使用形如 a_t=π(h_t)的策略，其中 h_t=(a1,o1,…,at−1,ot) 是完整的观测和动作历史，加上当前观测。由于对于长期运行的智能体而言，依赖完整历史是不可行的，因此发展出了各种近似求解方法,如信念状态、RNN、记忆
 
 - mdp, pomdp都是环境模型,value/policy/model-based 都是求解mdp/pomdp环境模型中最佳策略的算法种类,里面的算法比如a2c,ppo等等,都利用了马尔可夫性质,并且为了解决难以计算求解的问题,用了采样近似,函数近似, 神经网络泛化,rnn/栈堆叠压缩历史等方法
-#### exploration-exploition tradeoff 探索-利用权衡
+#### exploration-exploition tradeoff 探索-利用权衡(各种随机策略)
 - $\epsilon-greedy$策略,次优, 有$\epsilon$的概率选择随机探索
 - $\epsilon z-greedy$ (动作,该动作持续时间步)
 - boltzmann exploration 玻尔兹曼探索策略, 类似与softmax操作, 更高奖励的动作有更高的选择概率
@@ -282,4 +282,28 @@ $G_t^\lambda = (1 - \lambda) \sum_{n=1}^{T-t-1} \lambda^{n-1} G_{t:t+n} + \lambd
 - 同策略的算法有 SARRA, ppo等
 - ![sarsa和q-learning的区别,同策略和异策略的区别](assets_Kevin_Murphy_RL/2026-03-28-11-21-21.png)
 - SARSA的算法流程:![sarsa算法流程](assets_Kevin_Murphy_RL/2026-03-28-11-26-51.png):
-  - 其中采样到达s'后,利用现在的策略π选择a', 所以是同策略的;
+  - 其中采样时利用现在的策略选择a到达s',更新时利用现在的策略π选择a', 所以是同策略的. 
+  - ![ϵ-greedy策略](assets_Kevin_Murphy_RL/2026-03-28-14-12-38.png), 你会想: ϵ-greedy不是没变吗,哪来的策略改进呢?策略选取的概略没变,但是策略选取的动作变了,所以策略变化了,策略改进已经隐含在这个随机策略里.
+  - 这里的TD更新没有一次性求出当前Q(s,a)的收敛值, 而是更新一次后去求了Q(s',a'),但多次episode后,所有的Q(s,a)都会收敛
+- SARSA的名字由来是(s,a,r,s',a')
+- 还有sarsa(λ) TODO:todo
+- __表格Q-learning算法__ 采样时使用的策略一般是ϵ-greedy策略, 更新时采用的是greedy策略(max_a'), 算法流程:![表格Q-learning算法](assets_Kevin_Murphy_RL/2026-03-28-15-22-52.png)
+- 对于终止状态，s ∈ S + ，我们知道 Q(s, a) = 0 对所有动作 a 均成立。因此，对于最优价值函数，
+我们有 V ∗(s) = maxa′ Q∗ (s, a) = 0 对所有终止状态成立。在进行在线学习时，我们通常不知道哪些状
+态是终止状态。因此我们假设，每次在环境中采取一步时，我们都会获得下一个状态 s′ 和奖励 r，同
+时还得到一个二元指示符 done(s′ )，用于告诉我们 s′ 是否为终止状态。在这种情况下，我们在 Q 学习
+中将目标值设为 V ∗ (s′ ) = 0，从而得到修改后的更新规则：  $Q(s, a) \leftarrow Q(s, a) + \eta \left[ r + (1 - \text{done}(s')) \gamma \max_{a'} Q(s', a') - Q(s, a) \right]$, 
+为简洁起见，我们在后续方程中通常会忽略这个因子，但在代码中必须加以实现。
+- __函数近似的Q-learning算法__:
+  - 为了防止单个损失函数梯度噪声过大,对随机抽取的多个采样元组的损失函数求平均(并且这些多个元组也是随机选的,因为用如果连续采样的元组会高度相关,导致nn过拟合)
+  - 采样元组的损失函数公式: $\mathcal{L}(w|s, a, r, s') = \left( (r + \gamma \max_{a'} Q_w(s', a')) - Q_w(s, a) \right)^2$
+  - 函数近似的Q-learning算法伪代码: ![函数近似的Q-learning算法伪代码](assets_Kevin_Murphy_RL/2026-03-28-21-00-57.png)
+- 矩阵A的列空间: Ax=b, 所有b的集合/A的所有列向量线性组合的所有结果组成空间/A的列张成的子空间, 维度就是A的秩
+- 矩阵A的零空间: Ax=0,所有的x组成的空间/经过变换A消失的向量空间, 维度=n-rank(A)
+- DQN的设计
+  - experience replay : 把采样的数据放到experience replay buffer
+    - 优先经验回放prioritized experience replay: 一种反向传播的思想：当某个状态的价值发生变化时，所有能导致这个状态的前驱状态的价值也可能需要更新。
+  - Q网络+目标网络
+- the deadly triad(致命三元组): 一般来说，当强化学习算法同时具备以下三个要素时，可能会变得不稳定：函数逼近（例如神经
+网络），自举价值函数估计（即使用类似 TD 的方法而非蒙特卡洛方法），以及异策略学习（其中动作是从与正在优化的策略不同的分布中采样的）
+- 极大化偏差(maximization bias): max_a'Q(s',a') 由于随机奖励(奖励是概率分布的,比如奖励是正态分布),导致采样的max值会大于真正的max值,选择了这个次优的a',解决办法是double Q-learning
