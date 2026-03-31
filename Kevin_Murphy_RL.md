@@ -220,18 +220,18 @@ $\begin{aligned}
     2. 计算当前价值Vθ(s)=θ⊤ϕ(s)
     3. 计算贝尔曼目标target=r+γVθ(s′) ,(这里的r,s'是当前s单次采样近似选择动作a得到的r和s')
     4. 更新 θ: θ←θ+α⋅(target−Vθ(s))⋅ϕ(s)
--                    动态规划 (DP)
-                  /           \
-          价值迭代          策略迭代
-             ↓                 ↓
-           ADP          广义策略迭代 (GPI)
-         (近似)          /        \
-            ↓            /          \
-        RTDP等     TD学习     蒙特卡罗方法
-                     ↓            ↓
-                Q-learning    策略梯度
-                     ↓            ↓
-                  DQN           PPO/SAC
+    -                  动态规划 (DP)(value-based)
+                      /           \
+(value-based)价值迭代          策略迭代(value-based)
+                ↓                 ↓
+              ADP          广义策略迭代 (GPI)
+            (近似)          /        \
+                ↓            /          \
+            RTDP等     TD学习     蒙特卡罗方法
+                        ↓            ↓
+                    Q-learning    策略梯度(policy-based)
+                        ↓            ↓
+                      DQN           PPO/SAC
 - adp是价值迭代的推广: adp是经过近似 / 采样 / 函数近似 / 异步更新的价值迭代, 典型 ADP 包括：RTDP（实时动态规划）,带函数近似的值迭代等等
 - adp代码示例:
 ~~~python
@@ -318,3 +318,14 @@ $target = r + \gamma max_{a'} min_{i \in M}Q_{\bar{\omega_i}}(s', a')$
 - q-net学习的是当前状态的所有动作, 以至于要得到需要用的Q(s,a)需要用gather函数到索引需要的动作: `q = self.q_net(s).gather(1, a).squeeze()`, 这样准确估计所有的价值很难,训练效率低,容易受噪声影响,其实大部分时候同一状态的不同动作的q值很接近,可以让q-net分头学习,输出头学习基础状态值, 优势头学习差异值,再相加,这就是 __Dueling DQN算法__:
 ![dueling dqn算法公式](assets_Kevin_Murphy_RL/2026-03-29-19-59-58.png)
 - HER 同时用多种目标（包括真实目标和伪目标）训练同一个策略，让智能体学会“如何向任意目标移动”的通用能力，从而最终能够到达真实目标。
+
+# 基于策略的强化学习
+- 高斯输出层: 策略网络输出一个高斯分布(正态分布),而不是输出一个固定的动作. 只有训练阶段才输出分布（高斯 / 类别分布）用于探索；推理 / 部署阶段，直接取分布的均值作为控制指令。
+- 从 Q(s, a) 估计动作价值函数从中推导出策略的缺点:
+  - 难以应用于连续动作空间
+  - 致命三元组问题:使用函数近似,自举,异策略,容易发散
+  - 学习的是确定性策略,在随机/部分可观测环境中随机性策略证明是更优的
+- 策略梯度方法policy gradient直接优化策略的参数, 以最大化期望回报, 参数化策略将表示为 πθ (a|s)，
+- 似然比估计: ![似然比估计公式](assets_Kevin_Murphy_RL/2026-03-30-13-33-45.png)
+- 参数化策略的梯度计算公式: $\nabla_\theta J(\theta) = \mathbb{E}_\tau \left[ \left( \sum_{k=1}^T \nabla_\theta \log \pi_\theta(a_k | s_k) \right) R(\tau) \right]$, 其中的期望可以通过mc采样估计, τ就是一条轨迹
+- 在统计学中，∇θlogπθ(a|s) 这一项被称为（Fisher）得分函数(fisher score function)
