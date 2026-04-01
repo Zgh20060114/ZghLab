@@ -33,7 +33,7 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 - wrt(with respect to )是关于,相对于
 - utility 效用,实用的
 - ![最佳策略](assets_Kevin_Murphy_RL/2026-03-19-09-16-37.png), p(s0)是初始状态分布,求不同初始状态下的期望奖励的期望, 和大部分书中的公式不同点
-- episode 插画,一段,片段
+- episode 插画,一段,片段,回合
 - absorb 吸收
 - finite 有限
 - 剩余回报(reward to go):  $(G_t \triangleq r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots + \gamma^{T-t+1} r_{T-1})$
@@ -232,6 +232,7 @@ $\begin{aligned}
                     Q-learning    策略梯度(policy-based)
                         ↓            ↓
                       DQN           PPO/SAC
+TODO: 正确性待定
 - adp是价值迭代的推广: adp是经过近似 / 采样 / 函数近似 / 异步更新的价值迭代, 典型 ADP 包括：RTDP（实时动态规划）,带函数近似的值迭代等等
 - adp代码示例:
 ~~~python
@@ -277,7 +278,7 @@ $G_t^\lambda = (1 - \lambda) \sum_{n=1}^{T-t-1} \lambda^{n-1} G_{t:t+n} + \lambd
 - 在线方式指的是：每与环境交互一步，就立即更新，而不需要等待一个完整的公式结束。
 - eligibility 责任,资格
 - 但是TD(λ)里面有这么多step, 无法以在线方式更新,所以TD(λ)以资格迹的方式进行TD估计更新:![TD(λ)的资格迹更新计算公式](assets_Kevin_Murphy_RL/2026-03-28-10-36-40.png)
-
+- TD(0)是标准TD估计, TD(1)是蒙特卡罗估计
 - on-policy (同策略): 正在被优化的策略 = 生成采样数据的策略
 - 同策略的算法有 SARRA, ppo等
 - ![sarsa和q-learning的区别,同策略和异策略的区别](assets_Kevin_Murphy_RL/2026-03-28-11-21-21.png)
@@ -327,5 +328,28 @@ $target = r + \gamma max_{a'} min_{i \in M}Q_{\bar{\omega_i}}(s', a')$
   - 学习的是确定性策略,在随机/部分可观测环境中随机性策略证明是更优的
 - 策略梯度方法policy gradient直接优化策略的参数, 以最大化期望回报, 参数化策略将表示为 πθ (a|s)，
 - 似然比估计: ![似然比估计公式](assets_Kevin_Murphy_RL/2026-03-30-13-33-45.png)
-- 参数化策略的梯度计算公式: $\nabla_\theta J(\theta) = \mathbb{E}_\tau \left[ \left( \sum_{k=1}^T \nabla_\theta \log \pi_\theta(a_k | s_k) \right) R(\tau) \right]$, 其中的期望可以通过mc采样估计, τ就是一条轨迹
+- 为什么要化成对数呢: 把轨迹的连乘换成轨迹的连加
+- 参数化策略价值的梯度计算公式: $\nabla_\theta J(\theta) = \mathbb{E}_\tau \left[ \left( \sum_{k=1}^T \nabla_\theta \log \pi_\theta(a_k | s_k) \right) R(\tau) \right]$, 其中的期望可以通过mc采样估计, τ就是一条轨迹
 - 在统计学中，∇θlogπθ(a|s) 这一项被称为（Fisher）得分函数(fisher score function)
+- 奖励函数中折扣因子γ的作用: 调节智能体的远视与近视程度,保证收敛
+- 任何概率分布的导数期望为零,任何概率分布的对数的导数的期望为零
+- 从$\nabla_\theta J(\theta) = \mathbb{E}_\tau \left[ \left( \sum_{k=1}^T \nabla_\theta \log \pi_\theta(a_k | s_k) \right) R(\tau) \right]$到
+$\nabla J(\theta) = \mathbb{E}_\tau \left[ \sum_{k=1}^T \gamma^{k-1} Q_\theta(s_k, a_k) \nabla_\theta \log \pi_\theta(a_k | s_k) \right]$
+这样推导转变的目的是什么: 
+减小策略梯度的方差, 第一个公式是两个和的乘,每个动作的梯度乘以从第一状态开始到结束的奖励,第二个公式是多个乘的和,每个动作的梯度乘以从当前状态开始到结束的奖励,第二个公式的方差小,符合当前动作只影响现在和未来不影响过去的因果关系, 实际上更有效的方式是引入基线和优势函数,就像dueling dqn算法一样
+- 原始形式中，R(τ) 包含了过去和未来的所有奖励。但：
+    动作 ak不能影响过去的奖励
+    乘上过去奖励只会增加噪声，不会改变期望
+改进形式只保留从当前步开始的未来奖励，消除了与过去奖励相关的方差。
+- REINFORCE算法(策略价值梯度估计和sgd)的伪代码:![reinforce的回合式版本](assets_Kevin_Murphy_RL/2026-03-31-15-23-27.png),w为什么是回合式呢,因为reinforce算法只适合有终止状态的回合式空间
+- 带基准的REINFORCE算法的伪代码: ![baselined reinforce ](assets_Kevin_Murphy_RL/2026-04-01-10-23-11.png)
+- 把轨迹的期望换成第k步状态的分布概率乘以策略该状态选取动作的分布概率再乘进去: [策略梯度函数从轨迹的期望转换成对状态-动作的期望的推导](./策略梯度定理推导.md)
+- 策略梯度公式由对轨迹求期望转换成对状态-动作求期望有什么用呢
+
+| 形式 | 依赖 | 更新时机 | 方差 |
+|------|------|----------|------|
+| 轨迹期望形式 | 完整轨迹的回报 \(R(\tau)\) | 回合结束后 | 高 |
+| 状态-动作期望形式(现代策略梯度算法的基础) | 当前步的 \(Q(s,a)\) | 每步都可更新 | 低 |
+
+- 优势演员评论家算法advanced actor critor(a2c)伪代码: ![a2c算法](assets_Kevin_Murphy_RL/2026-04-01-11-18-32.png), 
+这里的ω就是为了计算引入的baseline,能在线更新,采样就是因为前面的状态动作期望的策略梯度算法

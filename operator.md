@@ -27,3 +27,4 @@
 - y/c/v ,配合s, / ,f, t 等搜索跳转有起效
 - `:LspRestart` , 重启lsp语言服务器
 - leader+xt , todo
+- 搜索\要用\\,搜索\[要用\\\[
