@@ -351,5 +351,35 @@ $\nabla J(\theta) = \mathbb{E}_\tau \left[ \sum_{k=1}^T \gamma^{k-1} Q_\theta(s_
 | 轨迹期望形式 | 完整轨迹的回报 \(R(\tau)\) | 回合结束后 | 高 |
 | 状态-动作期望形式(现代策略梯度算法的基础) | 当前步的 \(Q(s,a)\) | 每步都可更新 | 低 |
 
-- 优势演员评论家算法advanced actor critor(a2c)伪代码: ![a2c算法](assets_Kevin_Murphy_RL/2026-04-01-11-18-32.png), 
+- 双网络的优势演员评论家算法advanced actor critor(a2c)伪代码: ![a2c算法](assets_Kevin_Murphy_RL/2026-04-01-11-18-32.png), 
 这里的ω就是为了计算引入的baseline,能在线更新,采样就是因为前面的状态动作期望的策略梯度算法
+- a2c是同策略
+- 训练阶段：最大化熵,策略输出高斯分布 N(μ(s),σ(s))，按分布采样动作;
+  保存权重后得到部署模型;
+  部署阶段：加载相同权重，最小化熵,仅输出分布均值 μ(s)，舍弃采样与方差，实现确定性控制.
+- Q(s, a) − V (s) = A(s, a), A为优势函数。
+- 在策略强化学习中，熵用于度量策略 πθ(a|s) 的不确定性与随机程度. 熵越高，策略在状态 s 下的动作分布越均匀，探索性越强；熵越低，策略越趋于确定性，动作选择越集中。
+- 可以把a2c算法看作是同策略直接更新策略参数版本的dqn算法
+- 批量更新方式的单网络的a2c算法用到了损失函数(包含TD误差,策略梯度,策略的熵), 用这一个损失函数更新所有的参数: [单网络的a2c算法的损失函数讲解](./单网络的a2c算法的损失函数讲解.md)
+- n步优势公式迭代计算公式: 
+  δt = rt + γvt+1 − vt ,
+  At = δt + γλδt+1 + · · · + (γλ)T −(t+1) δT −1 = δt + γλAt+1
+- 这里 λ ∈ [0, 1] 是一个控制偏差-方差权衡的参数：较大的值会减小偏差但增加方差. 这种迭代估计优势函数大小的方式被称为广义优势估计generalized advantage estimation(GAE)
+-  ![GAE计算过程伪代码](assets_Kevin_Murphy_RL/2026-04-02-09-11-46.png), 这里的yt就是采样的回报值Gt的估计值
+- ![批量更新的a2c with gae伪代码](assets_Kevin_Murphy_RL/2026-04-02-09-42-40.png)
+
+- 底盘运动学解算,六轴机械臂逆运动学解算, 低通滤波器, rgb图深度图, 相机视觉模型,为全机身运动控制创建独立 PID 控制器：
+    驱动轮电机 PID（4 轴）
+    转向轮 PID（4 轴）
+    机械臂 PID（6 轴）
+    灵巧手 PID（16 轴）
+
+- 轨迹期望和单步期望, 单步和多次单步采样, 是不一样的 
+$
+\boldsymbol{e} = \text{angle_axis}\big(\boldsymbol{T}_e(\boldsymbol{q}),\,\boldsymbol{T}_{ep}\big) \quad \boldsymbol{e} \in \mathbb{R}^6$
+
+$$\Sigma_i=
+\begin{cases}
+-\dfrac{(q_i-q_{min,i}-\pi_i)^2}{(p_s-\pi_i)^2} & q_i\to q_{min,i}\\[4pt]
++\dfrac{(q_{max,i}-q_i-\pi_i)^2}{(p_s-\pi_i)^2} & q_i\to q_{max,i}
+\end{cases}$$
