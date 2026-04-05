@@ -383,3 +383,18 @@ $$\Sigma_i=
 -\dfrac{(q_i-q_{min,i}-\pi_i)^2}{(p_s-\pi_i)^2} & q_i\to q_{min,i}\\[4pt]
 +\dfrac{(q_{max,i}-q_i-\pi_i)^2}{(p_s-\pi_i)^2} & q_i\to q_{max,i}
 \end{cases}$$
+
+- 双-时间尺度-演员-评论员算法: 通过增大critic网络的学习率,或者增大critic网络的每步更新次数
+- pθ(y|x): 在给定x和参数θ下,y的以θ为参数的概率分布
+- 商法则: ∇(f/g)=(g∇f−f∇g)/g^2
+- sgd随机梯度下降更新其实是等价于最小化欧氏距离约束; 引入ngd自然梯度下降,等价于最小化kl散度约束
+- 自然梯度 = F−1× 普通梯度
+- 自然梯度不仅给每个参数分配不同步长，更重要的是通过 Fisher 矩阵的逆旋转梯度方向，使更新在概率分布的流形上指向真正的“最陡”方向——这是普通梯度和对角预条件做不到的。
+- 折现状态访问分布: 在所有时间步上,状态s的访问概率的折现之和 的分布
+- a=μθ(s)是确定性策略, a~πθ(s)是随机策略
+- 随机策略梯度定理: $\nabla_\theta J(\theta) = \mathbb{E}_{\rho_\gamma^\pi(s) \pi_\theta(a|s)} \left[ Q^{\pi_\theta}(s, a) \nabla_\theta \log \pi_\theta(a|s) \right]$
+- (dpg)确定策略梯度定理: $\nabla_\theta J(\mu_\theta) = \mathbb{E}_{\rho_{\mu_\theta}(s)} \left[ \nabla_\theta Q_{\mu_\theta}(s, \mu_\theta(s)) \right] = \mathbb{E}_{\rho_{\mu_\theta}(s)} \left[ \nabla_\theta \mu_\theta(s) \nabla_a Q_{\mu_\theta}(s, a) |_{a=\mu_\theta(s)} \right]$
+- 确定性策略训练时采样的数据要用随机策略来采集, 更新策略参数时的动作是确定策略给出的,所以确定性策略梯度算法是异策略的
+-  DDPG 本质上就是 DQN 在连续动作空间的扩展。两者共享核心机制：经验回放、目标网络、TD 学习。唯一的本质区别是：DQN 处理离散动作（用 max 选动作），DDPG 处理连续动作（用 Actor 网络 μθ(s) 输出动作）。
+- ![ddpg算法伪代码](assets_Kevin_Murphy_RL/2026-04-05-16-11-53.png)
+- TD3(twin delay deep deterministic policy gradient孪生延迟dpg): ![t3d](assets_Kevin_Murphy_RL/2026-04-05-16-52-28.png)
