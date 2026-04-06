@@ -321,6 +321,7 @@ $target = r + \gamma max_{a'} min_{i \in M}Q_{\bar{\omega_i}}(s', a')$
 - HER 同时用多种目标（包括真实目标和伪目标）训练同一个策略，让智能体学会“如何向任意目标移动”的通用能力，从而最终能够到达真实目标。
 
 # 基于策略的强化学习
+#### 策略梯度方法
 - 高斯输出层: 策略网络输出一个高斯分布(正态分布),而不是输出一个固定的动作. 只有训练阶段才输出分布（高斯 / 类别分布）用于探索；推理 / 部署阶段，直接取分布的均值作为控制指令。
 - 从 Q(s, a) 估计动作价值函数从中推导出策略的缺点:
   - 难以应用于连续动作空间
@@ -344,13 +345,14 @@ $\nabla J(\theta) = \mathbb{E}_\tau \left[ \sum_{k=1}^T \gamma^{k-1} Q_\theta(s_
 - REINFORCE算法(策略价值梯度估计和sgd)的伪代码:![reinforce的回合式版本](assets_Kevin_Murphy_RL/2026-03-31-15-23-27.png),w为什么是回合式呢,因为reinforce算法只适合有终止状态的回合式空间
 - 带基准的REINFORCE算法的伪代码: ![baselined reinforce ](assets_Kevin_Murphy_RL/2026-04-01-10-23-11.png)
 - 把轨迹的期望换成第k步状态的分布概率乘以策略该状态选取动作的分布概率再乘进去: [策略梯度函数从轨迹的期望转换成对状态-动作的期望的推导](./策略梯度定理推导.md)
+- 提出折现状态访问分布 ρμ(s) 的核心目的是：将策略性能 J(θ) 的梯度，从依赖“完整轨迹回报”的形式，转化为只依赖“当前状态-动作的 Q 函数梯度”的形式
 - 策略梯度公式由对轨迹求期望转换成对状态-动作求期望有什么用呢
 
 | 形式 | 依赖 | 更新时机 | 方差 |
 |------|------|----------|------|
 | 轨迹期望形式 | 完整轨迹的回报 \(R(\tau)\) | 回合结束后 | 高 |
 | 状态-动作期望形式(现代策略梯度算法的基础) | 当前步的 \(Q(s,a)\) | 每步都可更新 | 低 |
-
+#### a2c
 - 双网络的优势演员评论家算法advanced actor critor(a2c)伪代码: ![a2c算法](assets_Kevin_Murphy_RL/2026-04-01-11-18-32.png), 
 这里的ω就是为了计算引入的baseline,能在线更新,采样就是因为前面的状态动作期望的策略梯度算法
 - a2c是同策略
@@ -398,3 +400,16 @@ $$\Sigma_i=
 -  DDPG 本质上就是 DQN 在连续动作空间的扩展。两者共享核心机制：经验回放、目标网络、TD 学习。唯一的本质区别是：DQN 处理离散动作（用 max 选动作），DDPG 处理连续动作（用 Actor 网络 μθ(s) 输出动作）。
 - ![ddpg算法伪代码](assets_Kevin_Murphy_RL/2026-04-05-16-11-53.png)
 - TD3(twin delay deep deterministic policy gradient孪生延迟dpg): ![t3d](assets_Kevin_Murphy_RL/2026-04-05-16-52-28.png)
+- Wasserstein Policy Optimization 的核心目标是：让随机策略也能利用 ∇aQ 的方向信息，从而获得 DPG 的低方差优势，同时保留随机策略的探索能力。
+- ![wpo梯度更新公式](assets_Kevin_Murphy_RL/2026-04-06-09-46-08.png)
+- 随机策略梯度只用到了Q的大小,确定策略梯度用到了Q的方向
+#### 策略改进方法(policy improvement)
+- 策略梯度方法不能每一步都保证提升策略性能, 由于梯度估计有噪声方差高,学习率(步长η难调容易越过最优解)的缘故.策略改进方法利用下界保证每一步性能即使不上升,下降也有界,不会暴跌
+- 下界: L(π,πk)−惩罚项, J(π)−J(πk)>下界, 下界详细公式: 
+![下界详细公式](assets_Kevin_Murphy_RL/2026-04-06-12-28-22.png)
+$J(\pi) - J(\pi_k) \geq \underbrace{\frac{1}{1-\gamma} \mathbb{E}_{p_{\pi_k}^\gamma(s) \pi_k(a|s)} \left[ \frac{\pi(a|s)}{\pi_k(a|s)} A^{\pi_k}(s, a) \right]}_{L(\pi, \pi_k)} - \frac{2\gamma C^{\pi, \pi_k}}{(1-\gamma)^2} \mathbb{E}_{p_{\pi_k}^\gamma(s)} \left[ \mathrm{TV}(\pi(\cdot|s), \pi_k(\cdot|s)) \right]$
+- 优化下界就是找到一个策略π让下界最大, 带信任域约束的下界优化公式: 
+$\pi_{k+1} = \operatorname*{argmax}_{\pi} L(\pi, \pi_k) \quad \text{s.t.} \quad \mathbb{E}_{p_{\pi_k}^\gamma(s)} \left[ \text{TV}(\pi, \pi_k)(s) \right] \leq \epsilon$
+- trust region policy optimization算法伪代码: ![trpo算法伪代码](assets_Kevin_Murphy_RL/2026-04-06-17-25-39.png), 把TV换成KL散度
+- TRPO = 自然梯度方向 + 共轭梯度法求解 + 回溯线搜索保证 KL 约束，是信任域策略优化的经典实现。PPO 是其简化版，用 clipping 替代显式约束，更易实现和调参。
+- proximal 最接近的,邻近的
