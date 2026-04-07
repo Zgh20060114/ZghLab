@@ -412,4 +412,6 @@ $J(\pi) - J(\pi_k) \geq \underbrace{\frac{1}{1-\gamma} \mathbb{E}_{p_{\pi_k}^\ga
 $\pi_{k+1} = \operatorname*{argmax}_{\pi} L(\pi, \pi_k) \quad \text{s.t.} \quad \mathbb{E}_{p_{\pi_k}^\gamma(s)} \left[ \text{TV}(\pi, \pi_k)(s) \right] \leq \epsilon$
 - trust region policy optimization算法伪代码: ![trpo算法伪代码](assets_Kevin_Murphy_RL/2026-04-06-17-25-39.png), 把TV换成KL散度
 - TRPO = 自然梯度方向 + 共轭梯度法求解 + 回溯线搜索保证 KL 约束，是信任域策略优化的经典实现。PPO 是其简化版，用 clipping 替代显式约束，更易实现和调参。
-- proximal 最接近的,邻近的
+- proximal 最接近的,邻近的, proximal policy optimization 近端策略优化
+- ![ppo算法伪代码](assets_Kevin_Murphy_RL/2026-04-07-08-46-52.png)
+- ppo的clipping技巧,sgd代替了trpo复杂的信任域kl散度约束,自然梯度求解,步长η回溯线搜索
