@@ -479,3 +479,29 @@ self.assertRaises(exc, callable, arg1, arg2, ...)
 - 直接运行包内的子模块里的脚本: `python3 -m 包名.子模块脚本`
 - uv: 代替pip+venv
 - 当类实现了`__call__` 方法, 类的实例就可以当函数一样用`obj(xx)`
+- vars(x)等价于x.__dict__
+- 伪随机数生成器（PRNG）是一个确定性的数学算法。 给它相同的“种子”（初始状态），它就会产生完全相同的随机数__序列__, 这就像一个公式：相同的输入 → 完全相同的输出。
+- ABC 是 Python 中 Abstract Base Class（抽象基类）的缩写，用于定义不能被实例化的抽象类，强制规定子类重写实现某些方法。
+- `from __future__ import annotations` 遇到类型注解时先当作字符串存起来等整个文件读完后再进行类型检查
+- None 在 Python 中既是唯一的值，也用作类型注解中的类型占位符
+- `from typing import Any, NamedTuple `, NamedTuple类比tuple更清晰,比class更简单的只读的类
+~~~python
+  class ReplayBufferSamples(NamedTuple):
+    observations: th.Tensor
+    actions: th.Tensor
+    next_observations: th.Tensor
+    dones: th.Tensor
+    rewards: th.Tensor
+~~~
+- class xxx(NamedTuple) 就相当于cpp里的结构体
+- `@dataclass class XX` 也相当于cpp里的带值结构体
+- isinstance (变量，类型) → 判断这个变量是不是这个类型
+- `NotImplementedError` 未实现异常,表示这个功能还没有实现
+- extend有延伸,拓展,批量的意思
+- 在同文件夹下导入用`from .xx.xx`, `from . import xx`
+- 在cpp中函数名相同参数不同属于函数重载, 函数名相同参数相同会报错重复定义;在pyton中函数名相同就会直接覆盖
+- 在cpp类中调用一个函数只会在当前类中寻找,不会去父类中寻找(除非制定了父类作用域); python查找完子类后还会自动查找父类
+- python中返回值需要用return传递, 不写return就会丢弃调用函数的返回值,隐式添加return None
+- numpy.ndarray 是数据类型, numpy.array是创建ndarray类型数据的函数
+- python中的/是浮点数除法,//是整数除法(向下取整)
+- python中的赋值是赋值地址(引用), cpp的赋值是值拷贝,引用需要用&

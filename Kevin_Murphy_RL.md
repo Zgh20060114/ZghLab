@@ -259,7 +259,7 @@ TODO: 正确性待定
     - 增量更新形式: V (st ) ← V (st ) + η [Gt − V (st )]
 - 把蒙特卡罗估计和策略迭代结合：
     策略评估：用蒙特卡罗采样估计当前策略的 Q; 
-    策略改进：πk+1(s)=argmax_aQk(s,a). (策略是greedy)
+    策略改进：πk+1(s)=argmax_aQk(s,a). (策略均方是greedy)
     这就是 蒙特卡罗控制. 如果当前策略是确定性的，某些 (s,a) 可能永远不会被采样,解决方案：用 ϵ-greedy 策略（以 ϵ 概率随机探索）来收集数据. 但是这样是次优的(因为这不是当前策略的数据),让让 ϵ→0，最终策略退化为确定性最优策略
 - MC估计的问题: 需要采样完整的轨迹回报,走一个完整的策略轨迹才能得到一个G(t),随机性的累加导致方差很大,于是就有了TD(时序差分更新)算法,采用单步采样更新:
                   V(st)←V(st)+η[rt+γV(st+1)−V(st)], 
@@ -415,3 +415,24 @@ $\pi_{k+1} = \operatorname*{argmax}_{\pi} L(\pi, \pi_k) \quad \text{s.t.} \quad 
 - proximal 最接近的,邻近的, proximal policy optimization 近端策略优化
 - ![ppo算法伪代码](assets_Kevin_Murphy_RL/2026-04-07-08-46-52.png)
 - ppo的clipping技巧,sgd代替了trpo复杂的信任域kl散度约束,自然梯度求解,步长η回溯线搜索
+- `gym.vector.SyncVectorEnv `需要自己创建env,所以需要把创建env的函数传参给它,而不是创建过的env传参给它
+- 数据重复利用 → Off-Policy（异策略）
+- truncation 截断
+- 用python中的类型注解代替cpp里的声明成员变量: 
+~~~python
+class ReplayBuffer(BaseBuffer):
+    observations: np.ndarray
+    next_observations: np.ndarray
+    actions: np.ndarray
+    rewards: np.ndarray
+    dones: np.ndarray
+    timeouts: np.ndarray
+
+    def __init__(
+        self,........
+~~~
+- `flatten()` 把数据展平成一行
+- `max(dim=1) ` 除了返回最大值之外,还有最大值索引
+- `gather` 按索引提取元素
+- `sequeeze` 去除维度为1的维度
+- 把步数,更新步数等等想象在一条线上,而不是循环里面套循环

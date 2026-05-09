@@ -364,3 +364,5 @@ $$
 - immerse 沉浸
 - precise 精确的
 - utility 实用的
+- torch.backends 模块的作用是控制 PyTorch底层硬件加速库（如cuDNN、MKL）的行为，以优化计算性能或确保结果可复现。
+- `torch.tensor(xx)` 深拷贝,新建一个tensor ; `torch.as_tensor(xx)` 浅拷贝,与原数据共享内存
