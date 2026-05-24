@@ -505,3 +505,6 @@ self.assertRaises(exc, callable, arg1, arg2, ...)
 - numpy.ndarray 是数据类型, numpy.array是创建ndarray类型数据的函数
 - python中的/是浮点数除法,//是整数除法(向下取整)
 - python中的赋值是赋值地址(引用), cpp的赋值是值拷贝,引用需要用&
+- permutation 序列 
+- amplitude 振幅
+- hypotenuse 斜边

@@ -24,7 +24,8 @@
 - ctrl+d/u 向上/下翻半页
 - [vim_c_operate](./vim_c_operate.md)
 - v+f+字符+;/,选择, 然后y
-- y/c/v ,配合s, / ,f, t 等搜索跳转有起效
+- y/c/v ,配合s, / ,f, t 等搜索跳转有奇效
 - `:LspRestart` , 重启lsp语言服务器
 - leader+xt , todo
 - 搜索\要用\\,搜索\[要用\\\[
+- 将选中的单词转大写/小写: gU/gu
