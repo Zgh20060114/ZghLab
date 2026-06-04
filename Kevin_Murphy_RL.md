@@ -61,15 +61,15 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
   - 上下文老虎机contextual bandit, 上下文老虎机中智能体的动作 at 和过去状态 wt−1 无法影响下一个状态 wt；但在上下文 MDP 中，动作会影响状态转移。
   - 信念状态mpd: 信念状态mdp,通过b_t代替了不确定性z_t,w_t,o_t, 把pomdp转换成了可计算的mdp问题,但是又保留了podmdp的精髓信念状态, 环境是pomdp的,但是智能体的决策被建模到信念空间的mdp环境中, b_t就相当于mdp的s_t, 使用贝叶斯推理来计算信念状态，bt = p(wt|ht) 
 - 当 __环境模型未知(R(s,a)和p(s'|s,a)未知)__ 时如何计算最优策略的方法,这正是强化学习所解决的核心问题。我们主要关注马尔可夫决策过程（MDP）情形
-- $\textcolor{green}{on-policy}$: 只能用当前正在优化的策略与环境交互产生的数据跟新策略,数据只能用一次
+- $\textcolor{green}{on-policy}$: 只能用当前正在优化的策略与环境交互产生的数据跟新策略,数据只能用一次; 同一个生成数据和学习策略
 - $\textcolor{green}{off-policy}$: 可以用旧策略的数据,人类示范数据等等更新策略, 数据可以重复使用
 - 策略收敛: 策略不再改变
 - 传统动态规划（DP）要求：
 状态空间有限且小;已知完整模型（转移概率、奖励）;可以精确计算价值函数.当状态空间大或连续时，无法精确计算价值函数时，就用 函数近似 来估计价值函数，这就是 ADP。
 #### value-based rl 基于价值的强化学习,也称ADP(approximate dynamic programming 近似动态规划)
-- 最优策略的价值函数满足以下递归条件, 这个递归条件被称为贝尔曼最优方程: $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$, 
+- 最优策略的价值函数满足以下递归条件, 这个递归条件被称为$\textcolor{green}{贝尔曼最优方程}$: $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$, 
 在当前状态 s 选择动作 a获得的即时奖励 R(s,a)+折现后的未来价值期望的和的最大值。
-- 对于固定策略$\pi$,$贝尔曼方程 V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,但是不知道p{s'|s,a}, 也不能枚举出全部的s',所以可以用蒙特卡洛思想(用单个样本采样代替均值, 这里就体现了adp)和梯度下降, 求出该固定策略下的价值:$V_\pi(s) \leftarrow V_\pi(s) + \eta(r+ \gamma V_\pi(s') - V_\pi(s))$, 该求解固定策略的价值函数的方法也被称为$\textcolor{orange}{时序差分学习方法(Temproal Difference)(TD学习)}$
+- 对于固定策略$\pi$,$\textcolor{green}{贝尔曼方程} V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,但是不知道p{s'|s,a}, 也不能枚举出全部的s',所以可以用蒙特卡洛思想(用单个样本采样代替均值, 这里就体现了adp)和梯度下降, 求出该固定策略下的价值:$V_\pi(s) \leftarrow V_\pi(s) + \eta(r+ \gamma V_\pi(s') - V_\pi(s))$, 该求解固定策略的价值函数的方法也被称为$\textcolor{orange}{时序差分学习方法(Temproal Difference)(TD学习)}$
 - 策略: 在每个状态选择最优的动作, 所以能获得(状态,动作)表就是找到了策略, 策略不是一个顺序执行的规则
 - 已知价值函数,如何推导出策略:
   之前是状态价值函数V(s), 现在引入状态动作价值函数Q(s,a), 他们之间的关系是:  $V^∗(s′) = \max_{a′} Q^∗ (s′,a′)$, 
@@ -79,7 +79,7 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 - s,a->s', 有0.2的概率获得r1, 有0.8的概率获得r2
 #### policy-based rl 基于策略的强化学习(policy search/policy gradient方法)
 - ![rl算法对比](assets_Kevin_Murphy_RL/2026-03-23-08-44-24.png)
-- policy-based 相对于adp, 可证明可收敛到局部最优,不用遍历计算argmax,天然支持连续动作空间,可微性天然支持dl, 但是- policy-based 相对于adp, 可证明可收敛到局部最优,不用遍历计算argmax,天然支持连续动作空间,可微性天然支持dl, 但是策略梯度方差大,训练不稳定
+- policy-based 相对于adp, 可证明可收敛到局部最优,不用遍历计算argmax,天然支持连续动作空间,可微性天然支持dl, 但是策略梯度方差大,训练不稳定
 #### model-based rl 基于模型的强化学习
 - adp = dp + 采样近似 + 函数近似
 - value-based rl使用了近似采样+神经网络函数近似, model-based rl首先学习到mdp的p和r,在学习到的模型上使用apd(神经网络函数近似)
@@ -101,6 +101,8 @@ $p(s_1 \mid s_0,a_0) = \sum_{o_1} p_{\text{env}}(o_1 \mid a_0) \cdot \delta\bigl
 - potential 潜在的
 - s0=s : 初始状态时s
 - residual 剩余
+
+
 # Chapter 2: value-based rl 基于价值的强化学习
 - 贝尔曼方程(评价给定策略): $V(s) = E_{\pi(a|s)}[R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,  一个在求期望求平均
 - 贝尔曼最优方程(寻找最佳策略): $V^*(s) = \max_a [R(s, a) + \gamma \mathbb{E}_{p(s' | s, a)} \left[ V^*(s') \right]]$,  一个在求最大值
@@ -113,7 +115,7 @@ $\begin{aligned}
 - bellman error/bellman residual
 - bellman operator
 ### 在已知世界模型中求解最优策略
-#### value iteration
+#### value iteration $\textcolor{green}{值迭代}$
 ~~~python
 - 对于有限状态空间动作空间,可以列举全部的状态,进行值迭代
 - value iteration 代码示例
@@ -204,7 +206,7 @@ $\begin{aligned}
 - 确定性策略空间: 每个状态 s 只输出一个固定的动作 a=π(s), 比如π(s1)=a1,π(s2)=a2
 - 随机策略空间: 每个状态s 输出动作的概率分布
 - 一般训练时随机策略, 部署时确定性策略
-#### policy iteration
+#### policy iteration $\textcolor{green}{策略迭代}$
 - policy iteration 也是最优确定性/随机策略都有,但是pi只能在确定性策略空间中,求得确定性最优策略
 - 迭代贝尔曼最优方程是value iteration; 迭代贝尔曼方程是policy evaluation
 - policy improvement求下一个更好的策略的做法与value iteration用最佳价值函数求最佳策略的做法一致: 都是根据价值函数,使用贪心方法提取确定性特征
@@ -220,7 +222,7 @@ $\begin{aligned}
     2. 计算当前价值Vθ(s)=θ⊤ϕ(s)
     3. 计算贝尔曼目标target=r+γVθ(s′) ,(这里的r,s'是当前s单次采样近似选择动作a得到的r和s')
     4. 更新 θ: θ←θ+α⋅(target−Vθ(s))⋅ϕ(s)
-    -                  动态规划 (DP)(value-based)
+-                  动态规划 (DP)(value-based)
                       /           \
 (value-based)价值迭代          策略迭代(value-based)
                 ↓                 ↓
@@ -283,7 +285,7 @@ $G_t^\lambda = (1 - \lambda) \sum_{n=1}^{T-t-1} \lambda^{n-1} G_{t:t+n} + \lambd
 - 同策略的算法有 SARRA, ppo等
 - ![sarsa和q-learning的区别,同策略和异策略的区别](assets_Kevin_Murphy_RL/2026-03-28-11-21-21.png)
 - SARSA的算法流程:![sarsa算法流程](assets_Kevin_Murphy_RL/2026-03-28-11-26-51.png):
-  - 其中采样时利用现在的策略选择a到达s',更新时利用现在的策略π选择a', 所以是同策略的. 
+  - 其中采样时利用ε-greedy选择a到达s',更新时利用ε-greedy选择a', 所以是同策略的. 
   - ![ϵ-greedy策略](assets_Kevin_Murphy_RL/2026-03-28-14-12-38.png), 你会想: ϵ-greedy不是没变吗,哪来的策略改进呢?策略选取的概略没变,但是策略选取的动作变了,所以策略变化了,策略改进已经隐含在这个随机策略里.
   - 这里的TD更新没有一次性求出当前Q(s,a)的收敛值, 而是更新一次后去求了Q(s',a'),但多次episode后,所有的Q(s,a)都会收敛
 - SARSA的名字由来是(s,a,r,s',a')
