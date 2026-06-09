@@ -438,3 +438,4 @@ class ReplayBuffer(BaseBuffer):
 - `gather` 按索引提取元素
 - `sequeeze` 去除维度为1的维度
 - 把步数,更新步数等等想象在一条线上,而不是循环里面套循环
+- 优势函数 A(s,a)=Q(s,a)−V(s)，用来衡量某个动作比当前状态下的平均表现好多少或差多少
