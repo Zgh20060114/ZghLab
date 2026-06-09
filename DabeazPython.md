@@ -508,3 +508,4 @@ self.assertRaises(exc, callable, arg1, arg2, ...)
 - permutation 序列 
 - amplitude 振幅
 - hypotenuse 斜边
+- -1是一个占位符, 让框架自动计算该轴的长度.
