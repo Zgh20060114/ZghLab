@@ -19,7 +19,6 @@
 这是唯一需要跨文件包含的头文件，替代原来的 `extern` 声明：
 
 ```C++
-
 #pragma once
 #include <string>
 #include <mutex>  // 可选：线程安全（多线程场景加）
@@ -83,7 +82,6 @@ private:
 #### 步骤2：a.cpp（赋值类）—— 通过类接口给全局状态赋值
 
 ```C++
-
 #include "GlobalState.h"
 
 // a.cpp 中的类：负责赋值全局状态
@@ -107,7 +105,6 @@ int main_a() {  // 仅示例，实际可在业务逻辑中调用
 #### 步骤3：b.cpp（读取类）—— 通过类接口读取全局状态
 
 ```C++
-
 #include "GlobalState.h"
 #include <iostream>
 
@@ -118,7 +115,7 @@ public:
         // 调用 Getter 读取，无需 extern
         int counter = GlobalState::getInstance().getCounter();
         const std::string& name = GlobalState::getInstance().getName();
-        
+
         std::cout << "Counter: " << counter << ", Name: " << name << std::endl;
     }
 };
@@ -134,7 +131,6 @@ int main_b() {  // 仅示例，实际可在业务逻辑中调用
 #### 步骤4：主程序（main.cpp）—— 整合调用
 
 ```C++
-
 #include "GlobalState.h"
 #include "a.cpp"  // 实际项目中应包含 a.hpp，这里简化
 #include "b.cpp"  // 实际项目中应包含 b.hpp，这里简化
@@ -154,13 +150,14 @@ int main() {
 
 ### 三、这个方案的核心优势（对比 extern）
 
-|维度|extern 全局变量|单例状态类方案|
-|---|---|---|
-|耦合度|高（直接依赖全局变量名）|低（仅依赖类接口，变量名私有化）|
-|访问控制|无（可任意修改，无校验）|可控（Setter 加校验、日志、锁）|
-|线程安全|需手动加锁，易漏|类内封装锁，统一控制|
-|可维护性|变量分散，难追溯修改记录|所有修改通过接口，易调试/审计|
-|扩展性|差（新增变量需加 extern）|好（新增变量只需加 Getter/Setter）|
+| 维度   | extern 全局变量      | 单例状态类方案                  |
+| ---- | ---------------- | ------------------------ |
+| 耦合度  | 高（直接依赖全局变量名）     | 低（仅依赖类接口，变量名私有化）         |
+| 访问控制 | 无（可任意修改，无校验）     | 可控（Setter 加校验、日志、锁）      |
+| 线程安全 | 需手动加锁，易漏         | 类内封装锁，统一控制               |
+| 可维护性 | 变量分散，难追溯修改记录     | 所有修改通过接口，易调试/审计          |
+| 扩展性  | 差（新增变量需加 extern） | 好（新增变量只需加 Getter/Setter） |
+
 ### 四、进阶优化（可选，根据项目规模）
 
 #### 1. 多线程场景：已内置互斥锁
@@ -172,7 +169,6 @@ int main() {
 如果项目规模大、需要高可测试性，可把 `GlobalState` 作为依赖注入到 `DataUpdater`/`DataReader` 中（而非直接用单例）：
 
 ```C++
-
 // a.cpp 改造：构造函数注入 GlobalState
 class DataUpdater {
 public:
@@ -197,7 +193,6 @@ DataUpdater updater(state);
 如果需要把全局状态保存到文件/数据库，可在 `GlobalState` 中加序列化/反序列化接口：
 
 ```C++
-
 // GlobalState.h 中新增
 #include <fstream>
 void saveToFile(const std::string& path) {
@@ -220,4 +215,5 @@ void loadFromFile(const std::string& path) {
 3. 进阶选择：大型项目可结合「依赖注入」进一步解耦，多线程场景加内置锁，需持久化加序列化接口。
 
 这个方案完全符合现代 C++ 的设计理念，既保留了“全局共享状态”的需求，又解决了 `extern` 全局变量的所有痛点。
+
 > （注：文档部分内容可能由 AI 生成）
