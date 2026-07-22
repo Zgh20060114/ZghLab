@@ -80,14 +80,14 @@
 - this指针保存在寄存器中,不在内存中,所以无法取到this指针的地址.
 - 对象调用成员函数时,编译器会把对象的地址传递给成员函数隐藏的this形参(第一个参数).
 - 类成员变量的初始化顺序是声明的顺序.
-- > [!WARNING]
+> [!WARNING]
 > 初始化列表中的书写顺序，永远与类中声明的顺序保持一致！
 - c++类中有**4种特殊成员变量**💡💡:常量成员变量,引用成员变量,类对象成员变量,静态成员变量. 它们的初始化与普通成员变量有所不同.
   - 常量成员变量: `const int _a = 1;`这只是类内默认初始化,想改变默认初始化值必须在构造函数的列表初始化中完成. 一个含有const成员变量的类对象不能进行简单的赋值运算`p1=p2;`(编译器会自动删除该类的默认拷贝赋值运算符函数),必要时需要自己写出拷贝赋值运算符函数.
   - 引用成员变量: `int & _ref = num;`这也只是类内默认初始化, 想改变默认初始化值也必须在构造函数的列表初始化中完成.`(编译器会自动删除该类的默认拷贝赋值运算符函数),必要时需要自己写出拷贝赋值运算符函数
   - 类对象成员变量: 要么用花括号来类内默认初始化`Point _p1{1, 2};`,要么用拷贝构造函数`Point _p1=Point(1,2);`, 要么类构造函数初始化列表初始化`Line(): _p1(1,2){}`
   - static静态成员变量: 不属于任何一个类对象,被该类的所有对象共享, 存储在全局变量/静态变量区,并不占据对象的内存存储空间. 初始化必须放到**类外**:`int Computer::_static_price = 0;`, 语法上可以通过类对象调用,但是更推荐通过类名作用域限定符调用.
-- > [!WARNING]
+> [!WARNING]
 > 类内默认初始化类对象用()是错误的:`Point _p1(1,2);`❌❌,要用{}.
 - `=delete` :删除函数(可用于任何函数); `=default` :请编译器按照默认规则帮我生成这个函数(只能用于类中的6个特殊成员函数).
 - c++类中有**2种特殊成员函数**💡💡: static静态成员函数,const常量成员函数.
@@ -102,4 +102,62 @@
 - 一个类只能生成堆对象,不能生成栈对象: 把析构函数设为private; 一个类只能生成栈对象,不能生成堆对象: 把operator new和operator delete函数设为private.
 - 单例模式: 这个类只能有一个实例对象.
 - static是怎么延长函数中临时变量生命周期的: 把临时变量的储存位置从栈上挪到全局/静态存储区(**地址永不变**). static变量只初始化一次,后续调用直接跳过初始化. 
-- > asdf 
+> [!NOTE]
+> `static auto stc_ptr = std::make_unique<Point>(1, 2);`这个stc_ptr是在全局/静态存储区,stc_ptr指向的对象在堆上.
+- 现代c++单例模式规范写法及调用:
+<details>
+<summary>点击查看代码</summary>
+
+```cpp
+#include <iostream>
+#include <string>
+
+class Logger {
+public:
+    // 1. 获取单例实例的唯一入口
+    static Logger& getInstance() {
+        static Logger instance; // C++11 保证线程安全且只初始化一次
+        return instance;
+    }
+
+    // 2. 业务方法
+    void log(const std::string& message) {
+        std::cout << "[LOG] " << message << std::endl;
+    }
+
+    // 3. 禁止拷贝和移动，确保全局唯一性
+    Logger(const Logger&) = delete;
+    Logger& operator=(const Logger&) = delete;
+    Logger(Logger&&) = delete;
+    Logger& operator=(Logger&&) = delete;
+
+private:
+    // 4. 私有构造函数，防止外部直接创建
+    Logger() {
+        std::cout << "Logger instance created." << std::endl;
+    }
+
+    // 5. 析构函数（可选，用于释放资源）
+    ~Logger() {
+        std::cout << "Logger instance destroyed." << std::endl;
+    }
+};
+//调用
+    Logger& logger = Logger::getInstance();
+    logger.log("Application started");
+//或
+    Logger::getInstance().log("Processing data...");
+// 当单例实例需要灵活的配置时,不能在getInstance初始化,写一个init():
+    void init(const std::string& logPath, int level) {
+        logPath_ = logPath;
+        level_ = level;
+        std::cout << "Logger configured: path=" << logPath_
+                  << ", level=" << level_ << std::endl;
+    }
+```
+</details>
+
+- `<string>`标准库提供了一个`basic_string`类模板,string类的本质其实是`basic_string`类模板关于char类型的实例化.
+- `std::sting iterator= str.begain();`
+- ![std::string操作](assets_CPP_WD/2026-07-22-14-41-12.png)
+- basic_string还进行了运算符重载,支持使用==、>、< 等符号来比较两个字符串的内容.

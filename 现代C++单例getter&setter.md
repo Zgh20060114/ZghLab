@@ -18,7 +18,7 @@
 
 这是唯一需要跨文件包含的头文件，替代原来的 `extern` 声明：
 
-```C++
+```cpp
 #pragma once
 #include <string>
 #include <mutex>  // 可选：线程安全（多线程场景加）
@@ -81,7 +81,7 @@ private:
 
 #### 步骤2：a.cpp（赋值类）—— 通过类接口给全局状态赋值
 
-```C++
+```cpp
 #include "GlobalState.h"
 
 // a.cpp 中的类：负责赋值全局状态
@@ -104,7 +104,7 @@ int main_a() {  // 仅示例，实际可在业务逻辑中调用
 
 #### 步骤3：b.cpp（读取类）—— 通过类接口读取全局状态
 
-```C++
+```cpp
 #include "GlobalState.h"
 #include <iostream>
 
@@ -130,7 +130,7 @@ int main_b() {  // 仅示例，实际可在业务逻辑中调用
 
 #### 步骤4：主程序（main.cpp）—— 整合调用
 
-```C++
+```cpp
 #include "GlobalState.h"
 #include "a.cpp"  // 实际项目中应包含 a.hpp，这里简化
 #include "b.cpp"  // 实际项目中应包含 b.hpp，这里简化
@@ -168,7 +168,7 @@ int main() {
 
 如果项目规模大、需要高可测试性，可把 `GlobalState` 作为依赖注入到 `DataUpdater`/`DataReader` 中（而非直接用单例）：
 
-```C++
+```cpp
 // a.cpp 改造：构造函数注入 GlobalState
 class DataUpdater {
 public:
@@ -192,7 +192,7 @@ DataUpdater updater(state);
 
 如果需要把全局状态保存到文件/数据库，可在 `GlobalState` 中加序列化/反序列化接口：
 
-```C++
+```cpp
 // GlobalState.h 中新增
 #include <fstream>
 void saveToFile(const std::string& path) {

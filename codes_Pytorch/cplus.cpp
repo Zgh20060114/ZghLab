@@ -1,5 +1,8 @@
+#include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 
 class Point {
@@ -14,7 +17,7 @@ public:
     return *this;
   }
   Point(Point &&rhs) { std::cout << "调用移动构造函数" << std::endl; }
-  Point &operator=( Point &&rhs) {
+  Point &operator=(Point &&rhs) {
     std::cout << "调用移动赋值函数" << std::endl;
     return *this;
   }
@@ -31,7 +34,11 @@ int main(int argc, char *argv[]) {
   // auto p1_ptr = std::make_unique<Point>();
   // auto p = Point{1, 2};
   // auto p1_vec = std::vector<Point>{p};
-  std::vector<Point> p2_vec{Point{3, 4}};
+  // std::vector<Point> p2_vec{Point{3, 4}};
+  static auto stc_ptr = std::make_unique<Point>(1, 2);
+  Point p;
+  Point p2{11};
   // std::cout << sizeof(int) << std::endl;
+  std::string str{"hello"};
   return 0;
 }
