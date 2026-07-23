@@ -25,6 +25,7 @@ public:
 private:
   const int _x = 0;
   const int _y = 0;
+  auto vect = std::vector<int>{};
 };
 
 int main(int argc, char *argv[]) {
@@ -40,5 +41,7 @@ int main(int argc, char *argv[]) {
   Point p2{11};
   // std::cout << sizeof(int) << std::endl;
   std::string str{"hello"};
+  std::vector<int> vec{1, 2};
+  auto vec1 = std::vector<int>{1, 2, 3};
   return 0;
 }

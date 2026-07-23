@@ -158,6 +158,16 @@ private:
 </details>
 
 - `<string>`标准库提供了一个`basic_string`类模板,string类的本质其实是`basic_string`类模板关于char类型的实例化.
-- `std::sting iterator= str.begain();`
+- `std::string::iterator it = str.begain();`
 - ![std::string操作](assets_CPP_WD/2026-07-22-14-41-12.png)
 - basic_string还进行了运算符重载,支持使用==、>、< 等符号来比较两个字符串的内容.
+- 迭代器可以看作是指针,迭代器可以像指针一样:`*it`,`++it`, `it1==it2`.....
+- `std::vector`: 自动调整自身大小; 允许任意位置插入和删除元素; 有直接访问某个元素的能力.
+> [!WARNING]
+> 由于类在编译期进行内存对齐,所以成员变量声明时不能使用auto自动推导, 一般使用`std::vector<int> vec{1, 2};`进行声明, 只有成员函数内部局部变量和成员函数返回值可以用auto.
+> [!NOTE]
+> C++17 起，auto 配合列表初始化已成为标准实践, ` auto vec = std::vector<int>{1, 2, 3};`
+- shrink 缩小
+- std::vector有两个属性:`size`和`capacity`, `reserve`提前预留出capacity大小的空间, 适合已经清楚大小,较大的情况.
+- ![std::vector操作](assets_CPP_WD/2026-07-23-11-47-33.png)
+- 
