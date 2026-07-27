@@ -170,4 +170,35 @@ private:
 - shrink 缩小
 - std::vector有两个属性:`size`和`capacity`, `reserve`提前预留出capacity大小的空间, 适合已经清楚大小,较大的情况.
 - ![std::vector操作](assets_CPP_WD/2026-07-23-11-47-33.png)
-- 
+- ![stream](assets_CPP_WD/2026-07-23-16-51-14.png)
+- ![stream继承图](assets_CPP_WD/2026-07-23-16-51-56.png)
+- stream分类: 标准i/o, 文件i/o, 串i/o(向/从字符串中写入/读取数据)
+- stream的四种状态`googbit`(正常状态),`eofbit`(结束状态(提前按下ctrl+d或者文件结束)),`failbit`(可恢复错误状态),`badbit`(不可恢复错误状态):
+![stream的四种状态](assets_CPP_WD/2026-07-23-17-18-33.png)
+- stream流状态判断函数: `xxstream.good()`,`xxstream.eof()`,`xxstream.fail()`,`xxstream.bad()`,都是`bool xxx() const`形式.
+- 标准i/o流的三个实例:`std::cin`,`std::cout`,`std::cerr`.(是唯一对象,所以可以取地址)
+- `std::cin >>`以空白字符(空格,换行,制表等)为分隔符.
+- 从failbit状态恢复做法:
+<details>
+<summary>点击查看代码</summary>
+
+```cpp
+  if (!std::cin.good()) {
+  std::cin.clear(); //恢复流的状态
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n'); //清除缓冲区的内容
+  }
+```
+</details>
+
+- **逗号表达式**:逗号表达式整体的返回值就是最后一个表达式的返回值, belike: `while(std::cin>>num, !std::cin.eof())`.
+- `if(std::cin)`和`if(std::cin.good())`效果一样.
+- 标准输入/输出流存在输入/输出缓冲区.
+- 缓冲区存在三种缓冲机制:
+  - 全缓冲: 缓冲区填满才执行io操作, 对磁盘文件的读写.
+  - 行缓冲: 当遇到换行符enter后/强制刷新缓冲区后/行缓冲区(默认1024字节)满后/程序结束后,执行io操作, `std::cin`.
+  - 不缓冲: 遇到数据就执行io操作, `std::cerr`.
+- `std::cout`输出到终端时是行缓冲,输出到文件时是全缓冲.`std::endl`插入换行符,然后强制刷新缓冲区(`\n`+`std::flush`).
+- `std::endl`和`std::flush`在任何模式下都强制刷新缓冲区; 换行符`\n`在行缓冲模式下自动刷新缓冲区.
+- 用来自`<string>`头文件的`std::getline()`代替`ifs.getline()`.
+- `ifs.tellg()`获取游标位置, `if.seekg(offset)`移动offset字节长度相对与文件开头, `ifs.read(data,length)`读取指定长度.
+- 连续写入文件: `std::ofstream ofs("log.txt", std::ios::app);`,以追加模式打开文件,并自动定位到文件末尾.

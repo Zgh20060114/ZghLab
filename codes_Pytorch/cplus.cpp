@@ -1,6 +1,9 @@
-#include <algorithm>
-#include <cstring>
+#include <filesystem>
+#include <fstream>
+#include <ios>
 #include <iostream>
+#include <istream>
+#include <limits>
 #include <memory>
 #include <string>
 #include <vector>
@@ -25,7 +28,6 @@ public:
 private:
   const int _x = 0;
   const int _y = 0;
-  auto vect = std::vector<int>{};
 };
 
 int main(int argc, char *argv[]) {
@@ -38,10 +40,24 @@ int main(int argc, char *argv[]) {
   // std::vector<Point> p2_vec{Point{3, 4}};
   static auto stc_ptr = std::make_unique<Point>(1, 2);
   Point p;
-  Point p2{11};
+  auto p2 = Point{11};
   // std::cout << sizeof(int) << std::endl;
-  std::string str{"hello"};
   std::vector<int> vec{1, 2};
   auto vec1 = std::vector<int>{1, 2, 3};
+  // auto a = int{};
+  // std::cin >> a;
+  // std::cout << a << std::endl;
+  // if (!std::cin.good()) {
+  //   std::cin.clear(); // 恢复流的状态
+  //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+  //                   '\n'); // 清除缓冲区的内容
+  // }
+  // std::cout << &(std::cin) << std::endl;
+  auto file_path = std::filesystem::path{"./DQNexample.py"};
+  auto ifs = std::ifstream{file_path};
+  auto str_line = std::string{};
+  while (std::getline(ifs, str_line, '\n')) {
+    std::cout << str_line << "\n";
+  }
   return 0;
 }
