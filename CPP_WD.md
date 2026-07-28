@@ -177,7 +177,7 @@ private:
 ![stream的四种状态](assets_CPP_WD/2026-07-23-17-18-33.png)
 - stream流状态判断函数: `xxstream.good()`,`xxstream.eof()`,`xxstream.fail()`,`xxstream.bad()`,都是`bool xxx() const`形式.
 - 标准i/o流的三个实例:`std::cin`,`std::cout`,`std::cerr`.(是唯一对象,所以可以取地址)
-- `std::cin >>`以空白字符(空格,换行,制表等)为分隔符.
+- `std::cin >>`输入流运算符以空白字符(空格,换行,制表等)为分隔符.
 - 从failbit状态恢复做法:
 <details>
 <summary>点击查看代码</summary>
@@ -202,3 +202,9 @@ private:
 - 用来自`<string>`头文件的`std::getline()`代替`ifs.getline()`.
 - `ifs.tellg()`获取游标位置, `if.seekg(offset)`移动offset字节长度相对与文件开头, `ifs.read(data,length)`读取指定长度.
 - 连续写入文件: `std::ofstream ofs("log.txt", std::ios::app);`,以追加模式打开文件,并自动定位到文件末尾.
+- 已经使用std::getline从文件中获取行,怎么从行string中提取单词: 使用字符串io输入流将一个string拆分,`std::istringstream iss{str_line};`
+- `iostream`,`fstream`, `sstream`.
+- `std::to_string()`把基本类型安全转换成std::string类型.
+- 串输入流:拆分string; 串输出流:合并string.
+- ![日志系统设计](assets_CPP_WD/2026-07-28-15-58-30.png)
+- 

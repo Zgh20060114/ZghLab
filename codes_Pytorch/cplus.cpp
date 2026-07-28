@@ -1,10 +1,10 @@
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
-#include <ios>
 #include <iostream>
-#include <istream>
 #include <limits>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -39,8 +39,7 @@ int main(int argc, char *argv[]) {
   // auto p1_vec = std::vector<Point>{p};
   // std::vector<Point> p2_vec{Point{3, 4}};
   static auto stc_ptr = std::make_unique<Point>(1, 2);
-  Point p;
-  auto p2 = Point{11};
+  Point p{};
   // std::cout << sizeof(int) << std::endl;
   std::vector<int> vec{1, 2};
   auto vec1 = std::vector<int>{1, 2, 3};
@@ -53,11 +52,16 @@ int main(int argc, char *argv[]) {
   //                   '\n'); // 清除缓冲区的内容
   // }
   // std::cout << &(std::cin) << std::endl;
-  auto file_path = std::filesystem::path{"./DQNexample.py"};
-  auto ifs = std::ifstream{file_path};
-  auto str_line = std::string{};
-  while (std::getline(ifs, str_line, '\n')) {
-    std::cout << str_line << "\n";
-  }
+  // auto file_path = std::filesystem::path{"./DQNexample.py"};
+  // auto ifs = std::ifstream{file_path};
+  // auto str_line = std::string{};
+  // while (std::getline(ifs, str_line, '\n')) {
+  //   std::cout << str_line << "\n";
+  // }
+  int n1{0};
+  int n2{0};
+  std::cin >> n1 >> n2;
+  std::cout << n1 << " " << n2 << std::endl;
+  std::istringstream iss{str_line};
   return 0;
 }
