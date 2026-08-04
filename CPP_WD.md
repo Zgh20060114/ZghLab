@@ -145,7 +145,7 @@ private:
         std::cout << "Logger instance created." << std::endl;
     }
 
-    // 5. 析构函数（可选，用于释放资源）
+    // 5. 析构函数（可选，用于释放资源）(设为private,防止被程序员手动析构,private也不会影响编译器的调用)
     ~Logger() {
         std::cout << "Logger instance destroyed." << std::endl;
     }
@@ -165,6 +165,8 @@ private:
 ```
 </details>
 
+- 该Meyers单例模式写法是比c++98时期的饿汉式/懒汉式写法更进步的产物.
+
 - `<string>`标准库提供了一个`basic_string`类模板,string类的本质其实是`basic_string`类模板关于char类型的实例化.
 - `std::string::iterator it = str.begain();`
 - ![std::string操作](assets_CPP_WD/2026-07-22-14-41-12.png)
@@ -177,7 +179,11 @@ private:
 > [!NOTE]
 > C++17 起，auto 配合列表初始化已成为标准实践, ` auto vec = std::vector<int>{1, 2, 3};`
 - shrink 缩小
-- std::vector有两个属性:`size`和`capacity`, `reserve`提前预留出capacity大小的空间, 适合已经清楚大小,较大的情况.
+- `std::vector`有两个属性:`size`和`capacity`, `reserve`提前预留出capacity大小的空间, 适合已经清楚大小,较大的情况.
+- `std::vector`对象管理的元素在堆上,`std::vector`对象由三个指针(迭代器)组成,所以`sizeof(vec)`=3*8: 
+  - `_start`,指向堆内存块的起始地址.
+  - `_finish`,指向当前最后一个有效元素的下一个位置.
+  - `_end_of_storage`,指向已分配内存最后一个地址的下一个位置.
 - ![std::vector操作](assets_CPP_WD/2026-07-23-11-47-33.png)
 - ![stream](assets_CPP_WD/2026-07-23-16-51-14.png)
 - ![stream继承图](assets_CPP_WD/2026-07-23-16-51-56.png)
@@ -310,3 +316,4 @@ private:
 > [!NOTE]
 > 只有当类没有显式声明(主动写出了成员函数声明,不论后面是=delete,=defualt,还是函数体)的拷贝操作、移动操作、析构函数中的一个时，编译器才自动生成默认的移动操作,拷贝操作.
 - 手动声明`= delete`,显式表达意图,防止后续改变,有备无患.
+- eager 渴求的,深切的.

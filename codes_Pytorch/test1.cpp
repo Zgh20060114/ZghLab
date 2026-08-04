@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 //
 // class C {
 // public:
@@ -33,12 +34,19 @@
 //   return 0;
 // }
 
-class Line {
-public:
-  int a;
-  void print() { std::cout << b << std::endl; }
-  class Point {
-  public:
-    int b;
-  };
-};
+// class Line {
+// public:
+//   int a;
+//   void print() { std::cout << b << std::endl; }
+//   class Point {
+//   public:
+//     int b;
+//   };
+// };
+int main(int argc, char *argv[]) {
+
+  std::vector<int> vec{2, 3};
+  std::cout << vec.size() << "\n";
+  std::cout << vec.capacity() << "\n";
+  return 0;
+}
