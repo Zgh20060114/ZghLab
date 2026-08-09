@@ -1,4 +1,6 @@
+#include <cstring>
 #include <iostream>
+#include <utility>
 #include <vector>
 //
 // class C {
@@ -43,10 +45,33 @@
 //     int b;
 //   };
 // };
+class Point {
+public:
+  Point() {}
+  Point(int x) {}
+
+private:
+  int _x = 0;
+  int _y = 0;
+};
+class Point3D : public Point {
+public:
+  Point3D(int z) : _z(z) {}
+
+private:
+  int _z = 0;
+};
 int main(int argc, char *argv[]) {
 
-  std::vector<int> vec{2, 3};
-  std::cout << vec.size() << "\n";
-  std::cout << vec.capacity() << "\n";
+  // std::vector<int> vec{2, 3};
+  // std::cout << vec.size() << "\n";
+  // std::cout << vec.capacity() << "\n";
+  // std::cout << strlen(nullptr) << "\n"; // 段错误
+  // auto pai = std::make_pair(1, 2);
+
+  std::cout << sizeof(std::string) << "\n";
+  std::string str{"aaa"};
+  std::cout << str.size() << "\n";
+  std::cout << str.capacity() << "\n";
   return 0;
 }
