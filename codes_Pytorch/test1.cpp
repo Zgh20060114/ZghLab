@@ -1,5 +1,6 @@
 #include <cstring>
 #include <iostream>
+#include <memory>
 #include <utility>
 #include <vector>
 //
@@ -48,18 +49,26 @@
 class Point {
 public:
   Point() {}
-  Point(int x) {}
+  Point(int x, int y) : _x(x), _y(y) {}
+  int getX() const { return _x; }
+  int getY() const { return _y; }
+  virtual void print() {}
 
 private:
-  int _x = 0;
-  int _y = 0;
+  int _x{0};
+  int _y{0};
 };
+
 class Point3D : public Point {
 public:
-  Point3D(int z) : _z(z) {}
+  Point3D() {}
+  Point3D(int x, int y, int z) : Point(x, y), _z(z) {}
+  void printPoint3D() {
+    std::cout << getX() << "," << getY() << "," << _z << "," << '\n';
+  }
 
 private:
-  int _z = 0;
+  int _z{0};
 };
 int main(int argc, char *argv[]) {
 
@@ -69,9 +78,21 @@ int main(int argc, char *argv[]) {
   // std::cout << strlen(nullptr) << "\n"; // 段错误
   // auto pai = std::make_pair(1, 2);
 
-  std::cout << sizeof(std::string) << "\n";
-  std::string str{"aaa"};
-  std::cout << str.size() << "\n";
-  std::cout << str.capacity() << "\n";
+  // std::cout << sizeof(std::string) << "\n";
+  // std::string str{"aaa"};
+  // std::cout << str.size() << "\n";
+  // std::cout << str.capacity() << "\n";
+
+  Point3D d1{};
+  Point b1{};
+  Point *base = &d1;
+  // Point b1{1, 1};
+  // Point *base = &b1;
+  auto derive = dynamic_cast<Point3D *>(base);
+  if (derive == nullptr) {
+    std::cout << "没有转换" << '\n';
+  } else {
+    derive->printPoint3D();
+  }
   return 0;
 }
