@@ -54,6 +54,13 @@ public:
   int getY() const { return _y; }
   virtual void print() {}
 
+  Point &operator=(const Point &rhs) {
+    _x = rhs._x;
+    _y = rhs._y;
+    std::cout << "调用的是Point的拷贝赋值运算符函数." << '\n';
+    return *this;
+  }
+
 private:
   int _x{0};
   int _y{0};
@@ -70,6 +77,16 @@ public:
 private:
   int _z{0};
 };
+
+class Shape {
+public:
+  virtual void draw() const { std::cout << "draw shape" << '\n'; };
+  virtual ~Shape() = default;
+};
+class Circle : public Shape {
+private:
+  void draw() const override { std::cout << "draw circle" << '\n'; }
+};
 int main(int argc, char *argv[]) {
 
   // std::vector<int> vec{2, 3};
@@ -83,16 +100,23 @@ int main(int argc, char *argv[]) {
   // std::cout << str.size() << "\n";
   // std::cout << str.capacity() << "\n";
 
-  Point3D d1{};
-  Point b1{};
-  Point *base = &d1;
-  // Point b1{1, 1};
-  // Point *base = &b1;
-  auto derive = dynamic_cast<Point3D *>(base);
-  if (derive == nullptr) {
-    std::cout << "没有转换" << '\n';
-  } else {
-    derive->printPoint3D();
-  }
+  // Point3D d1{};
+  // Point b1{};
+  // Point *base = &d1;
+  // // Point b1{1, 1};
+  // // Point *base = &b1;
+  // auto derive = dynamic_cast<Point3D *>(base);
+  // if (derive == nullptr) {
+  //   std::cout << "没有转换" << '\n';
+  // } else {
+  //   derive->printPoint3D();
+  // }
+  //
+  // Point3D d2{};
+  // Point b2{};
+  // b2 = d2;
+
+  std::unique_ptr<Shape> shape = std::make_unique<Circle>();
+  shape->draw();
   return 0;
 }
