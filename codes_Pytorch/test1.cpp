@@ -1,6 +1,7 @@
 #include <cstring>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 //
@@ -80,12 +81,21 @@ private:
 
 class Shape {
 public:
-  virtual void draw() const { std::cout << "draw shape" << '\n'; };
+  virtual void draw() const { std::cout << "draw shape" << '\n'; }
   virtual ~Shape() = default;
-};
-class Circle : public Shape {
+
 private:
-  void draw() const override { std::cout << "draw circle" << '\n'; }
+  std::unique_ptr<std::string> ptr_str{std::make_unique<std::string>("Shape")};
+};
+class Pen {
+public:
+  virtual void draw() const { std::cout << "draw pen" << '\n'; }
+  virtual ~Pen() = default;
+};
+class Circle : public Pen, public Shape {
+private:
+  void draw() const override { std::cout << "draw circle" << '\n'; };
+  std::unique_ptr<std::string> ptr_str{std::make_unique<std::string>("Circle")};
 };
 int main(int argc, char *argv[]) {
 
@@ -115,8 +125,14 @@ int main(int argc, char *argv[]) {
   // Point3D d2{};
   // Point b2{};
   // b2 = d2;
+  Circle circle{};
+  Shape *shape = &circle;
+  Pen *pen = &circle;
+  std::cout << &circle << '\n';
+  std::cout << shape << '\n';
+  std::cout << pen << '\n';
 
-  std::unique_ptr<Shape> shape = std::make_unique<Circle>();
+  // std::unique_ptr<Shape> shape = std::make_unique<Circle>();
   shape->draw();
   return 0;
 }
