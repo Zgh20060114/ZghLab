@@ -391,6 +391,7 @@ private:
 - `class`的默认继承是`private`,`struct`的默认继承是`public`.
 - `class A : public B,public C{};`
 - 多重继承可能产生的问题: 相同成员名访问的二义性; 存储二义性.
+- 菱形继承是存储二义性,v型继承是成员名二义性.
 - ![菱形/钻石继承内存布局](assets_CPP_WD/2026-08-10-14-44-18.png)
 - ![使用虚继承virtual derive解决菱形继承二义性问题的内存布局](assets_CPP_WD/2026-08-10-14-46-26.png)
 - `class A{}; class B: virtual public A{}; class C: virtual public A{}; class D: public B,public C{};`
@@ -456,3 +457,59 @@ private:
 > 子类对象的内存布局中基类子部分的顺序严格按照继承列表中的顺序.
 - ![虚拟继承解决带有虚函数多态类的二义性的内存布局](assets_CPP_WD/2026-08-15-19-32-22.png)
 - 虚拟继承解决带有虚函数多态类的二义性的内存布局: 每个基类子部分的虚函数指针vfptr下面放置一个虚基类指针vbptr.
+- 模板引入一种全新的编程思维:泛型编程/通用编程,本质上是一个代码生成器.
+  - 函数模板 
+  - 类模板
+- 模板把类型参数化:把类型定义为参数.
+- `template <template/class T1,template/class T1,....>` 里面的template和class任选其一; 模板形参列表中的模板参数包括类型参数和非类型参数.
+- ```
+- 函数模板示例:
+  ~~~cpp
+  template <class T>
+  T add(T t1, T t2){
+    return t1+t2;
+  }
+  ~~~
+- 模板的发生时机是在编译期.
+- 模板实例化:
+  - 隐式实例化`add(1,2)`
+  - 显式实例化`add<int>(1,2)`; 显式实例化可以参数类型转换`add<int>(1,2.2);`
+- short只有int的一半大.
+- 函数模板的重载包括:
+  - 函数模板与函数模板重载(谨慎使用)
+  - 函数模板与普通函数重载(当都能使用时**普通函数的优先级更高**,当然如果显式实例化了肯定使用函数模板)
+- 当实例化时两个函数模板重载都能生成时,优先使用模板参数少的模板.
+- 在源文件中函数模板和普通函数一样可以声明和定义分开,但是想简单的把模板函数的声明放到hpp文件中,把实现放到cpp文件中,就会报错函数未定义,因为函数.
+> [!TIP]
+> 编译器在处理一个 .cpp 文件（称为一个“翻译单元”）时，是独立编译的.它看不到其他 .cpp 文件里的内容. 编译器把每个cpp文件里的#include头文件展开插入然后编译.
+- 普通函数编译: main.cpp 编译时：编译器看到 add 的声明（来自 utils.hpp），知道它是个函数，但不知道它的地址，因此生成一个未解析的符号引用（“我需要一个叫 add 的函数”）;
+utils.cpp 编译时：编译器看到 add 的定义，生成对应的机器码，并将其函数名作为导出的符号（“我提供了一个叫 add 的函数”）;链接时：链接器将 main.o 中的未解析符号与 utils.o 中的导出符号匹配，成功完成链接，生成可执行文件.
+- 函数模板编译时: main.cpp 中调用 add(1, 2.5)，编译器需要生成 add<int, double> 的实例化版本。但它看不到定义（因为定义在 utils.cpp 中），所以它只能生成一个未解析的符号引用，期待链接器提供; utils.cpp 编译时，虽然看到了模板定义，但没有实际调用，因此编译器不会生成任何实例化代码; 链接时，main.o 需要的 add<int, double> 符号在 utils.o 中不存在，导致未定义引用错误.
+- 所以解决办法: 1.在cpp文件中调用一次(实例化一次)(但是要写一些和项目无关的调用代码); 2.定义写在在头文件中(与初衷相违背). 都不行.
+- 标准委员会的解决办法: 声明写在头文件`utils.hpp`,定义写在源文件`utils.tpp`,然后头文件`#include "utils.tpp"`.
+- 当通用函数模板无法被某个参数类型实例化使用时, 可以用普通函数重载/特化模板.
+~~~cpp
+  template <class T>
+  T add(T t1, T t2){
+    return t1+t2;
+  }
+  template <>
+  const char* add<const char*>(const char* c1,const char* c2){xxxx}
+~~~
+- 特化模板不能脱离通用模板单独使用,因为特化模板要去匹配通用模板,形式与通用模板一致.
+- extraneous 外来的,额外的,随机的
+- `template <class T1, class T2,class T3> T3 add(T1 t1, T2 t2) { return t1 + t2; }`这样的模板必须显式实例化:`int result = add<int, double, double>(1.2, 2.5); `
+- 尾置返回型函数模板:`template <class T1, class T2>  auto add(T1 t1, T2 t2) -> decltype(t1 + t2) { return t1 + t2;}`
+- 模板参数列表中可以放:
+  - 类型参数: 可以是任何类型
+  - 非类型参数: 需要是整型: char/short/int/long/size_t; 不能是浮点型: float/double(c++20之后就可以了,因为浮点数的比较更准确了).
+  ~~~cpp
+  template <class T1, class T2, int ratio> T1 multiply(T1 t1, T2 t2) {
+    return t1 * t2 * ratio;
+  }
+  std::cout << multiply<int, int, 2>(2, 2) << '\n';
+  ~~~
+- <>是模板参数列表,()是函数参数列表.
+- 非类型参数可以有默认值: `template <class T1, class T2, int ratio=10> T1 multiply(T1 t1, T2 t2) {xxx}`
+- 因为显式指定优先级>推导>默认值,所以无法推导的返回值类型参数可以有默认值: `template <class T1, class T2,class T3 = double> T3 add(T1 t1, T2 t2) { return t1 + t2; }`
+

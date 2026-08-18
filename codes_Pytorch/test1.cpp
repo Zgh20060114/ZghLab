@@ -97,7 +97,18 @@ private:
   void draw() const override { std::cout << "draw circle" << '\n'; };
   std::unique_ptr<std::string> ptr_str{std::make_unique<std::string>("Circle")};
 };
+
+template <class T1, class T2> T1 add(T1 t1, T2 t2) { return t1 + t2; }
+template <class T1, class T2 = int, class T3, int ratio = 10>
+T2 multiply(T1 t1, T3 t2) {
+  return t1 * t2 * ratio;
+}
+
+template <>
+const char *add<const char *, const char *>(const char *c1, const char *c2) {}
 int main(int argc, char *argv[]) {
+
+  std::cout << multiply<double>(15.2, 2.2) << '\n';
 
   // std::vector<int> vec{2, 3};
   // std::cout << vec.size() << "\n";
@@ -133,6 +144,6 @@ int main(int argc, char *argv[]) {
   std::cout << pen << '\n';
 
   // std::unique_ptr<Shape> shape = std::make_unique<Circle>();
-  shape->draw();
+  // shape->draw();
   return 0;
 }
