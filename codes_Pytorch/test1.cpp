@@ -1,10 +1,13 @@
+#include <cmath>
+#include <cstdio>
 #include <cstring>
+#include <cxxabi.h>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
-//
+
 // class C {
 // public:
 //   void cPrint() const { std::cout << "C::cPrint()" << std::endl; }
@@ -54,6 +57,7 @@ public:
   int getX() const { return _x; }
   int getY() const { return _y; }
   virtual void print() {}
+  template <class T> T getDistance() { return std::pow(getX(), 2); }
 
   Point &operator=(const Point &rhs) {
     _x = rhs._x;
@@ -98,7 +102,17 @@ private:
   std::unique_ptr<std::string> ptr_str{std::make_unique<std::string>("Circle")};
 };
 
-template <class T1, class T2> T1 add(T1 t1, T2 t2) { return t1 + t2; }
+void print() { std::cout << '\n'; }
+template <class T, class... Args> void print(T t, Args... args) {
+  std::cout << t << " ";
+  print(args...);
+}
+// template <class T1, class T2> T1 add(T1 t1, T2 t2) { return t1 + t2; }
+template <class T> T add() { return 0; }
+template <class T1, class T2, class... Args> T1 add(T2 t, Args... args) {
+  return t + add<T1>(args...);
+}
+
 template <class T1, class T2 = int, class T3, int ratio = 10>
 T2 multiply(T1 t1, T3 t2) {
   return t1 * t2 * ratio;
@@ -106,44 +120,117 @@ T2 multiply(T1 t1, T3 t2) {
 
 template <>
 const char *add<const char *, const char *>(const char *c1, const char *c2) {}
-int main(int argc, char *argv[]) {
 
-  std::cout << multiply<double>(15.2, 2.2) << '\n';
-
-  // std::vector<int> vec{2, 3};
-  // std::cout << vec.size() << "\n";
-  // std::cout << vec.capacity() << "\n";
-  // std::cout << strlen(nullptr) << "\n"; // 段错误
-  // auto pai = std::make_pair(1, 2);
-
-  // std::cout << sizeof(std::string) << "\n";
-  // std::string str{"aaa"};
-  // std::cout << str.size() << "\n";
-  // std::cout << str.capacity() << "\n";
-
-  // Point3D d1{};
-  // Point b1{};
-  // Point *base = &d1;
-  // // Point b1{1, 1};
-  // // Point *base = &b1;
-  // auto derive = dynamic_cast<Point3D *>(base);
-  // if (derive == nullptr) {
-  //   std::cout << "没有转换" << '\n';
-  // } else {
-  //   derive->printPoint3D();
-  // }
-  //
-  // Point3D d2{};
-  // Point b2{};
-  // b2 = d2;
-  Circle circle{};
-  Shape *shape = &circle;
-  Pen *pen = &circle;
-  std::cout << &circle << '\n';
-  std::cout << shape << '\n';
-  std::cout << pen << '\n';
-
-  // std::unique_ptr<Shape> shape = std::make_unique<Circle>();
-  // shape->draw();
-  return 0;
+template <typename T> std::string type_name() {
+  // using TR = std::decay_t<T>; // 先获取 decay 后的类型
+  // 获取编译器内部的修饰名 (mangled name)
+  const std::string mangled_name = typeid(T).name();
+  int status = 0;
+  // 使用 abi::__cxa_demangle 将其转换为人类可读的格式
+  std::unique_ptr<char, decltype(&std::free)> demangled_name(
+      abi::__cxa_demangle(mangled_name.c_str(), nullptr, nullptr, &status),
+      std::free);
+  return (status == 0) ? demangled_name.get() : mangled_name;
 }
+template <typename T> std::string_view type_name_pretty() {
+#if defined(__clang__) || defined(__GNUC__)
+  // 返回 "std::string_view type_name_pretty() [T = const int&]"
+  std::string_view pretty = __PRETTY_FUNCTION__;
+  auto start = pretty.find("T = ") + 4;
+  auto end = pretty.find(';', start);
+  return pretty.substr(start, end - start);
+#else
+  return "unsupported";
+#endif
+}
+
+template <class T> class Vector {
+public:
+  template <class InputIt> Vector(InputIt first, InputIt last, T t);
+
+  template <class U>
+  Vector(const Vector<U> &other); // 允许 vector<int> v = vector<double>(...)
+};
+
+class FileCloser {
+  void operator()(FILE *f) const {
+    if (f)
+      fclose(f);
+  }
+};
+class Session : public std::enable_shared_from_this<Session> {
+public:
+  void func() {
+    auto sft = shared_from_this(); // 然后use(sft);}
+  };
+  int main(int argc, char *argv[]) {
+
+    // std::shared_ptr<FILE> file{fopen("data.txt", "r"), FileCloser{}};
+    Point *po = new Point();
+    std::shared_ptr<Point> sp{po};
+    std::shared_ptr<Point> sp1{po};
+    // std::cout << multiply<double>(15.2, 2.2) << '\n';
+    // print(1, 2, 3, 4);
+    // std::cout << add<double>(1.1, 2.1, 3.1, 4.1) << '\n';
+
+    // std::vector<int> vec{2, 3};
+    // std::cout << vec.size() << "\n";
+    // std::cout << vec.capacity() << "\n";
+    // std::cout << strlen(nullptr) << "\n"; // 段错误
+    // auto pai = std::make_pair(1, 2);
+
+    // std::cout << sizeof(std::string) << "\n";
+    // std::string str{"aaa"};
+    // std::cout << str.size() << "\n";
+    // std::cout << str.capacity() << "\n";
+
+    // Point3D d1{};
+    // Point b1{};
+    // Point *base = &d1;
+    // // Point b1{1, 1};
+    // // Point *base = &b1;
+    // auto derive = dynamic_cast<Point3D *>(base);
+    // if (derive == nullptr) {
+    //   std::cout << "没有转换" << '\n';
+    // } else {
+    //   derive->printPoint3D();
+    // }
+    //
+    // Point3D d2{};
+    // Point b2{};
+    // b2 = d2;
+    // Circle circle{};
+    // Shape *shape = &circle;
+    // Pen *pen = &circle;
+    // std::cout << &circle << '\n';
+    // std::cout << shape << '\n';
+    // std::cout << pen << '\n';
+
+    // std::unique_ptr<Shape> shape = std::make_unique<Circle>();
+    // shape->draw();
+    // int a{};
+    // int &&c = a + 1;
+    // const int &b = a;
+    // Point *p{};
+    // std::string e = "hello";
+    // std::string &&f = std::move(e);
+    // std::string &g = e;
+    // std::cout << g << '\n';
+    // f = std::string{"world"};
+    // std::cout << e << '\n';
+    // std::cout << typeid(a).name() << '\n';
+    // std::cout << typeid(p).name() << '\n';
+    // std::cout << type_name_pretty<decltype(p)>() << '\n';
+    // auto sp{std::make_shared<int>()};
+    // if (sp) {
+    //   std::cout << sp.get() << '\n';
+    // }
+    // std::weak_ptr<int> wp{sp};
+    // if (auto s_wp = wp.lock()) {
+    //   std::cout << s_wp.get() << '\n';
+    // }
+    // std::unique_ptr<FILE> up_file{fopen("data.txt", "r")};
+    // auto vec_uptr = std::vector<std::unique_ptr<int>>{};
+    // vec_uptr.push_back(uptr);
+    return 0;
+  }

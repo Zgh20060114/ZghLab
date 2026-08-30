@@ -27,7 +27,7 @@
 - `int * ptr = new int[5]{1,2,3,4,5}; delete[] ptr;`
 - 在c++中使用的c风格字符串是const常量, `const char * ptr = "hello";`
 > [!NOTE]
-> c++的输出流运算符对char *有默认重载效果,所以`std::cout<< ptr;` 没有输出指针的地址而是输出了hello.
+> c++的输出流运算符对char *有默认重载效果,所以`std::cout<< ptr;` 没有输出指针的地址而是输出了hello. 普通指针输出的是指向的地址.
 - 引用本质就是一个受限制的指针(常量指针const pointer)
 > [!NOTE]
 > 只要参数没有带 &（引用）或 *（指针），C++ 就会在背后默默地为实参做一次完整的拷贝.
@@ -35,9 +35,10 @@
 - 引用作为函数返回值
 > [!NOTE]
 > 在现代 C++ 中，直接按值返回函数中创建的临时大对象（如std::string）即可. 编译器会通过 **RVO/NRVO 机制(解决"函数内部创建了新对象并返回，返回时避免拷贝"问题)** 和移动语义（Move Semantics）帮你消除拷贝开销(是的,没有优化时return会触发一次拷贝构造函数,但仅对于return局部变量才会优化)。只有当你明确**需要“修改原对象”或“链式调用”或返回自己或返回正常大变量时**，还是要使用返回引用.  (函数返回引用值一定不能是局部变量)
+- RVO,NRVO: 编译器通过“直接构造到返回值内存”来消除拷贝/移动的优化技术; 起作用场景:函数返回临时对象/局部对象.
 > [!NOTE]
 > C++ 标准规定，**对引用取地址**，等价于对引用绑定的变量本体取地址 
-- 类型转换: `static_cast`(基本数据类型的转化,父类和子类之间指针(或引用)类型的转化) `dynamic_cast`(父类和子类之间的转换) `const_cast`(常量转化成非常量,基本不用) `reinterpret_cast`(任意指针(或引用)类型的转换,万能转换)
+- 类型转换: `static_cast`(基本数据类型的转化,父类和子类之间指针(或引用)类型的转化,非常量转化为常量) `dynamic_cast`(父类和子类之间的转换) `const_cast`(常量转化成非常量,基本不用) `reinterpret_cast`(任意指针(或引用)类型的转换,万能转换)
 - `static_cast`和`dynamic_cast`的区别: 
   - `static_cast`可以转换值、引用和指针，而 `dynamic_cast`只能用于指针和引用.
   - `static_cast` : 编译期静态检查,如果编译器认为类型之间有关联(如继承关系,基本类型转换),则允许转换;否则报错.它不会在运行时检查对象是否真的属于目标类型，因此需要程序员自己保证转换的安全性.
@@ -512,4 +513,146 @@ utils.cpp 编译时：编译器看到 add 的定义，生成对应的机器码�
 - <>是模板参数列表,()是函数参数列表.
 - 非类型参数可以有默认值: `template <class T1, class T2, int ratio=10> T1 multiply(T1 t1, T2 t2) {xxx}`
 - 因为显式指定优先级>推导>默认值,所以无法推导的返回值类型参数可以有默认值: `template <class T1, class T2,class T3 = double> T3 add(T1 t1, T2 t2) { return t1 + t2; }`
+- 对于无法推导的参数类型,要么显式实例化,要么写上默认值.
+- 函数模板也可以作为类成员函数,可以访问类成员,所以生成的模板成员函数也有this指针作为参数; 如果是static函数模板,那也不能访问非static成员.
+- 成员函数模板唯独不能加上virtual, 因为虚函数表是在编译期确定大小,成员函数模板实例化是编译期生成, 但是虚表在确定大小之前还无法确定要实例化多少模板函数.
+- 类模板: 一类类.
+<details>
+<summary>点击查看类模板代码</summary>
 
+~~~cpp
+template <class T, int kCapacity = 10>
+class Stack
+{
+public:
+    Stack(): _top(-1), _data(new T[kCapacity]()){
+        cout << "Stack()" << endl;
+    }
+    ~Stack() {
+        if (_data) {
+            delete[] _data;
+            _data = nullptr;
+        }
+        cout << "~Stack()" << endl;
+    }
+    bool empty() const;
+    bool full() const;
+    void push(const T &);
+    void pop();
+    T top();
+private:
+    int _top;
+    T *_data;
+};
+~~~
+
+</details>
+
+- 可变参数模板variadic template: 能表示从0到任意个数,任意类型的参数. 当可能有很多不同类型的参数,不适合一一写出,这时就适合使用variadic template.
+- 可变参数模板和普通模板语义相同,只是写法稍有不同:
+  - 用...写到参数包的左侧,代表打包. 示例: `template <class T1, class T2, class... Args> T1 add(T1 t1, T2 t2, Args... args) {}`
+  - 查看可变参数个数: `sizeof...(Args)`
+  - 用...写到参数包的右侧,代表解包. 解包递归停止到: 调用到一个非递归的重载的普通函数模板或者普通函数.
+
+<details>
+<summary>点击查看可变参数模板参数解包代码</summary>
+
+~~~cpp
+void print() { std::cout << '\n'; }
+template <class T, class... Args> void print(T t, Args... args) {
+  std::cout << t << " ";
+  print(args...);  // 递归停止到: 调用到一个非递归的重载的普通函数模板或者普通函数.
+}
+template <class T1, class T2, class... Args>
+T1 add(T1 t1, T2 t2, Args... args) {
+  std::cout << sizeof...(Args) << '\n';
+  print(args...);
+  return t1 + t2;
+}
+~~~
+
+</details>
+
+- 模板类中的模板成员函数(普通成员函数也用不着写成模板的形式,大多数模板成员函数都是类特殊函数,比如构造函数) 实例化时只能指定类的模板参数类型,不能指定模板成员函数的模板参数类型(靠推导).
+- 拷贝省略elide-constructors: 编译器遇到函数返回对象或用临时对象初始化另一个对象时，标准允许编译器省略掉中间不必要的临时对象创建和拷贝/移动构造，直接在目标位置构造对象.
+- `fno-elide-constructors` 关闭拷贝省略.
+- 左值和右值是相对表达式而言的,左值:表达式执行完后仍然存在的对象; 右值:表达式执行完后消失的对象.
+- 关于右值的存储位置: 可以存储在内存中,也可以存储在寄存器中,这取决于右值或者编译器.当一个右值比较大或者编译器认为这样比较高效时,就在内存中存储右值; 当右值比较简单时编译器将其存储在寄存器中以优化性能.
+- 移动构造函数和移动赋值运算符函数的触发条件一定是: 等号右边是**同类型**的右值(同类型的临时对象或std::move过的对象).
+- `std::string str = "hello";`触发的不是移动函数,而是转换构造函数, 因为"hello"不是std::string类型的右值,除非是`std::string str = std::string{"hello"};`.
+- `noexcept`关键字: 承诺一个函数不可能抛出异常.
+- 一个函数加了noexcept,但是函数内部真的抛出了异常，程序会直接调用 std::terminate() 终止运行，而不会沿调用栈向上传播去捕捉处理异常.
+- 移动操作函数一般加上noexcept承诺不可能抛出异常,主要为了保证作为stl容器元素加入时的性能: 移动操作函数有了noexcept,标准库容器扩容时更放心的选择更高效的移动操作.
+- 当同时定义了拷贝构造函数和移动构造函数时,编译器通过判断表达式右边是左值还是右值来决定调用拷贝操作函数还是移动操作函数.
+- 拷贝构造函数既能接收左值也能接收右值,再去定义移动构造函数,就能把右值抢过去,这就实现了左值右值的区分.
+- 需要把引用进行完善:
+  - 左值引用`int &b= a;` : 引用那些我们希望改变的对象.
+  - 右值引用`int &&b= a+1;`,只能接收右值 : 所引用的对象在我们使用后就无需保留了.
+  - 把`const int &b = a+1;` 叫做const左值引用. 既能接收左值也能接收右值 : 引用那些我们不希望改变的对象.
+- 那这个右值引用本身b是左值还是右值呢?
+- 移动构造函数: `String(String && rhs):_pstr(rhs._pstr){rhs._pstr = nullptr;}`
+- 移动赋值运算符函数: `String & operator=(String && rhs){if(this!=&rhs){delete[] _pstr; _pstr= rhs._pstr; rhs._pstr=nullptr; }return *this;}`
+- `std::move()`:接受一个左值表达式,返回一个右值引用表达式.也就是说,`std::string f = std::move(e)`的结果是右值,但e本身没有任何变化--它依然是一个左值变量，只是他的返回值触发了移动构造函数,它的资源被f移动走了,现在e是空的.
+> [!WARNING]
+> 如果后续还需要用e那就不能用std::move.
+- 移动赋值运算符函数的自赋值检测`if(this!=&rhs)`是为了防止: `e = std::move(e);`
+- 右值引用本身是左值还是右值,取决于右值引用本身有没有名字,有名字就能取地址是左值,没名字就是右值.
+- RAII的本质是利用对象的生命周期来管理资源.
+- 对于独占资源型RAII类(不允许拷贝操作),禁止拷贝构造函数和拷贝赋值运算符函数,允许移动构造函数和移动赋值运算符函数(std::move).所以可以显式地把拷贝操作函数=delete, 把移动操作函数=default,虽然编译器会隐式地这么做,不写也完全正确,但显式写出来更直观.
+- ![`std::unique_ptr` : `release,reset,swap,get等成员函数`](assets_CPP_WD/2026-08-25-11-39-41.png)
+- 需要用到裸指针时,用get().
+- `vec.push_back(a);`这个a不是a本身,而是a的副本(触发了拷贝构造函数).
+- 所以`  auto uptr{std::make_unique<int>(1)}; auto vec_uptr{std::vector<std::unique_ptr<int>>{}}; vec_uptr.push_back(uptr);`不可行; 可以`vec_uptr.push_back(std::move(uptr));`但是uptr就是空指针了用不了了.
+- `auto sptr = std::make_shared<int>(1); auto vec_sptr = std::vector<std::shared_ptr<int>>{}; vec_sptr.push_back(sptr);`触发拷贝构造函数.
+- 循环引用发生在两个或多个对象互相持有对方的 std::shared_ptr 时. 这会形成一个强引用闭环,导致引用计数永远无法降为0从而内存泄漏.
+- 循环引用的解决办法是把任意一个std::shared_ptr换成std::weak_ptr,这个智能指针不会增加引用计数, 只要有一个对象的引用计数能降低到0,其他对象的引用计数就能降到0.但在实际工程中不是"任意一个"更换std::weak_ptr,而是"谁拥有谁"谁就用std::shared_ptr,"谁借用/观测/依赖谁"谁就用std::weak_ptr.
+- `std::weak_ptr`的`use_count()`返回: 该weak_ptr所观测的对象的shared_ptr引用计数.
+- weak_ptr就是为了解决shared_ptr的循环计数问题而提出的,是shared_ptr的补丁.
+- `std::weak_ptr`天生被设计成观测者,而不是所有者,它不能直接访问它所观测的资源,没法直接判断观测的资源还在不在,毕竟没有提供相应的直接成员函数,.
+- `auto s_wp = wp.lock();` 返回一个临时创建的对应的std::shared_ptr对象,离开当前作用域被销毁. 然后可以通过s_wp访问资源, 可以通过s_wp的true or false来判断资源还在不在.
+- expire 过期,失效,死亡.
+- `wp.expired()`检查所观察的资源是否被销毁,被销毁返回true; 不是线程安全的不适合多线程.
+- lock是访问资源的唯一推荐方式:`if (auto s_wp = wp.lock()) {std::cout << s_wp.get() << '\n';}`, 而不是先用`wp.expired()`判断完再lock.
+- 智能指针的默认删除器类析构new和new [].
+- 智能指针的析构函数会自动调用删除器类中的`operator()`函数.所以要自定义一个删除器类中,一个类中的operator()函数.
+- `std::make_unique()`和`std::make_shared()`工厂函数只能动态创建能用new/new[]创建的对象,对于不能new的只能直接创建:`std::unique_ptr<FILE> up_file{fopen("data.txt", "r")}`.
+- 当不是用new/new[]创建的对象需要自定义删除器:智能指针的析构函数会自动调用删除器类中的`operator()`函数.所以要自定义一个删除器类,一个类中的operator()函数.
+    - `std::unique_ptr`:
+        ~~~cpp
+        class FileCloser {
+            void operator()(FILE* f) const {
+                if (f) fclose(f);
+            }
+        };
+        std::unique_ptr<FILE, FileCloser> file{fopen("data.txt", "r")};
+        ~~~
+  - `std::shared_ptr`:
+      ~~~cpp 
+      std::shared_ptr<FILE> file{fopen("data.txt", "r"),FileCloser{}};
+      ~~~
+- 使用智能指针还发生double free的原因都是: 创建了一个裸指针,但是用这个裸指针构造了多个智能指针.比如:
+    ~~~cpp 
+    Point *po = new Point();
+    std::shared_ptr<Point> sp{po};
+    std::shared_ptr<Point> sp1{po};
+    ~~~
+- `enable_shared_from_this()`的作用就是在类内部安全的获得该类自身的std::shared_ptr共享智能指针,并与类外该类的共享智能指针共享计数,是在对象内部安全延长自身生命周期标准答案:
+    ~~~cpp 
+    class Session : public std::enable_shared_from_this<Session> {
+    public:
+      void func() {
+        auto sft = shared_from_this(); // 然后use(sft);}
+      };
+    ~~~
+- stl六大核心组件:
+  - 函数对象(仿函数): 一个重载了operator()的类. operator() 的作用就是让对象可以被当作函数一样“调用”（即 obj(args),智能指针的自定义删除器就是一个函数对象.
+  - 适配器(adapter): 
+    - 容器适配器: 基于现有的底层顺序容器（如std::deque、std::list、std::vector),但限制了访问接口，使其只表现出特定的数据结构行为.
+    - 函数适配器: 对现有的函数对象（仿函数）进行包装、绑定或组合，改变其参数数量或行为，使其能够适配 STL 算法的要求.比如:如果你有一个二元谓词 bool compare(int val, int threshold)，你可以用 std::bind(compare, std::placeholders::_1, 50) 把第二个参数固定为 50，把它“适配”成一元谓词.
+    - 迭代器适配器: 改变迭代器遍历容器的“方向”或“赋值行为”.这在 STL 算法中极其常用.
+      - 反向迭代器: std::reverse_iterator
+      - 插入迭代器: std::back_inserter、std::front_inserter、std::inserter.
+  - 空间适配器: 为各个容器高效地管理内存（负责内存的申请与回收）.绝大数情况下不需要手动实现,每个 STL 容器的模板参数中，都默认携带了一个空间配置器. 
+  - 容器 
+  - 迭代器: 一种泛型指针.
+  - 算法
