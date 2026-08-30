@@ -1,0 +1,21 @@
+{
+  "date": "2026-08-30T14:12:05.190195311+08:00",
+  "data": {
+    "/home/zgh/CPP_Projects/ZghLab/code_CMake/CMakeLists.txt": [
+      {
+        "label": "CMAKE_EXPORT-COMPILE-COMMANDS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/zgh/CPP_Projects/ZghLab/code_CMake/CMakeLists.txt"
+      }
+    ],
+    "/home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt": [
+      {
+        "label": "CMAKE_EXPORT-COMPILE-COMMANDS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt"
+      }
+    ]
+  }
+}

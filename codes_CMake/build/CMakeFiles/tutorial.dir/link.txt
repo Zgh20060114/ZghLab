@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/tutorial.dir/link.d CMakeFiles/tutorial.dir/src/main.cpp.o -o tutorial  libtutorial_lib.a 3rdlibs/glfw/src/libglfw3.a /usr/lib/librt.a -lm -ldl

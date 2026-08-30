@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/cmake_install.cmake",
+		"/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test/cmake_install.cmake",
+		"/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/cmake_install.cmake",
+		"/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/glfw/cmake_install.cmake",
+		"/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/glfw/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

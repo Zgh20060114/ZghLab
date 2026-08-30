@@ -1,0 +1,22 @@
+{
+  "date": "2026-08-30T14:12:05.190218946+08:00",
+  "data": {
+    "CMAKE_EXPORT-COMPILE-COMMANDS": {
+      "location": {
+        "uri": "file:///home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt",
+        "range": {
+          "start": {
+            "line": 7,
+            "character": 4
+          },
+          "end": {
+            "line": 7,
+            "character": 33
+          }
+        }
+      },
+      "document_info": "defined variable\nfrom: /home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt",
+      "is_function": false
+    }
+  }
+}
