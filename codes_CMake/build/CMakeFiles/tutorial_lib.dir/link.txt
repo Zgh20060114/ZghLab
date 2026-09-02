@@ -1,2 +1,2 @@
-/usr/bin/ar qc libtutorial_lib.a CMakeFiles/tutorial_lib.dir/src/utils.cpp.o
+/usr/bin/ar qc libtutorial_lib.a CMakeFiles/tutorial_lib.dir/src/main.cpp.o CMakeFiles/tutorial_lib.dir/src/utils.cpp.o
 /usr/bin/ranlib libtutorial_lib.a

@@ -569,19 +569,6 @@ ContinuousSubmit/fast:
 .PHONY : ContinuousSubmit/fast
 
 #=============================================================================
-# Target rules for targets named utilsTest
-
-# Build rule for target.
-utilsTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 utilsTest
-.PHONY : utilsTest
-
-# fast build rule for target.
-utilsTest/fast:
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/build
-.PHONY : utilsTest/fast
-
-#=============================================================================
 # Target rules for targets named uninstall
 
 # Build rule for target.
@@ -620,11 +607,40 @@ update_mappings/fast:
 	$(MAKE) $(MAKESILENT) -f 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build.make 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build
 .PHONY : update_mappings/fast
 
+#=============================================================================
+# Target rules for targets named utilsTest
+
+# Build rule for target.
+utilsTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 utilsTest
+.PHONY : utilsTest
+
+# fast build rule for target.
+utilsTest/fast:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/build
+.PHONY : utilsTest/fast
+
+# target to build an object file
+cmake_pch.hxx.gch:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch
+.PHONY : cmake_pch.hxx.gch
+
+# target to preprocess a source file
+cmake_pch.hxx.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.i
+.PHONY : cmake_pch.hxx.i
+
+# target to generate assembly for a file
+cmake_pch.hxx.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.s
+.PHONY : cmake_pch.hxx.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/src/main.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial.dir/build.make CMakeFiles/tutorial.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
@@ -633,6 +649,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/src/main.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial.dir/build.make CMakeFiles/tutorial.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
@@ -641,6 +658,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/src/main.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial.dir/build.make CMakeFiles/tutorial.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
@@ -716,6 +734,9 @@ help:
 	@echo "... tutorial"
 	@echo "... tutorial_lib"
 	@echo "... utilsTest"
+	@echo "... cmake_pch.hxx.gch"
+	@echo "... cmake_pch.hxx.i"
+	@echo "... cmake_pch.hxx.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

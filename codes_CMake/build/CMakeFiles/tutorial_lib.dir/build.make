@@ -72,31 +72,67 @@ include CMakeFiles/tutorial_lib.dir/flags.make
 CMakeFiles/tutorial_lib.dir/codegen:
 .PHONY : CMakeFiles/tutorial_lib.dir/codegen
 
+CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch: CMakeFiles/tutorial_lib.dir/flags.make
+CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.cxx
+CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch: CMakeFiles/tutorial_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -x c++-header -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -MD -MT CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch -MF CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch.d -o CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.cxx
+
+CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -x c++-header -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.cxx > CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.i
+
+CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -x c++-header -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.cxx -o CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.s
+
+CMakeFiles/tutorial_lib.dir/src/main.cpp.o: CMakeFiles/tutorial_lib.dir/flags.make
+CMakeFiles/tutorial_lib.dir/src/main.cpp.o: /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp
+CMakeFiles/tutorial_lib.dir/src/main.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+CMakeFiles/tutorial_lib.dir/src/main.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch
+CMakeFiles/tutorial_lib.dir/src/main.cpp.o: CMakeFiles/tutorial_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/tutorial_lib.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -MD -MT CMakeFiles/tutorial_lib.dir/src/main.cpp.o -MF CMakeFiles/tutorial_lib.dir/src/main.cpp.o.d -o CMakeFiles/tutorial_lib.dir/src/main.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp
+
+CMakeFiles/tutorial_lib.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tutorial_lib.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp > CMakeFiles/tutorial_lib.dir/src/main.cpp.i
+
+CMakeFiles/tutorial_lib.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tutorial_lib.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp -o CMakeFiles/tutorial_lib.dir/src/main.cpp.s
+
 CMakeFiles/tutorial_lib.dir/src/utils.cpp.o: CMakeFiles/tutorial_lib.dir/flags.make
 CMakeFiles/tutorial_lib.dir/src/utils.cpp.o: /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp
+CMakeFiles/tutorial_lib.dir/src/utils.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+CMakeFiles/tutorial_lib.dir/src/utils.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch
 CMakeFiles/tutorial_lib.dir/src/utils.cpp.o: CMakeFiles/tutorial_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tutorial_lib.dir/src/utils.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tutorial_lib.dir/src/utils.cpp.o -MF CMakeFiles/tutorial_lib.dir/src/utils.cpp.o.d -o CMakeFiles/tutorial_lib.dir/src/utils.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/tutorial_lib.dir/src/utils.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -MD -MT CMakeFiles/tutorial_lib.dir/src/utils.cpp.o -MF CMakeFiles/tutorial_lib.dir/src/utils.cpp.o.d -o CMakeFiles/tutorial_lib.dir/src/utils.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp
 
 CMakeFiles/tutorial_lib.dir/src/utils.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tutorial_lib.dir/src/utils.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp > CMakeFiles/tutorial_lib.dir/src/utils.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp > CMakeFiles/tutorial_lib.dir/src/utils.cpp.i
 
 CMakeFiles/tutorial_lib.dir/src/utils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tutorial_lib.dir/src/utils.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp -o CMakeFiles/tutorial_lib.dir/src/utils.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp -o CMakeFiles/tutorial_lib.dir/src/utils.cpp.s
 
 # Object files for target tutorial_lib
 tutorial_lib_OBJECTS = \
+"CMakeFiles/tutorial_lib.dir/src/main.cpp.o" \
 "CMakeFiles/tutorial_lib.dir/src/utils.cpp.o"
 
 # External object files for target tutorial_lib
 tutorial_lib_EXTERNAL_OBJECTS =
 
+libtutorial_lib.a: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch
+libtutorial_lib.a: CMakeFiles/tutorial_lib.dir/src/main.cpp.o
 libtutorial_lib.a: CMakeFiles/tutorial_lib.dir/src/utils.cpp.o
 libtutorial_lib.a: CMakeFiles/tutorial_lib.dir/build.make
 libtutorial_lib.a: CMakeFiles/tutorial_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libtutorial_lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libtutorial_lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/tutorial_lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tutorial_lib.dir/link.txt --verbose=$(VERBOSE)
 

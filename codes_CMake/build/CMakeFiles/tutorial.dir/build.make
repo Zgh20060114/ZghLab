@@ -74,17 +74,19 @@ CMakeFiles/tutorial.dir/codegen:
 
 CMakeFiles/tutorial.dir/src/main.cpp.o: CMakeFiles/tutorial.dir/flags.make
 CMakeFiles/tutorial.dir/src/main.cpp.o: /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp
+CMakeFiles/tutorial.dir/src/main.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+CMakeFiles/tutorial.dir/src/main.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch
 CMakeFiles/tutorial.dir/src/main.cpp.o: CMakeFiles/tutorial.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tutorial.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tutorial.dir/src/main.cpp.o -MF CMakeFiles/tutorial.dir/src/main.cpp.o.d -o CMakeFiles/tutorial.dir/src/main.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -MD -MT CMakeFiles/tutorial.dir/src/main.cpp.o -MF CMakeFiles/tutorial.dir/src/main.cpp.o.d -o CMakeFiles/tutorial.dir/src/main.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp
 
 CMakeFiles/tutorial.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tutorial.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp > CMakeFiles/tutorial.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp > CMakeFiles/tutorial.dir/src/main.cpp.i
 
 CMakeFiles/tutorial.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tutorial.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp -o CMakeFiles/tutorial.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp -o CMakeFiles/tutorial.dir/src/main.cpp.s
 
 # Object files for target tutorial
 tutorial_OBJECTS = \

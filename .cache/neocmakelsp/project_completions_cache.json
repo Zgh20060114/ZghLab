@@ -1,5 +1,5 @@
 {
-  "date": "2026-08-30T14:12:05.190195311+08:00",
+  "date": "2026-09-02T19:02:04.517701789+08:00",
   "data": {
     "/home/zgh/CPP_Projects/ZghLab/code_CMake/CMakeLists.txt": [
       {
@@ -11,10 +11,516 @@
     ],
     "/home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt": [
       {
-        "label": "CMAKE_EXPORT-COMPILE-COMMANDS",
+        "label": "CMAKE_EXPORT_COMPILE_COMMANDS",
         "kind": 12,
         "detail": "Value",
         "documentation": "defined variable\nfrom: /home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt"
+      },
+      {
+        "label": "ENABLE_TEST",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/zgh/CPP_Projects/ZghLab/codes_CMake/CMakeLists.txt"
+      },
+      {
+        "label": "GET_VS_VERSION_STRING",
+        "kind": 3,
+        "detail": "Function",
+        "documentation": "defined function\nfrom: /usr/share/cmake/Modules/CTest.cmake\n\nlike vs9 or vs10"
+      },
+      {
+        "label": "SET_IF_NOT_SET",
+        "kind": 3,
+        "detail": "Function",
+        "documentation": "defined macro\nfrom: /usr/share/cmake/Modules/CTest.cmake\n\nSetup some auxiliary macros"
+      },
+      {
+        "label": "SET_IF_SET",
+        "kind": 3,
+        "detail": "Function",
+        "documentation": "defined macro\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "SET_IF_SET_AND_NOT_SET",
+        "kind": 3,
+        "detail": "Function",
+        "documentation": "defined macro\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "BUILD_TESTING",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "ver_string",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "${var}",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CTEST_USE_LAUNCHERS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "CTEST_USE_LAUNCHERS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "__launch_common_options",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "__launch_compile_options",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "__launch_link_options",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "__launch_custom_options",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "CTEST_LAUNCH_COMPILE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "CTEST_LAUNCH_LINK",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "CTEST_LAUNCH_CUSTOM",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestUseLaunchers.cmake"
+      },
+      {
+        "label": "\"${var}\"",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "\"${var}\"",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "SUBMIT_URL",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CVS_UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_COMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_COMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_COMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_COMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_COMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_COMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "UPDATE_OPTIONS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_TESTING_TIMEOUT",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CTEST_SUBMIT_RETRY_DELAY",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CTEST_SUBMIT_RETRY_COUNT",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "MEMORYCHECK_SUPPRESSIONS_FILE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "COVERAGE_EXTRA_FLAGS",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "SITE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_COMPILER",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_COMPILER",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_COMPILER",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_NAME_COMPONENT",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_NAME_COMPONENT",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "BUILD_NAME_SYSTEM_NAME",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "BUILD_NAME_SYSTEM_NAME",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "BUILDNAME",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "MAKECOMMAND",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DEFAULT_CTEST_CONFIGURATION_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake\n\nif there is no -C arg given to ctest:"
+      },
+      {
+        "label": "DEFAULT_CTEST_CONFIGURATION_TYPE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "BZRCOMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "COVERAGE_COMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "COVERAGE_EXTRA_FLAGS",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CTEST_SUBMIT_RETRY_DELAY",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CTEST_SUBMIT_RETRY_COUNT",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CVSCOMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CVS_UPDATE_OPTIONS",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "DART_TESTING_TIMEOUT",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "GITCOMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "P4COMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "HGCOMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "MAKECOMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "MEMORYCHECK_COMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "MEMORYCHECK_SUPPRESSIONS_FILE",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "SITE",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "SVNCOMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "RUN_FROM_CTEST_OR_DART",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      },
+      {
+        "label": "CMAKE_TARGET_PATH",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CMAKE_CTEST_COMMAND",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "defined var\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CTEST_TLS_VERSION",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CTEST_TLS_VERSION",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CTEST_TLS_VERIFY",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CTEST_TLS_VERIFY",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CTEST_TEST_COVERAGE_MERGE_EXECUTABLE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "CTEST_TEST_COVERAGE_DATA_EXECUTABLE",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "__conf_types",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake"
+      },
+      {
+        "label": "__conf_types",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTestTargets.cmake\n\nWe need to pass the configuration type on the test command line."
+      },
+      {
+        "label": "RUN_FROM_CTEST_OR_DART",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /usr/share/cmake/Modules/CTest.cmake"
+      }
+    ],
+    "/home/zgh/CPP_Projects/ZghLab/codes_CMake/test/CMakeLists.txt": [
+      {
+        "label": "AddTest",
+        "kind": 3,
+        "detail": "Function",
+        "documentation": "defined macro\nfrom: /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/CMakeLists.txt"
       }
     ]
   }

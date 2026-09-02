@@ -1,0 +1,19 @@
+Start testing: Sep 02 13:17 CST
+----------------------------------------------------------
+1/1 Testing: utilsTest
+1/1 Test: utilsTest
+Command: "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test/utilsTest"
+Directory: /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test
+"utilsTest" start time: Sep 02 13:17 CST
+Output:
+----------------------------------------------------------
+Test passed!
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"utilsTest" end time: Sep 02 13:17 CST
+"utilsTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 02 13:17 CST

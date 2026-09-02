@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/utilsTest.dir/link.d CMakeFiles/utilsTest.dir/utilsTest.cpp.o -o utilsTest  ../libtutorial_lib.a
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/utilsTest.dir/link.d CMakeFiles/utilsTest.dir/utilsTest.cpp.o -o utilsTest  ../libtutorial_lib.a ../3rdlibs/glfw/src/libglfw3.a /usr/lib/librt.a -lm -ldl

@@ -44,12 +44,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test/cmake_install.cmake")
+  include("/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/cmake_install.cmake")
+  include("/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT

@@ -1,21 +1,27 @@
 [
 {
   "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build",
-  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc  -o CMakeFiles/tutorial_lib.dir/src/utils.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp",
+  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include  -Winvalid-pch -x c++-header -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -o CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.cxx",
+  "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.cxx",
+  "output": "CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch"
+},
+{
+  "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build",
+  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include  -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -o CMakeFiles/tutorial_lib.dir/src/main.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp",
+  "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp",
+  "output": "CMakeFiles/tutorial_lib.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build",
+  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include  -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -o CMakeFiles/tutorial_lib.dir/src/utils.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp",
   "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/src/utils.cpp",
   "output": "CMakeFiles/tutorial_lib.dir/src/utils.cpp.o"
 },
 {
   "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build",
-  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include  -o CMakeFiles/tutorial.dir/src/main.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp",
+  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/tomlplusplus/.  -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -o CMakeFiles/tutorial.dir/src/main.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp",
   "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/src/main.cpp",
   "output": "CMakeFiles/tutorial.dir/src/main.cpp.o"
-},
-{
-  "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test",
-  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc  -o CMakeFiles/utilsTest.dir/utilsTest.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp",
-  "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp",
-  "output": "test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o"
 },
 {
   "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/glfw/src",
@@ -148,5 +154,11 @@
   "command": "/usr/bin/cc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/src -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/3rdlibs/glfw/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/linux_joystick.c.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/src/linux_joystick.c",
   "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/src/linux_joystick.c",
   "output": "3rdlibs/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o"
+},
+{
+  "directory": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test",
+  "command": "/usr/bin/c++  -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include  -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -o CMakeFiles/utilsTest.dir/utilsTest.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp",
+  "file": "/home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp",
+  "output": "test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o"
 }
 ]

@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch"
+  "CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch.d"
+  "CMakeFiles/tutorial_lib.dir/src/main.cpp.o"
+  "CMakeFiles/tutorial_lib.dir/src/main.cpp.o.d"
   "CMakeFiles/tutorial_lib.dir/src/utils.cpp.o"
   "CMakeFiles/tutorial_lib.dir/src/utils.cpp.o.d"
   "libtutorial_lib.a"

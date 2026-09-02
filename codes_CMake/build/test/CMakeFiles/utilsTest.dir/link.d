@@ -4,6 +4,9 @@ utilsTest: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o \
   CMakeFiles/utilsTest.dir/utilsTest.cpp.o \
   ../libtutorial_lib.a \
+  ../3rdlibs/glfw/src/libglfw3.a \
+  /usr/lib/librt.a \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libdl.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so \
@@ -45,6 +48,12 @@ utilsTest: \
 CMakeFiles/utilsTest.dir/utilsTest.cpp.o:
 
 ../libtutorial_lib.a:
+
+../3rdlibs/glfw/src/libglfw3.a:
+
+/usr/lib/librt.a:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libdl.a:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so:
 

@@ -74,17 +74,19 @@ test/CMakeFiles/utilsTest.dir/codegen:
 
 test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o: test/CMakeFiles/utilsTest.dir/flags.make
 test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o: /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp
+test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch
 test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o: test/CMakeFiles/utilsTest.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o"
-	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o -MF CMakeFiles/utilsTest.dir/utilsTest.cpp.o.d -o CMakeFiles/utilsTest.dir/utilsTest.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp
+	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -MD -MT test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o -MF CMakeFiles/utilsTest.dir/utilsTest.cpp.o.d -o CMakeFiles/utilsTest.dir/utilsTest.cpp.o -c /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp
 
 test/CMakeFiles/utilsTest.dir/utilsTest.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/utilsTest.dir/utilsTest.cpp.i"
-	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp > CMakeFiles/utilsTest.dir/utilsTest.cpp.i
+	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -E /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp > CMakeFiles/utilsTest.dir/utilsTest.cpp.i
 
 test/CMakeFiles/utilsTest.dir/utilsTest.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/utilsTest.dir/utilsTest.cpp.s"
-	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp -o CMakeFiles/utilsTest.dir/utilsTest.cpp.s
+	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -Winvalid-pch -include /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx -S /home/zgh/CPP_Projects/ZghLab/codes_CMake/test/utilsTest.cpp -o CMakeFiles/utilsTest.dir/utilsTest.cpp.s
 
 # Object files for target utilsTest
 utilsTest_OBJECTS = \
@@ -97,6 +99,9 @@ test/utilsTest: test/CMakeFiles/utilsTest.dir/utilsTest.cpp.o
 test/utilsTest: test/CMakeFiles/utilsTest.dir/build.make
 test/utilsTest: test/CMakeFiles/utilsTest.dir/compiler_depend.ts
 test/utilsTest: libtutorial_lib.a
+test/utilsTest: 3rdlibs/glfw/src/libglfw3.a
+test/utilsTest: /usr/lib/librt.a
+test/utilsTest: /usr/lib/libm.so
 test/utilsTest: test/CMakeFiles/utilsTest.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable utilsTest"
 	cd /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/utilsTest.dir/link.txt --verbose=$(VERBOSE)

@@ -4,7 +4,13 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc
+CXX_INCLUDES = -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include
 
 CXX_FLAGS = 
+
+# PCH options: CMakeFiles/tutorial_lib.dir/cmake_pch.hxx.gch_OPTIONS = -Winvalid-pch;-x;c++-header;-include;/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+
+# PCH options: CMakeFiles/tutorial_lib.dir/src/main.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
+
+# PCH options: CMakeFiles/tutorial_lib.dir/src/utils.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
 

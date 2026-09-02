@@ -65,20 +65,20 @@ CMAKE_BINARY_DIR = /home/zgh/CPP_Projects/ZghLab/codes_CMake/build
 # The main recursive "all" target.
 all: CMakeFiles/tutorial_lib.dir/all
 all: CMakeFiles/tutorial.dir/all
-all: test/all
 all: 3rdlibs/all
+all: test/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/tutorial_lib.dir/codegen
 codegen: CMakeFiles/tutorial.dir/codegen
-codegen: test/codegen
 codegen: 3rdlibs/codegen
+codegen: test/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
-preinstall: test/preinstall
 preinstall: 3rdlibs/preinstall
+preinstall: test/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
@@ -112,8 +112,8 @@ clean: CMakeFiles/ContinuousTest.dir/clean
 clean: CMakeFiles/ContinuousCoverage.dir/clean
 clean: CMakeFiles/ContinuousMemCheck.dir/clean
 clean: CMakeFiles/ContinuousSubmit.dir/clean
-clean: test/clean
 clean: 3rdlibs/clean
+clean: test/clean
 .PHONY : clean
 
 #=============================================================================
@@ -121,18 +121,22 @@ clean: 3rdlibs/clean
 
 # Recursive "all" directory target.
 3rdlibs/all: 3rdlibs/glfw/all
+3rdlibs/all: 3rdlibs/tomlplusplus/all
 .PHONY : 3rdlibs/all
 
 # Recursive "codegen" directory target.
 3rdlibs/codegen: 3rdlibs/glfw/codegen
+3rdlibs/codegen: 3rdlibs/tomlplusplus/codegen
 .PHONY : 3rdlibs/codegen
 
 # Recursive "preinstall" directory target.
 3rdlibs/preinstall: 3rdlibs/glfw/preinstall
+3rdlibs/preinstall: 3rdlibs/tomlplusplus/preinstall
 .PHONY : 3rdlibs/preinstall
 
 # Recursive "clean" directory target.
 3rdlibs/clean: 3rdlibs/glfw/clean
+3rdlibs/clean: 3rdlibs/tomlplusplus/clean
 .PHONY : 3rdlibs/clean
 
 #=============================================================================
@@ -176,6 +180,25 @@ clean: 3rdlibs/clean
 .PHONY : 3rdlibs/glfw/src/clean
 
 #=============================================================================
+# Directory level rules for directory 3rdlibs/tomlplusplus
+
+# Recursive "all" directory target.
+3rdlibs/tomlplusplus/all:
+.PHONY : 3rdlibs/tomlplusplus/all
+
+# Recursive "codegen" directory target.
+3rdlibs/tomlplusplus/codegen:
+.PHONY : 3rdlibs/tomlplusplus/codegen
+
+# Recursive "preinstall" directory target.
+3rdlibs/tomlplusplus/preinstall:
+.PHONY : 3rdlibs/tomlplusplus/preinstall
+
+# Recursive "clean" directory target.
+3rdlibs/tomlplusplus/clean:
+.PHONY : 3rdlibs/tomlplusplus/clean
+
+#=============================================================================
 # Directory level rules for directory test
 
 # Recursive "all" directory target.
@@ -198,15 +221,15 @@ test/clean: test/CMakeFiles/utilsTest.dir/clean
 # Target rules for target CMakeFiles/tutorial_lib.dir
 
 # All Build rule for target.
-CMakeFiles/tutorial_lib.dir/all:
+CMakeFiles/tutorial_lib.dir/all: 3rdlibs/glfw/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=26,27 "Built target tutorial_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=26,27,28,29 "Built target tutorial_lib"
 .PHONY : CMakeFiles/tutorial_lib.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tutorial_lib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 27
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tutorial_lib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 0
 .PHONY : CMakeFiles/tutorial_lib.dir/rule
@@ -218,7 +241,7 @@ tutorial_lib: CMakeFiles/tutorial_lib.dir/rule
 # codegen rule for target.
 CMakeFiles/tutorial_lib.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tutorial_lib.dir/build.make CMakeFiles/tutorial_lib.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=26,27 "Finished codegen for target tutorial_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=26,27,28,29 "Finished codegen for target tutorial_lib"
 .PHONY : CMakeFiles/tutorial_lib.dir/codegen
 
 # clean rule for target.
@@ -239,7 +262,7 @@ CMakeFiles/tutorial.dir/all: 3rdlibs/glfw/src/CMakeFiles/glfw.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tutorial.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 27
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 29
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tutorial.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 0
 .PHONY : CMakeFiles/tutorial.dir/rule
@@ -1156,38 +1179,6 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 .PHONY : CMakeFiles/ContinuousSubmit.dir/clean
 
 #=============================================================================
-# Target rules for target test/CMakeFiles/utilsTest.dir
-
-# All Build rule for target.
-test/CMakeFiles/utilsTest.dir/all: CMakeFiles/tutorial_lib.dir/all
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/depend
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=29,30 "Built target utilsTest"
-.PHONY : test/CMakeFiles/utilsTest.dir/all
-
-# Build rule for subdir invocation for target.
-test/CMakeFiles/utilsTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/utilsTest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/utilsTest.dir/rule
-
-# Convenience name for target.
-utilsTest: test/CMakeFiles/utilsTest.dir/rule
-.PHONY : utilsTest
-
-# codegen rule for target.
-test/CMakeFiles/utilsTest.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=29,30 "Finished codegen for target utilsTest"
-.PHONY : test/CMakeFiles/utilsTest.dir/codegen
-
-# clean rule for target.
-test/CMakeFiles/utilsTest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/clean
-.PHONY : test/CMakeFiles/utilsTest.dir/clean
-
-#=============================================================================
 # Target rules for target 3rdlibs/glfw/CMakeFiles/uninstall.dir
 
 # All Build rule for target.
@@ -1258,7 +1249,7 @@ glfw: 3rdlibs/glfw/src/CMakeFiles/glfw.dir/rule
 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/all:
 	$(MAKE) $(MAKESILENT) -f 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build.make 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build.make 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=28 "Built target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=30 "Built target update_mappings"
 .PHONY : 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1275,13 +1266,46 @@ update_mappings: 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/rule
 # codegen rule for target.
 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build.make 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=28 "Finished codegen for target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=30 "Finished codegen for target update_mappings"
 .PHONY : 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/codegen
 
 # clean rule for target.
 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/clean:
 	$(MAKE) $(MAKESILENT) -f 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/build.make 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/clean
 .PHONY : 3rdlibs/glfw/src/CMakeFiles/update_mappings.dir/clean
+
+#=============================================================================
+# Target rules for target test/CMakeFiles/utilsTest.dir
+
+# All Build rule for target.
+test/CMakeFiles/utilsTest.dir/all: CMakeFiles/tutorial_lib.dir/all
+test/CMakeFiles/utilsTest.dir/all: 3rdlibs/glfw/src/CMakeFiles/glfw.dir/all
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/depend
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=31,32 "Built target utilsTest"
+.PHONY : test/CMakeFiles/utilsTest.dir/all
+
+# Build rule for subdir invocation for target.
+test/CMakeFiles/utilsTest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 29
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/utilsTest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles 0
+.PHONY : test/CMakeFiles/utilsTest.dir/rule
+
+# Convenience name for target.
+utilsTest: test/CMakeFiles/utilsTest.dir/rule
+.PHONY : utilsTest
+
+# codegen rule for target.
+test/CMakeFiles/utilsTest.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles --progress-num=31,32 "Finished codegen for target utilsTest"
+.PHONY : test/CMakeFiles/utilsTest.dir/codegen
+
+# clean rule for target.
+test/CMakeFiles/utilsTest.dir/clean:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/utilsTest.dir/build.make test/CMakeFiles/utilsTest.dir/clean
+.PHONY : test/CMakeFiles/utilsTest.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

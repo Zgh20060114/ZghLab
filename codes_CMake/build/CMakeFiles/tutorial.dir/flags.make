@@ -4,7 +4,9 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include
+CXX_INCLUDES = -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/inc -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/glfw/include -I/home/zgh/CPP_Projects/ZghLab/codes_CMake/3rdlibs/tomlplusplus/.
 
 CXX_FLAGS = 
+
+# PCH options: CMakeFiles/tutorial.dir/src/main.cpp.o_OPTIONS = -Winvalid-pch;-include;/home/zgh/CPP_Projects/ZghLab/codes_CMake/build/CMakeFiles/tutorial_lib.dir/cmake_pch.hxx
 
