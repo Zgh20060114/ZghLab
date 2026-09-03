@@ -328,7 +328,7 @@ private:
 - 运算符重载函数本质就是一种 成员函数/友元函数,当然可以进行函数重载,比如说`int operator+(int a)`,`float operator+(float a)`
 - 一般运算符重载函数进行函数重载参数个数不能改变,但是函数调用运算符()重载的函数重载的参数可以是任意的.
 - 函数对象: 重载了函数调用运算符()的类的对象. 优点: 可以携带状态信息,比起单纯的函数重载.
-- `typedef a A;`
+- `typedef a A;`: typedef 已有类型 新类型.
 - 函数指针可以很简单的赋值为普通函数,那如何指向一个类中的非静态成员函数呢: `返回类型 (ClassA::*ptr)(参数类型)= &ClassA::func;`,调用:`ClassA a; (a.*ptr)(参数);`(需要用完整形式的函数指针,需要加上类作用域.)
 - 这里的`.*`视为一个运算符,叫做成员指针运算符的第一种形式.
 - `返回类型 (ClassA::*ptr)(参数类型)= &ClassA::func;`,调用:`ClassA *a = new ClassA(); (a->*ptr)(参数);`
@@ -647,12 +647,26 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - stl六大核心组件:
   - 函数对象(仿函数): 一个重载了operator()的类. operator() 的作用就是让对象可以被当作函数一样“调用”（即 obj(args),智能指针的自定义删除器就是一个函数对象.
   - 适配器(adapter): 
-    - 容器适配器: 基于现有的底层顺序容器（如std::deque、std::list、std::vector),但限制了访问接口，使其只表现出特定的数据结构行为.
+    - 容器适配器: 基于现有的底层顺序容器（如std::deque、std::list、std::vector),但限制了访问接口，使其只表现出特定的数据结构行为(std::queue, std::stack, std::priority_queue).
     - 函数适配器: 对现有的函数对象（仿函数）进行包装、绑定或组合，改变其参数数量或行为，使其能够适配 STL 算法的要求.比如:如果你有一个二元谓词 bool compare(int val, int threshold)，你可以用 std::bind(compare, std::placeholders::_1, 50) 把第二个参数固定为 50，把它“适配”成一元谓词.
     - 迭代器适配器: 改变迭代器遍历容器的“方向”或“赋值行为”.这在 STL 算法中极其常用.
       - 反向迭代器: std::reverse_iterator
       - 插入迭代器: std::back_inserter、std::front_inserter、std::inserter.
   - 空间适配器: 为各个容器高效地管理内存（负责内存的申请与回收）.绝大数情况下不需要手动实现,每个 STL 容器的模板参数中，都默认携带了一个空间配置器. 
-  - 容器 
+  - 容器: 用来存放数据的,所以也称为数据结构 
+    - 序列式容器(实现按顺序访问): std::array(静态连续数组),std::vector(动态连续数组), std::forward_list(单链表), std::list(双链表), std::deque(双端队列)
+    - 关联式容器(实现快速查找,关联: 插入的位置与插入的元素大小有关): std::set(唯一键的集合,按照键大小排序), std::map(唯一键的键值对的集合,按照键大小排序), std::multiset, std::multimap
+    - 无序关联式容器: std::unordered_set, std::unordered_map
   - 迭代器: 一种泛型指针.
   - 算法
+- vector,list,deque都有push_back()和pop_back(); 只有list,deque有push_front()和pop_front(),但是vector没有push_front()和pop_front(),不能在头部进行操作; list不能随机访问.
+- std::vector: _begain_ptr, _finish_ptr, _end_of_storage_ptr.
+- ![std::deque的底层实现](assets_CPP_WD/2026-09-03-09-15-38.png)
+- deque内存是局部连续,整体分散(一堆分散的火车车厢),deque是由多个片段组成的.(逻辑连续,物理分散)
+- _M_map叫做"中控器数组",是一个指针数组,每一个指针元素指向一个片段的首地址.
+- deque当容量満了会再申请片段,而没有销毁.
+- deque和vector都支持insert(),但是可能有o(n)的元素搬移,更推荐list的insert().
+- 动态的容器里的元素都是在堆上,像std::array静态数组遵循c++的内存布局:局部在栈上，全局在全局区，动态 new 出来的在堆上.
+- `vec.data()`返回指向vector第一个元素的地址的裸指针.
+- `deque/list/vector.insert(it,3)`,在it前插入,且it的地址一直不变,对于list,it指向的元素不变;对于deque,it指向的值可能会发生变化;对于vector,it可能会悬空.
+- vector,deque使用erase(it)时,后面的元素会前移;list不会前移. `it = erase(it)`,销毁旧迭代器,返回下一个新迭代器

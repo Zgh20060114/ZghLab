@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cxxabi.h>
 #include <iostream>
+#include <list>
 #include <memory>
 #include <string>
 #include <utility>
@@ -165,9 +166,9 @@ public:
 int main(int argc, char *argv[]) {
 
   // std::shared_ptr<FILE> file{fopen("data.txt", "r"), FileCloser{}};
-  Point *po = new Point();
-  std::shared_ptr<Point> sp{po};
-  std::shared_ptr<Point> sp1{po};
+  // Point *po = new Point();
+  // std::shared_ptr<Point> sp{po};
+  // std::shared_ptr<Point> sp1{po};
   // std::cout << multiply<double>(15.2, 2.2) << '\n';
   // print(1, 2, 3, 4);
   // std::cout << add<double>(1.1, 2.1, 3.1, 4.1) << '\n';
@@ -231,5 +232,11 @@ int main(int argc, char *argv[]) {
   // std::unique_ptr<FILE> up_file{fopen("data.txt", "r")};
   // auto vec_uptr = std::vector<std::unique_ptr<int>>{};
   // vec_uptr.push_back(uptr);
+  std::vector<int> v_a{1, 2};
+  std::list<int> l_a{1, 2};
+  std::cout << v_a.max_size() << "\n";
+  std::list<int>::iterator it{l_a.begin()};
+  it = l_a.erase(it);
+  std::cout << *it << "\n";
   return 0;
 }
