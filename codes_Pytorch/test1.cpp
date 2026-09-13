@@ -1,11 +1,21 @@
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <cxxabi.h>
+#include <deque>
+#include <functional>
 #include <iostream>
+#include <iterator>
 #include <list>
+#include <map>
 #include <memory>
+#include <queue>
+#include <set>
+#include <stack>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -233,10 +243,53 @@ int main(int argc, char *argv[]) {
   // auto vec_uptr = std::vector<std::unique_ptr<int>>{};
   // vec_uptr.push_back(uptr);
   std::vector<int> v_a{1, 2};
+  std::vector<int> v_b{1, 2, 3};
+  std::deque<int> d_a{1, 2, 3};
   std::list<int> l_a{1, 2};
+  std::list<int> l_b{1, 2, 4};
+  std::set<int> s_a{1, 2, 3};
+  std::map<int, std::string> m_a{{1, "a"}, {2, "b"}};
+  std::multiset<int> ms_a{1, 2, 4, 5};
+  std::unordered_set<int> us_a{1, 2, 3, 1};
+  std::unordered_multiset<int> ums_a{1, 2, 3, 1};
+  std::multimap<int, std::string> mm_a{{1, "a"}, {2, "b"}};
+  std::unordered_map<int, std::string> um_a{{1, "a"}, {2, "b"}};
+  std::priority_queue<int> pq_a{std::less<int>(), std::vector<int>{1, 5, 3}};
+  std::priority_queue<int> pq_b{v_a.begin(), v_a.end()};
+  std::stack<int> st_a{d_a};
+  std::cout << us_a.count(1) << "\n";
+  std::cout << ums_a.count(1) << "\n";
+  std::map<int, std::string> map_a{
+      {1, "a"},
+      {2, "b"},
+      {2,
+       "c"}}; // 列表初始化里面插入用的insert(),insert插入相同的键时旧值保留,新值丢弃.
+  // map_a.insert_or_assign(2, "d");
+  map_a.insert({2, "d"});
+  std::cout << map_a.at(2) << "\n";
   std::cout << v_a.max_size() << "\n";
   std::list<int>::iterator it{l_a.begin()};
   it = l_a.erase(it);
   std::cout << *it << "\n";
+  v_b.swap(v_a);
+  l_b.swap(l_a);
+  v_a.insert(v_a.begin(), 100);
+  s_a.insert(10);
+  // for (auto i : v_b) {
+  //   std::cout << i << " ";
+  // }
+  // std::cout << "\n";
+  auto it_low = ms_a.lower_bound(3);
+  auto it_up = ms_a.upper_bound(2);
+  s_a.equal_range(3);
+  std::cout << *it_low << "\n";
+  std::cout << *it_up << "\n";
+  std::cout << map_a.at(2) << "\n";
+  std::ostream_iterator<int> osi{std::cout, "-"};
+  // std::copy(v_a.begin(), v_a.end(), osi);
+  std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout, " "});
+  std::cout << "\n";
+  std::cout << v_a.back() << "\n";
+
   return 0;
 }

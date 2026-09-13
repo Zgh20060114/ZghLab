@@ -655,11 +655,13 @@ T1 add(T1 t1, T2 t2, Args... args) {
   - 空间适配器: 为各个容器高效地管理内存（负责内存的申请与回收）.绝大数情况下不需要手动实现,每个 STL 容器的模板参数中，都默认携带了一个空间配置器. 
   - 容器: 用来存放数据的,所以也称为数据结构 
     - 序列式容器(实现按顺序访问): std::array(静态连续数组),std::vector(动态连续数组), std::forward_list(单链表), std::list(双链表), std::deque(双端队列)
-    - 关联式容器(实现快速查找,关联: 插入的位置与插入的元素大小有关): std::set(唯一键的集合,按照键大小排序), std::map(唯一键的键值对的集合,按照键大小排序), std::multiset, std::multimap
+    - 关联式容器(实现快速查找,关联: 插入的位置与插入的元素大小有关): std::set(唯一键的集合,按照键大小升序排序), std::map(唯一键的键值对的集合,按照键大小升序排序), std::multiset, std::multimap
     - 无序关联式容器: std::unordered_set, std::unordered_map
   - 迭代器: 一种泛型指针.
   - 算法
-- vector,list,deque都有push_back()和pop_back(); 只有list,deque有push_front()和pop_front(),但是vector没有push_front()和pop_front(),不能在头部进行操作; list不能随机访问.
+- vector,list,deque都有`push_back()`和`pop_back()`; 只有list,deque有`push_front()`和`pop_front()`,**但是vector没有push_front()和pop_front(),不能在头部进行操作**; list不能随机访问.
+> [!TIP]
+> 因此什么情况下用vector,什么情况下用deque呢?: 默认用vector,只有需要频繁在头部进行插入删除时才用deque.
 - std::vector: _begain_ptr, _finish_ptr, _end_of_storage_ptr.
 - ![std::deque的底层实现](assets_CPP_WD/2026-09-03-09-15-38.png)
 - deque内存是局部连续,整体分散(一堆分散的火车车厢),deque是由多个片段组成的.(逻辑连续,物理分散)
@@ -668,5 +670,98 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - deque和vector都支持insert(),但是可能有o(n)的元素搬移,更推荐list的insert().
 - 动态的容器里的元素都是在堆上,像std::array静态数组遵循c++的内存布局:局部在栈上，全局在全局区，动态 new 出来的在堆上.
 - `vec.data()`返回指向vector第一个元素的地址的裸指针.
-- `deque/list/vector.insert(it,3)`,在it前插入,且it的地址一直不变,对于list,it指向的元素不变;对于deque,it指向的值可能会发生变化;对于vector,it可能会悬空.
-- vector,deque使用erase(it)时,后面的元素会前移;list不会前移. `it = erase(it)`,销毁旧迭代器,返回下一个新迭代器
+- `deque/list/vector.insert(it,3)`,在it前插入,且it的地址一直不变,对于list,it指向的元素不变;对于deque,it指向的值可能会发生变化;对于vector,it可能会悬空(迭代器失效).
+- vector,deque使用`erase(it)`时,后面的元素会前移;list不会前移. `it = erase(it)`,销毁旧迭代器,返回下一个新迭代器
+- `.clear()`清空元素.
+- `.shrink_to_fit()`回收多余的空间,只有vector和deque有,list没有(因为list元素和空间一起删除)
+- `v_b.swap(v_a);`交换,都支持.
+- `.resize(n)`改变元素的个数,都支持.
+- `.emplace_back(Args)`在尾部插入构造的元素,与`.push_back()`在尾部先构造再拷贝构造相比,效率更高. 两者插入内置类型相差不大,自定义类型相差较大.
+- `.emplace(Args)`and `.insert()`
+- deque,list有`emplace_front()`,vector无.
+- `front`,`back`获取第一个/最后一个元素.`return *(end()-1);`
+- `begin`,`end`获取第一个/最后一个元素的后一个迭代器.
+> [!WARNING]
+> std::list没有[]和at,无法随机访问,只能通过迭代器+n的方式. 因为std::list底层是双向链表,不支持随机访问(不能随机访问就意味着慢,C++的设计哲学是:如果操作很慢就不要让它看起来很方便.).
+- list特有的操作:
+  - `.reverse()`反转元素.
+  - `.sort()`增序排序;`.sort(std::greater<int>())`降序排列.
+  - `.unique()`去除连续的重复元素,如果要整体去重需要先sort().
+  - `.merge(other)`合并,都是增序的,合并后才是增序的.
+  - `.splice(it,other)`拼接,插入到it之前;`.splice(it,other,other_it)`把other_it的元素插到it之前;`.splice(it,other,other_first,other_end)`把other_first到other_end的元素插到it之前.
+- it指向的值不会随着元素的增减而变化.
+- vector迭代器失效: 扩容了,直接换了一块内存.
+- ![专选课12学分](assets_CPP_WD/2026-09-05-15-50-10.png)
+- ![研究方向必修课6学分](assets_CPP_WD/2026-09-05-16-01-18.png)
+- vector的capacity扩容不是简单的2倍size关系: 设size()=m,capacity()=n,insert_number=t,当n-m<t<m时,capacity=2*n; 当`n-m<t且t>m`时,capacity=m+t.
+- 关联式容器没有头尾的概念,只有最大元素(end),最小元素(begin).
+> [!TIP]
+> 关联式容器(除了std::map,std::unordered_map)也没有下标和at.
+- `std::map`和`std::unrodered_map`支持下标和at,但是语义不同,不是第n个元素,而是[key]和at(key),返回value.
+- 关联式容器的键不能修改(不能迭代器解引用修改),只能增删.
+> [!WARNING]
+> std::map和std::unordered_map的下标访问`T& operator [](const Key &key)`没有const版本,所以const版本的map使用[key]会报错,因为const对象不能调用非const操作.
+- set/multiset操作:
+  - `size_t cnt = set.count(key);`,返回指定key的个数,判断set里有没有key.
+  - `std::set<int>::iterator it = set.find(key);`,迭代器存不存在需要和`set.end()`尾迭代器比较.
+  - `std::pair<std::set<int>::iterator, bool> ret = set.insert(key);`;`set.insert(vec.begin(),vec.end());`; `set.insert({1,2,3,4});`
+  - `.lower_bound(key)`返回第一个>=key的迭代器
+  - `.upper_bound(key)`返回第一个>key的迭代器.
+  - `.equal_range(key)`返回两个迭代器,一个是`.lower_bound(key)`,一个是`.upper_bound(key)`.
+- `std::tuple`,`std::pair`
+- g++ test.cpp 2> error.txt; 0是标准输入,1是标准输出,2是错误输出.
+- `std::hypot`比std::sqrt(x*x + y*y)更好.
+- 有序关联式容器元素是自定义类型时,自定义类型需要重载<运算符,或者对std::less<自定义类型>的operator()进行模板特化,或者自定义个带bool operator()的类.
+- 无序关联式容器元素是自定义类型时,自定义类型需要重载==运算符,或者对std::equal_to<自定义类型>的operator()进行模板特化,或者自定义个带bool operator()的类, 和对std::hash<自定义类型>的operator()进行模板特化.
+- 把模板参数列表中的所有参数都以特定的类型写出来,模板声明写为`template <>`,这叫做模板的全特化.
+- map操作:
+  - `std::map<int, std::string> map_a{ {1, "a"},{2, "b"},{2,"c"}};`列表初始化里面插入用的insert(),insert插入相同的键时旧值保留,新值丢弃.
+  - `.emplace()`插入相同的键时旧值保留,新值丢弃.
+  - `operator[]`,插入相同的键时新值覆盖旧值.
+  - `.insert_or_assign()`,插入相同的键时新值覆盖旧值.
+- 函数声明可以只写形参类型类型不写形参名字,函数定义必须要写.
+> [!TIP]
+> 序列式容器vector和deque由于底层内存是连续的,没有任何索引结构,只能线性扫描,所以没有find(),count(),只能用`std::find()`.只有无序/有序关联式容器才有查找功能.
+- 无序关联式容器`unordered_xx`
+- 序列式容器底层是没有索引结构,查找只能逐个遍历,所以复杂度是O(n).
+- 有序关联式容器底层都是红黑树rbtree,复杂度都是O(log(n)).
+- 无序关联式容器底层都是哈希表,复杂度都是最快O(1),最慢O(n).(平均是O(1)).
+- `std::unordered_set`元素不能重复, `std::unordered_multiset`元素可以重复且无序.
+- 迭代器的种类不同:
+  - 随机访问迭代器: vector,deuqe ,可以(it+=2)
+  - 双向迭代器: list, 关联式容器,只能(it++,it--)
+  - 前向迭代器: 无序关联式容器.只能(it++)不能(it--)
+- instantiate 实例化
+- stack底层默认是deque.模拟的数据结构是栈.
+- queue底层默认也是deque.模拟的数据结构是队列.
+- priority_queue底层默认是vector.模拟的数据结构是完全二叉堆(大顶堆).
+- priority_queue不能使用{}列表初始化了,不支持下标访问,没有容器迭代器,所以无法正常的遍历,只能先top再pop.
+- 虽然说容器适配器也算是容器,但是容器适配器没有迭代器.因此容器适配器只能破坏性的遍历.
+- priority_queue操作:
+  - top,获取堆顶元素,最大.
+  - push,插入元素,用std::less与堆顶元素比较来决定置换.
+  - pop,弹出堆顶元素.
+  - 大顶堆和小顶堆写法不一样,默认模板类型参数是std::less:
+    ~~~cpp
+    // 大顶堆：默认 less，top() 是最大值
+    std::priority_queue<int> pq_a(data.begin(), data.end());
+    // 小顶堆：显式 greater，top() 是最小值
+    std::priority_queue<int, std::vector<int>, std::greater<int>> pq_b(
+        data.begin(), data.end()
+    );
+    ~~~
+
+- 类型萃取
+- 内存上的堆和栈和数据结构里的堆和栈完全没有联系.
+- ![五种迭代器的继承关系](assets_CPP_WD/2026-09-13-09-47-05.png)
+- `std::ostream_iterator`
+- std::copy(inputiterator first, inputiterator last, outputiterator dst_first)
+- `std::ostream_iterator<int> osi(`
+- 列表初始化,直接初始化都是调用的构造函数.
+- 很多现代终端（尤其是 Zsh，macOS 默认的 shell）会在最后一行输出没有以换行符 \n 结尾时，自动在末尾显示一个反白的 % 符号，用来提醒你："这一行没有换行符结束".
+- begin/end返回的是迭代器,支持迭代器的容器都有; front/back返回的是元素,有头尾顺序的序列式容器都有.
+- 一种支持迭代器的容器通用的遍历方法(除了范围for循环之外):
+~~~cpp
+  std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout, " "});
+  std::cout << "\n";
+~~~
