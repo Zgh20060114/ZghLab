@@ -289,7 +289,24 @@ int main(int argc, char *argv[]) {
   // std::copy(v_a.begin(), v_a.end(), osi);
   std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout, " "});
   std::cout << "\n";
+  std::copy(s_a.begin(), s_a.end(), std::ostream_iterator<int>{std::cout, " "});
+  std::cout << "\n";
+  std::vector<int> v_c{};
+  std::copy(std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{},
+            std::back_inserter(v_c));
+  std::copy(v_c.begin(), v_c.end(), std::ostream_iterator<int>{std::cout, " "});
+  std::cout << "\n";
   std::cout << v_a.back() << "\n";
+  std::copy(v_a.begin(), v_a.end(),
+            std::back_insert_iterator<std::list<int>>(l_a));
+  std::copy(v_a.begin(), v_a.end(), std::back_inserter(l_a));
+  for (auto &l_i : l_a) {
+    std::cout << l_i << " ";
+  }
+  auto it_r = v_a.rbegin();
+  std::vector<int> v_d{5, 4, 3};
+  *v_d.begin() = 100;
+  std::reverse(v_d.begin(), v_d.end());
 
   return 0;
 }

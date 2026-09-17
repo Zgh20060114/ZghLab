@@ -694,7 +694,7 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - ![专选课12学分](assets_CPP_WD/2026-09-05-15-50-10.png)
 - ![研究方向必修课6学分](assets_CPP_WD/2026-09-05-16-01-18.png)
 - vector的capacity扩容不是简单的2倍size关系: 设size()=m,capacity()=n,insert_number=t,当n-m<t<m时,capacity=2*n; 当`n-m<t且t>m`时,capacity=m+t.
-- 关联式容器没有头尾的概念,只有最大元素(end),最小元素(begin).
+- 关联式容器没有头尾的概念,只有最大元素的迭代器(end),最小元素的迭代器(begin).
 > [!TIP]
 > 关联式容器(除了std::map,std::unordered_map)也没有下标和at.
 - `std::map`和`std::unrodered_map`支持下标和at,但是语义不同,不是第n个元素,而是[key]和at(key),返回value.
@@ -761,7 +761,29 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - 很多现代终端（尤其是 Zsh，macOS 默认的 shell）会在最后一行输出没有以换行符 \n 结尾时，自动在末尾显示一个反白的 % 符号，用来提醒你："这一行没有换行符结束".
 - begin/end返回的是迭代器,支持迭代器的容器都有; front/back返回的是元素,有头尾顺序的序列式容器都有.
 - 一种支持迭代器的容器通用的遍历方法(除了范围for循环之外):
-~~~cpp
-  std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout, " "});
-  std::cout << "\n";
-~~~
+  - 输出流迭代器:
+    ~~~cpp
+      std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout, " "});
+      std::cout << "\n";
+    ~~~
+  - 输入流迭代器:
+    ~~~cpp
+      std::vector<int> v_c{};
+      std::copy(std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{},
+                std::back_inserter(v_c));
+      std::copy(v_c.begin(), v_c.end(), std::ostream_iterator<int>{std::cout, " "});
+      std::cout << "\n";
+  ~~~
+- ctrl+d: 在linux终端中表示eof文件结束,告诉当前正在读取输入的程序：“输入到此为止,没有更多数据了.”
+- 为什么运行a.out就不行,./a.out就可以? : 当前目录 . 默认不在系统的 PATH 环境变量里,需要指定在当前目录.里寻找a.out
+- -g添加调试信息,l打印代码,r运行,bt打印堆栈信息,q退出.
+- STL中的插入迭代器适配器一共有3个,用于把算法(std::copy,std::transform等)的赋值操作转换成容器的插入操作:
+  - `std::back_inserter(continer)`是一个插入迭代器适配器,作用是把std::copy,std::transform的赋值操作转换成`push_back()`,返回值是`std::back_inserter_iterator`类型.
+  - `std::front_inserter(continer)`, 调用`push_front()`
+  - `std::inserter(continer,pos)`,调用`insert()`
+  - `std::copy(v_a.begin(), v_a.end(),std::back_insert_iterator<std::list<int>>(l_a));` 
+- `auto it_r = v_a.rbegin();`其实就是`std::vector::reverse_iterator it_r = v_a.rbegin();`,反向迭代器rbegin(),rend().
+- algorithm算法:
+  - 非修改式算法:count,count_if,find,find_if,for_each
+  - 修改式算法:copy,remove,replace,swap,reverse.
+- 文件名类名大驼峰,函数名小驼峰,变量名分词下划线.
