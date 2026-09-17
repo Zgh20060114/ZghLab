@@ -32,3 +32,4 @@
 - x: 在normal模式删除光标下字符
 - X: 在normal模式删除光标的前一个字符
 - 用寄存器复制粘贴: "字母y/p
+- lazyvim用的neo-tree, H隐藏/显示隐藏文件.
