@@ -734,7 +734,7 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - instantiate 实例化
 - stack底层默认是deque.模拟的数据结构是栈.
 - queue底层默认也是deque.模拟的数据结构是队列.
-- priority_queue底层默认是vector.模拟的数据结构是完全二叉堆(大顶堆).
+- priority_queue底层默认是vector.模拟的数据结构是完全二叉堆(大顶堆)heap.
 - priority_queue不能使用{}列表初始化了,不支持下标访问,没有容器迭代器,所以无法正常的遍历,只能先top再pop.
 - 虽然说容器适配器也算是容器,但是容器适配器没有迭代器.因此容器适配器只能破坏性的遍历.
 - priority_queue操作:
@@ -785,5 +785,20 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - `auto it_r = v_a.rbegin();`其实就是`std::vector::reverse_iterator it_r = v_a.rbegin();`,反向迭代器rbegin(),rend().
 - algorithm算法:
   - 非修改式算法:count,count_if,find,find_if,for_each
-  - 修改式算法:copy,remove,replace,swap,reverse.
+  - 修改式算法:copy,remove,remove_if,replace,replace_if,swap,reverse
+  - 排序操作: sort
+  - 二分搜索操作: lower_bound(大于等于), upper_bound(严格大于)
+  - 集合操作(这里的集合是指交集并集,不是std::set): set_union(交集),set_intersection(并集),set_difference(差集)
+  - 堆操作(这里的堆不是指priority_queue,而是把容器里的元素按照heap的形式重排): make_heap, pop_heap, push_heap.
+  - 取最值: min, max, min_element, max_element, minmax_element.
+  - 数值运算操作: accumulate(累加), reduce(也是累加,但是支持并行累加)
 - 文件名类名大驼峰,函数名小驼峰,变量名分词下划线.
+- unary 一元.
+- unaryFunc一元函数: 函数的参数只有一个; 二元函数: 函数的参数只有两个.
+- unaryPredicate一元断言/一元谓词: 函数参数只有一个,并且函数的返回类型是bool.
+- lambda表达式(也叫匿名函数): ` [](){};`
+  - `[]`捕获列表: 捕获外部变量,`[a]`拷贝了一份const类型的; `[&a]`是引用; 或者  `[a](int value) mutable{}`可变关键字拷贝一份非const类型的.
+  - ()匿名函数的参数列表.
+  - {}函数的函数体.
+  - ` [](int value){std::cout<< value <<"\n";}(200);`会打印出200,不加(200)只是声明,加上才是调用.
+  - 当函数体想要使用匿名函数外面的变量时,必须用`[]`捕获一下.
