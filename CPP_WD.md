@@ -38,15 +38,21 @@
 - RVO,NRVO: 编译器通过“直接构造到返回值内存”来消除拷贝/移动的优化技术; 起作用场景:函数返回临时对象/局部对象.
 > [!NOTE]
 > C++ 标准规定，**对引用取地址**，等价于对引用绑定的变量本体取地址 
-- 类型转换: `static_cast`(基本数据类型的转化,父类和子类之间指针(或引用)类型的转化,非常量转化为常量) `dynamic_cast`(父类和子类之间的转换) `const_cast`(常量转化成非常量,基本不用) `reinterpret_cast`(任意指针(或引用)类型的转换,万能转换)
+- 类型转换: `static_cast`(基本数据类型的转化,父类和子类之间指针(或引用)类型的转化,非常量转化为常量) `dynamic_cast`(父类和子类指针之间的转换) `const_cast`(常量转化成非常量,基本不用) `reinterpret_cast`(任意指针(或引用)类型的转换,万能转换)
 - `static_cast`和`dynamic_cast`的区别: 
-  - `static_cast`可以转换值、引用和指针，而 `dynamic_cast`只能用于指针和引用.
+  - `static_cast`可以转换值、引用和指针，**而 `dynamic_cast`只能用于指针和引用**.
   - `static_cast` : 编译期静态检查,如果编译器认为类型之间有关联(如继承关系,基本类型转换),则允许转换;否则报错.它不会在运行时检查对象是否真的属于目标类型，因此需要程序员自己保证转换的安全性.
   - `dynamic_cast`: 运行期动态检查,程序跑起来,查内存里的对象的真实类型.如果转换合法则返回正确的指针；否则返回 `nullptr`(对于指针)或抛出 `std::bad_cast` 异常(对于引用).
-  - `dynamic_cast`使用条件: 基类中必须有虚virtual函数.
+  - `dynamic_cast`使用条件: **基类中必须有虚virtual函数(必须要是多态)**.
   - 当基类指针没有指向目标子类对象时,用`static_cast`直接把这个基类指针转换为子类指针,但是用这个子类指针访问子类部分成员时就会奔溃.
   - 当基类指针没有指向目标子类对象时,用`dynamic_cast`在运行时检测到无法把这个基类指针转换为子类指针, 不进行转换.
   - 向下转换的成功与否，是由基类指针的实际指向决定的，而不是由用哪个转换语法决定的.
+> [!TIP]
+> 对于类对象向上转型隐式,static_cast都可以;类对象向下转型不支持;类指针向上转型隐式,dynamic_cast,static_cast都可以; 类指针向下转型要安全只能用dynamic_cast.
+> [!TIP]
+> 转型是否安全,不取决于你怎么转,而取决于指针实际指向的是什么对象.类指针向下转型只有在“父类指针实际指向的就是子类对象”时，才是安全的.
+> [!TIP]
+> 类指针向上转型不切片,类对象向上转型切片.
 - 函数重载: c++中不允许通过返回值类型的不同来重载函数, 通过参数的类型,个数,顺序进行重载.
 - `extern "C"{...}`, 在c++中的c代码按照c的方式编译.
 > [!NOTE]
@@ -437,10 +443,14 @@ private:
   - 只定义了protected权限的构造函数,没有定义public权限的构造函数.
 - 没有全部override纯虚函数的子类也是一个抽象类abstract class.
 - `const int count = 1;`与`constexpr int count = 1;`的区别: 都是不可改变的常量,但是const的值确定时期可以是编译器也可以是运行期,constexpr只能是编译期, `int count=1;`在运行期且可改变.  `const int count = getValue();`可行,但是`constexpr int count = getValue();`错误❌.
+- constexpr关键字和const的区别: 
+  - `const`: 在运行时/编译时初始化, 是运行时常量.
+  - `constexpr`: 必须是在编译期初始化,所以编译期就是常量了; 修饰函数时,传入编译期常量时返回值就可以赋值给constexpr常量, 不是编译期常量时就退化成普通函数
+  - c++17引入了`if constexpr`: 函数可以在编译期拥有运行时的判断能力.
 - 构造函数不能设置为虚函数, 因为虚函数的调用需要vfptr, 而vfptr又需要在构造函数里初始化,陷入死循环.
 > [!NOTE]
 > 调用子类对象的析构函数,会自动链式调用基类的析构函数.
-- 只要存在通过基类指针析构派生类对象的可能, 析构函数就应该设置为虚函数.
+- 只要存在通过基类指针析构派生类对象的可能(有可能通过delete基类指针来析构子类对象,问题出在delete不会调用子类析构函数), 基类析构函数就应该设置为虚函数.
 - 子类的析构函数和基类的析构函数名字都不一样,为什么能实现虚函数覆盖? : 特殊设计.
 > [!WARNING]
 > 不调用类的析构函数,类中的智能指针也无法调用自身的析构函数,导致智能指针也会泄漏内存
@@ -586,7 +596,7 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - 当同时定义了拷贝构造函数和移动构造函数时,编译器通过判断表达式右边是左值还是右值来决定调用拷贝操作函数还是移动操作函数.
 - 拷贝构造函数既能接收左值也能接收右值,再去定义移动构造函数,就能把右值抢过去,这就实现了左值右值的区分.
 - 需要把引用进行完善:
-  - 左值引用`int &b= a;` : 引用那些我们希望改变的对象.
+  - 左值引用`int &b= a;`只能接收左值 : 引用那些我们希望改变的对象.
   - 右值引用`int &&b= a+1;`,只能接收右值 : 所引用的对象在我们使用后就无需保留了.
   - 把`const int &b = a+1;` 叫做const左值引用. 既能接收左值也能接收右值 : 引用那些我们不希望改变的对象.
 - 那这个右值引用本身b是左值还是右值呢?
@@ -654,7 +664,7 @@ T1 add(T1 t1, T2 t2, Args... args) {
       - 插入迭代器: std::back_inserter、std::front_inserter、std::inserter.
   - 空间适配器: 为各个容器高效地管理内存（负责内存的申请与回收）.绝大数情况下不需要手动实现,每个 STL 容器的模板参数中，都默认携带了一个空间配置器. 
   - 容器: 用来存放数据的,所以也称为数据结构 
-    - 序列式容器(实现按顺序访问): std::array(静态连续数组),std::vector(动态连续数组), std::forward_list(单链表), std::list(双链表), std::deque(双端队列)
+    - 序列式容器(实现按顺序访问): std::array(静态连续数组),std::vector(动态连续数组), std::forward_list(单向链表), std::list(双向链表), std::deque(双端队列)
     - 关联式容器(实现快速查找,关联: 插入的位置与插入的元素大小有关): std::set(唯一键的集合,按照键大小升序排序), std::map(唯一键的键值对的集合,按照键大小升序排序), std::multiset, std::multimap
     - 无序关联式容器: std::unordered_set, std::unordered_map
   - 迭代器: 一种泛型指针.
@@ -689,8 +699,10 @@ T1 add(T1 t1, T2 t2, Args... args) {
   - `.unique()`去除连续的重复元素,如果要整体去重需要先sort().
   - `.merge(other)`合并,都是增序的,合并后才是增序的.
   - `.splice(it,other)`拼接,插入到it之前;`.splice(it,other,other_it)`把other_it的元素插到it之前;`.splice(it,other,other_first,other_end)`把other_first到other_end的元素插到it之前.
+  - `.splice(lst.begin(), lst, it)`在本容器内移动元素,复杂度为o(1).
 - it指向的值不会随着元素的增减而变化.
-- vector迭代器失效: 扩容了,直接换了一块内存.
+- list的迭代器不能+n,只能+1.所以要想一步移动到位,直接用`std::next(it,n)`.
+- vector迭代器失效: push_back扩容了,直接换了一块内存.
 - ![专选课12学分](assets_CPP_WD/2026-09-05-15-50-10.png)
 - ![研究方向必修课6学分](assets_CPP_WD/2026-09-05-16-01-18.png)
 - vector的capacity扩容不是简单的2倍size关系: 设size()=m,capacity()=n,insert_number=t,当n-m<t<m时,capacity=2*n; 当`n-m<t且t>m`时,capacity=m+t.
@@ -726,6 +738,7 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - 序列式容器底层是没有索引结构,查找只能逐个遍历,所以复杂度是O(n).
 - 有序关联式容器底层都是红黑树rbtree,复杂度都是O(log(n)).
 - 无序关联式容器底层都是哈希表,复杂度都是最快O(1),最慢O(n).(平均是O(1)).
+- get/set 要求 O(1),首选 unordered_map（哈希表).但如果键是连续整数，vector 的 O(1) 更严格、更快.注意 unordered_map 的 O(1) 是“平均”，最坏可能退化到 O(n).
 - `std::unordered_set`元素不能重复, `std::unordered_multiset`元素可以重复且无序.
 - 迭代器的种类不同:
   - 随机访问迭代器: vector,deuqe ,可以(it+=2)
@@ -777,11 +790,11 @@ T1 add(T1 t1, T2 t2, Args... args) {
 - ctrl+d: 在linux终端中表示eof文件结束,告诉当前正在读取输入的程序：“输入到此为止,没有更多数据了.”
 - 为什么运行a.out就不行,./a.out就可以? : 当前目录 . 默认不在系统的 PATH 环境变量里,需要指定在当前目录.里寻找a.out
 - -g添加调试信息,l打印代码,r运行,bt打印堆栈信息,q退出.
-- STL中的插入迭代器适配器一共有3个,用于把算法(std::copy,std::transform等)的赋值操作转换成容器的插入操作:
-  - `std::back_inserter(continer)`是一个插入迭代器适配器,作用是把std::copy,std::transform的赋值操作转换成`push_back()`,返回值是`std::back_inserter_iterator`类型.
+- STL中的**插入迭代器适配器**一共有3个,用于把算法(std::copy,std::transform等)的赋值操作转换成容器的插入操作,让算法“往容器里插入”而不是“覆盖”,自动扩容,避免越界.back_inserter 用于尾部追加，front_inserter 用于头部插入，inserter 用于关联容器或指定位置插入:
+  - `std::back_inserter(continer)`是一个插入迭代器适配器,作用是把std::copy,std::transform的赋值操作转换成调用`push_back()`,返回值是`std::back_inserter_iterator`类型.
   - `std::front_inserter(continer)`, 调用`push_front()`
-  - `std::inserter(continer,pos)`,调用`insert()`
-  - `std::copy(v_a.begin(), v_a.end(),std::back_insert_iterator<std::list<int>>(l_a));` 
+  - `std::inserter(continer,pos)`,调用`insert(pos,value)`
+  - `std::copy(v_a.begin(), v_a.end(),std::back_insert_iterator<std::list<int>>(l_a));` 等价于`std::copy(v_a.begin(), v_a.end(),std::back_inserter(l_a));` 
 - `auto it_r = v_a.rbegin();`其实就是`std::vector::reverse_iterator it_r = v_a.rbegin();`,反向迭代器rbegin(),rend().
 - algorithm算法:
   - 非修改式算法:count,count_if,find,find_if,for_each
@@ -794,11 +807,91 @@ T1 add(T1 t1, T2 t2, Args... args) {
   - 数值运算操作: accumulate(累加), reduce(也是累加,但是支持并行累加)
 - 文件名类名大驼峰,函数名小驼峰,变量名分词下划线.
 - unary 一元.
+- predicate 断言,谓词.
 - unaryFunc一元函数: 函数的参数只有一个; 二元函数: 函数的参数只有两个.
 - unaryPredicate一元断言/一元谓词: 函数参数只有一个,并且函数的返回类型是bool.
-- lambda表达式(也叫匿名函数): ` [](){};`
-  - `[]`捕获列表: 捕获外部变量,`[a]`拷贝了一份const类型的; `[&a]`是引用; 或者  `[a](int value) mutable{}`可变关键字拷贝一份非const类型的.
+- std::for_each的用法: `unaryFunc for_each(inputit first, intputit second, unaryFunc f)`
+- lambda表达式(也叫**匿名函数**): ` [](){};`
+  - `[]`捕获列表: 捕获外部变量,`[a]`默认值拷贝了一份const类型的a; `[&a]`是引用a; 或者  `[a](int value) mutable{}`可变关键字值拷贝一份非const类型的a.
   - ()匿名函数的参数列表.
   - {}函数的函数体.
-  - ` [](int value){std::cout<< value <<"\n";}(200);`会打印出200,不加(200)只是声明,加上才是调用.
-  - 当函数体想要使用匿名函数外面的变量时,必须用`[]`捕获一下.
+  - ` [](int value){std::cout<< value <<"\n";}(200);`会打印出200,不加(200)只是定义了一个函数,加上才是函数调用.
+  - 当函数体想要使用匿名函数外面的变量时,必须用`[]`捕获一下;除了全局变量,lambda函数形参不需要捕获,其他的都需要[]捕获.
+
+~~~text
+  工作区（你编辑的文件）
+      │  git add
+      ↓
+  暂存区（准备提交的改动）
+      │  git commit
+      ↓
+  本地仓库（提交历史）
+      │  git push
+      ↓
+  远程仓库（GitHub 等）
+~~~
+
+- 大多数情况下lambda的返回类型可以省略,编译器会自动推导;只有“多个 return 类型不同”“想返回引用”“推导不出”时，才需要显式写 -> 类型.
+- lambda无法省略返回类型时: ` []()->return_type{};`
+- 当要捕获的外部变量太多时,用`[=](){}`, 等号以const值拷贝的形式全部捕获; 用`[&](){}`,地址符以引用的形式全部捕获.
+- lambda 定义在哪个作用域，它就能捕获那个作用域以及其外层作用域的变量,不能跨作用域捕捉.
+- 当值拷贝和引用都需要的时候: `[&,b](){}`,除了b之外都是引用; `[=,&b](){}`,除了b之外全是值拷贝.注意:有顺序要求.
+- 可以把lambda函数的定义跟调用分开: `auto lf = [](){}; lf();`
+- 类中的lambda函数要使用成员变量,需要捕获this指针,`[this](){};`, 让该lambda函数拥有成员函数的权限.
+- lambda函数的类型可以看作一个重载了`void operator()() const`函数的类,即lambda函数是一个仿函数.所以可以用std::function和std::bind存储和操作.
+- `std::remove_if`不是一下把满足条件的元素删除,而是返回待删除元素的首迭代器(把要删除的元素都放到了后面).结合容器的erase操作删除.`auto it =std::remove_if(ls.begin(), ls.end(), [](int value) { return value > 3; }); ls.erase(it, ls.end());`
+- 二元函数变一元函数:
+  - `std::bind1st(func, x)`把二元谓词函数func的第一个参数固定为x.
+  - `std::bind2nd(func, x)`把二元谓词函数func的第二个参数固定为x.
+  - `auto it =std::remove_if(ls.begin(), ls.end(), std::bind1st(std::less<int>(),3)); ls.erase(it, ls.end());` 效果相同.
+  - `auto it =std::remove_if(ls.begin(), ls.end(), std::bind2nd(std::greater<int>(),3)); ls.erase(it, ls.end());` 效果相同.
+  - 但是这两个函数适配器c++11就被弃用了,编译失败,可以用`std::bind(func,args...)`或者lambda表达式代替,std::bind还需要占位符_1,不如lambda,所以能用lambda就用lambda.
+- 函数名就是函数的地址(指向函数的指针): main和(&main)是一样的.
+- 普通函数和类的静态成员函数用name和&name是一样的; 对于类的非静态成员函数(由于有this参数的问题)获得地址必须要用&name; lambda表达式: 没有捕获变量的可以正常隐式退化,捕获了的不能转化为函数指针.
+- **引用折叠**是为了解决模版中 万能引用(T &&) 的类型推导(T &左值引用正常用,不涉及万能引用,还是只能接收左值不能接收右值):
+  - `template <class T> void universalCitation(T &&param) {}`
+  - 可以传入左值变量, int & &&万能引用推导出int &.
+  - 可以传入右值变量, int && &&万能引用推导出int &&.
+  - 万能引用只能是: 1.是模板函数, 2.能自动类型推导(不能手动指定<int>,否则就退化了), 3.模板函数参数是T &&.
+- 引入"**万能引用**"的核心目的就是实现"**完美转发**".万能引用几乎不单独使用,和完美转发形影不离.
+- 只有万能引用,没有完美转发的问题: 在 C++中，有一个极其反直觉的规则"只要一个变量有了名字，它在表达式中就变成了一个左值,哪怕它的类型是右值引用 T&&."
+  ~~~cpp
+  void target(int& x)  { std::cout << "处理左值\n"; }
+  void target(int&& x) { std::cout << "处理右值\n"; }
+  template <typename T>
+  void wrapper(T&& param) { 
+      target(param); 
+  }
+  ~~~
+即使传入的param是个右值,到target(param)这里时就被target函数变成了左值. 这种形参类型改变问题在**函数中形参传递给另一个内部函数时出现**.
+- 有了完美转发: 
+  ~~~cpp
+  template <typename T>
+  void wrapper(T&& param) { 
+      target(std::forward<T>(param)); 
+  }
+
+  int main() {
+      int x = 5;
+      wrapper(x);  // 传入左值，输出：处理左值
+      wrapper(10); // 传入右值，输出：处理右值
+  }
+  ~~~
+std::forward<T>() 的魔法就在于此.它读取了模板推导时 T 到底带不带 &：如果最初传入的是左值（T 被推导为 int&），std::forward 就会把它当成左值传下去;如果最初传入的是右值（T 被推导为 int),std::forward 就会把它强行转回右值传下去。
+- 完美转发中万能引用的作用是: 1.既能接收左值有能接收右值,2.接收左值右值的同时做标记把两种类型分开,让std::forward识别两种类型然后分别处理.
+- **函数指针**(**装一个函数**/**延迟函数的调用**)的写法的发展历程: 
+  - `int func1() { return 1; } `
+  - `int (*pfunc)() = func1; int result = pfunc(); //或(*pfunc)()`,c语言的写法, return_class (*函数指针名)(param_class)
+  - `typedef int (*pfunc)(); pfunc pf1 = func1; int result = pf1();`,c语言的写法
+  - `using pfunc = int(*)(); pfunc pf1 = func1;`
+  - `std::function<int()> pf1 = func1; int result = pf1();`,不是函数指针,但是功能是一样的.
+  - `std::bind`也可以
+  - `lambda`函数也可以, 在一些函数指针作为形参的函数上,形参写lambda函数就好了.
+> [!TIP]
+> 装一个函数/延迟函数的调用: 回调. 注册,执行.
+- 元编程就是指在编译期就提前计算,生成,处理代码, 实现方式包括:模板,constexpr, if constexpr, concepts.
+- 泛型编程就是指让同一套逻辑能够复用适配多种不同的数据类型, 实现方式包括：模板、auto 自动类型推导、泛型 Lambda、concepts.
+  - 泛型lambda: 允许lambda的参数是auto, 允许lambda里写模板,写concepts
+> [!NOTE]
+> void*: 指向未知类型对象的指针，也就是一种通用指针.它只保存一个内存地址，不携带类型信息，因此不能直接解引用，必须先转换成具体类型的指针才能使用.C语言中用void *来实现泛型,多态等,现代cpp中很少用了
+- 多态和继承不一样,多态是基类类型的指针或基类类型的引用.

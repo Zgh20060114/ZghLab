@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -97,7 +98,7 @@ private:
 class Shape {
 public:
   virtual void draw() const { std::cout << "draw shape" << '\n'; }
-  virtual ~Shape() = default;
+  virtual ~Shape() { std::cout << "基类析构函数" << '\n'; }
 
 private:
   std::unique_ptr<std::string> ptr_str{std::make_unique<std::string>("Shape")};
@@ -108,6 +109,9 @@ public:
   virtual ~Pen() = default;
 };
 class Circle : public Pen, public Shape {
+public:
+  ~Circle() { std::cout << "子类析构函数" << '\n'; }
+
 private:
   void draw() const override { std::cout << "draw circle" << '\n'; };
   std::unique_ptr<std::string> ptr_str{std::make_unique<std::string>("Circle")};
@@ -173,8 +177,50 @@ class Session : public std::enable_shared_from_this<Session> {
 public:
   void start() { auto sft = shared_from_this(); }
 };
-int main(int argc, char *argv[]) {
 
+class Base {
+public:
+  virtual ~Base() {}
+  int a{1};
+};
+
+class Derived : public Base {
+public:
+  void foo() {}
+  int a{2};
+  int c{3};
+};
+
+void test1() {
+  Base ba{Derived()};
+  assert(ba.a == 1);
+}
+
+struct ListNode {
+  int key{};
+  int value{};
+};
+class LRU {
+  std::list<ListNode> list_nodes{};
+  std::unordered_map<int, std::list<ListNode>::iterator> _cache{};
+};
+
+template <class T> void universalCitation(T &&param) {}
+
+int func() { return 2; }
+void test2() {
+  std::function<int()> p_func = &func;
+  auto p_func2{&func};
+  std::cout << p_func() << "\n";
+}
+
+void test3() {}
+int main(int argc, char *argv[]) {
+  test3();
+
+  // universalCitation<int>(5);
+  // int a = 5;
+  // universalCitation<int>(a);
   // std::shared_ptr<FILE> file{fopen("data.txt", "r"), FileCloser{}};
   // Point *po = new Point();
   // std::shared_ptr<Point> sp{po};
@@ -254,8 +300,8 @@ int main(int argc, char *argv[]) {
   // std::unordered_multiset<int> ums_a{1, 2, 3, 1};
   // std::multimap<int, std::string> mm_a{{1, "a"}, {2, "b"}};
   // std::unordered_map<int, std::string> um_a{{1, "a"}, {2, "b"}};
-  // std::priority_queue<int> pq_a{std::less<int>(), std::vector<int>{1, 5, 3}};
-  // std::priority_queue<int> pq_b{v_a.begin(), v_a.end()};
+  // std::priority_queue<int> pq_a{std::less<int>(), std::vector<int>{1, 5,
+  // 3}}; std::priority_queue<int> pq_b{v_a.begin(), v_a.end()};
   // std::stack<int> st_a{d_a};
   // std::cout << us_a.count(1) << "\n";
   // std::cout << ums_a.count(1) << "\n";
@@ -288,14 +334,16 @@ int main(int argc, char *argv[]) {
   // std::cout << map_a.at(2) << "\n";
   // std::ostream_iterator<int> osi{std::cout, "-"};
   // // std::copy(v_a.begin(), v_a.end(), osi);
-  // std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout, "
+  // std::copy(v_a.begin(), v_a.end(), std::ostream_iterator<int>{std::cout,
+  // "
   // "}); std::cout << "\n"; std::copy(s_a.begin(), s_a.end(),
   // std::ostream_iterator<int>{std::cout, " "}); std::cout << "\n";
   // std::vector<int> v_c{};
   // std::copy(std::istream_iterator<int>{std::cin},
   // std::istream_iterator<int>{},
   //           std::back_inserter(v_c));
-  // std::copy(v_c.begin(), v_c.end(), std::ostream_iterator<int>{std::cout, "
+  // std::copy(v_c.begin(), v_c.end(), std::ostream_iterator<int>{std::cout,
+  // "
   // "}); std::cout << "\n"; std::cout << v_a.back() << "\n";
   // std::copy(v_a.begin(), v_a.end(),
   //           std::back_insert_iterator<std::list<int>>(l_a));
@@ -308,13 +356,28 @@ int main(int argc, char *argv[]) {
   // *v_d.begin() = 100;
   // std::reverse(v_d.begin(), v_d.end());
 
-  int a{10};
-  [a](int value) mutable {
-    std::cout << value << "\n";
-    a++;
-    std::cout << a << "\n";
-  }(100);
-  std::cout << a << "\n";
+  // std::list<int> ls{1, 3, 5, 7};
+  // int a{10};
+  // [a](int value) mutable {
+  //   std::cout << value << "\n";
+  //   a++;
+  //   std::cout << a << "\n";
+  // }(100);
+  // std::cout << a << "\n";
+  // auto it =
+  //     std::remove_if(ls.begin(), ls.end(), [](int value) { return value >
+  //     3;
+  //     });
+  // for (auto &l : ls) {
+  //   std::cout << l << " ";
+  // }
+  // std::cout << "\n";
+  // std::cout << *it << "\n";
+  // ls.erase(it, ls.end());
+  // for (auto &l : ls) {
+  //   std::cout << l << " ";
+  // }
+  // std::cout << "\n";
 
   return 0;
 }

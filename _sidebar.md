@@ -19,3 +19,4 @@
 - [mjlab](./mjlab.md)
 - [vim操作拾遗](./operator.md)
 - [中长跑训练](./长跑训练.md)
+- [Python项目组织规范](./Python项目组织规范.md)

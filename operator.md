@@ -33,3 +33,7 @@
 - X: 在normal模式删除光标的前一个字符
 - 用寄存器复制粘贴: "字母y/p
 - lazyvim用的neo-tree, H隐藏/显示隐藏文件.
+- space+g+d: 查看工作区与暂存区的差异
+- du -sh 目录: 查看该目录的大小.
+- nohup waybar > /dev/null 2>&1 &
+- go env -w GOPROXY=https://goproxy.cn,direct
